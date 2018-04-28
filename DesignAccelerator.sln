@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignAccelerator", "DesignAccelerator\DesignAccelerator.csproj", "{F421AFA6-9F0C-4D0F-B101-8BBE46DE484D}"
 EndProject
@@ -42,26 +42,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://pacchi.visualstudio.com/
-		SccProjectUniqueName0 = DesignAccelerator\\DesignAccelerator.csproj
-		SccProjectName0 = DesignAccelerator
-		SccLocalPath0 = DesignAccelerator
-		SccLocalPath1 = .
-		SccProjectUniqueName2 = DA.BusinessLayer\\DA.BusinessLayer.csproj
-		SccProjectName2 = DA.BusinessLayer
-		SccLocalPath2 = DA.BusinessLayer
-		SccProjectUniqueName3 = DA.DataAccessLayer\\DA.DataAccessLayer.csproj
-		SccProjectName3 = DA.DataAccessLayer
-		SccLocalPath3 = DA.DataAccessLayer
-		SccProjectUniqueName4 = DA.DomainModel\\DA.DomainModel.csproj
-		SccProjectName4 = DA.DomainModel
-		SccLocalPath4 = DA.DomainModel
-		SccProjectUniqueName5 = DesignAccelerator.Tests\\DesignAccelerator.Tests.csproj
-		SccProjectName5 = DesignAccelerator.Tests
-		SccLocalPath5 = DesignAccelerator.Tests
 	EndGlobalSection
 EndGlobal

@@ -3,3 +3,10 @@ D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\bin\Debug\DA.Do
 D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Debug\DA.DomainModel.dll
 D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Debug\DA.DomainModel.pdb
 D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Debug\DA.DomainModel.csprojResolveAssemblyReference.cache
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\bin\Debug\DA.DomainModel.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\bin\Debug\DA.DomainModel.pdb
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\bin\Debug\EPPlus.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\bin\Debug\EPPlus.xml
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\obj\Debug\DA.DomainModel.csprojResolveAssemblyReference.cache
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\obj\Debug\DA.DomainModel.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\obj\Debug\DA.DomainModel.pdb
