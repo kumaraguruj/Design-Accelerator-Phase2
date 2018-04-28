@@ -1,0 +1,62 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model AttributeListViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Delete Attribute List Input</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.AttributeID)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.AttributeDesc, "Attribute Name", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline" style="margin-left:-80px">
+                    @Html.EditorFor(m => m.AttributeDesc, new { htmlAttributes = new { @class = "form-control", @required = "required", @style = "width:300px", @readonly = "true" } })
+                    @Html.ValidationMessageFor(m => m.AttributeDesc, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.AttributeTypeDesc, "Attribute Type", htmlAttributes: new { @class = "col-sm-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span style="margin-left:-80px">
+                    <label radio="inline" style="margin:8px 0 0">
+                        @Html.EditorFor(m => m.CommonAttributeTypeID, new { htmlAttributes = new { disabled = "disabled"} })
+                        <span>Common</span>
+
+                        @Html.EditorFor(m => m.CriticalAttributeTypeID, new { htmlAttributes = new { disabled = "disabled" } })
+                        <span>Critical</span>
+                    </label>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="margin-left:115px">
+                <input type="submit" id="btnDelete" value="Delete" class="btn btn-default btn-group-sm; button" />
+                @*<input type="submit" value="Cancel" onclick="Cancel()" class="btn btn-warning" />*@
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>

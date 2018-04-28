@@ -1,0 +1,112 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model RoleViewModel
+
+@{
+    ViewBag.Title = "CreateRoles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<h2>Create Roles</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="createRoleForm">
+            @using (Html.BeginForm("Index", "Role", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @*@Html.HiddenFor(m => m.roleId)*@
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.rolename, "Role Name*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.TextBoxFor(m => m.rolename, new { @maxlength = "20", @class = "form-control", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.rolename, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.status, "Active*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10" style="margin:6px 0 0">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.CheckBoxFor(m => m.status, new { id = "status", @checked = "false", @class = "" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:160px">
+                        <input type="submit" value="Add" name="action:Add" class="btn btn-default; button" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index", "Client")">Back</a>
+</div>
+<hr />
+
+@{
+    IEnumerable<RoleViewModel> Roleviewmodel2 = ViewData["Roleviewmodel1"] as IEnumerable<RoleViewModel>;
+}
+<div style="width:50%;">
+    @{
+        WebGrid grid = new WebGrid(Roleviewmodel2);
+        @grid.GetHtml(
+                 tableStyle: "table table-bordered table-hover",
+                 fillEmptyRows: false,
+                 headerStyle: "gvHeading",
+                 alternatingRowStyle: "gvAlternateRow",
+                 rowStyle: "gvRow",
+                 footerStyle: "gvFooter",
+                 mode: WebGridPagerModes.All,
+                 firstText: "<< First",
+                 previousText: "< Prev",
+                 nextText: ">> Next",
+                 lastText: "> Last",
+                 columns: new[] {
+                                    grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex, canSort:true),
+                                    grid.Column("rolename",header: "Roles",canSort:true),
+                                    grid.Column(header: "Status", format: @<text><input name="chkStatus" disabled="disabled" type="checkbox" value="@item.status" @(item.status == false ? null : "checked") /></text>)
+                                   @* grid.Column("roleId",header:"Edit/Delete",canSort:false,
+     format: @<text>
+        @Html.ActionLink("Edit |", "Edit", new { id=item.roleId})
+        @Html.ActionLink("Delete", "Delete", new { id=item.roleId})
+    </text>)*@
+
+                                }
+                    )
+}
+</div>
+
+
+
+@section Scripts {
+
+@*@if (ViewBag.Message1 != null)
+    {
+    <script>
+        alert('@ViewBag.Message1');
+    </script>
+}*@
+
+@if (ViewBag.Message != null)
+{
+    <script>
+        alert('@ViewBag.Message');
+        $("#rolename").val("");
+        $('#status').prop('checked', false);
+    </script>
+}
+
+}

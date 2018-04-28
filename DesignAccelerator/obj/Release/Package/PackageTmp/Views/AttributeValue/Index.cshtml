@@ -1,0 +1,559 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model AttributeValueViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<h2> Attribute Value</h2>
+<hr />
+
+@if (!string.IsNullOrEmpty(ViewBag.Status))
+{
+    <script>
+        alert('Data saved successfully !'); // place your comment.
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <section id="AttributeValueForm">
+            @using (Html.BeginForm("Index", "AttributeValue", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "AttributeValue creation was unsuccessful. Please enter correctly and try again", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.AttributeID)
+                @Html.HiddenFor(m => m.DaId)
+
+                <div class="form-group" style="padding-left:0px;">
+                    @Html.LabelFor(m => m.LstAttrib, "Attribute Name ", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-8">
+                        <span class="form-inline" style="float:left">
+                            @Html.DropDownListFor(model => model.AttributeDesc, new SelectList(Model.LstAttrib, "AttributeID ", "AttributeDesc"), "---Select Attribute---", new { @class = "form-control" })
+                        </span>
+                    </div>
+                </div>
+                //foreach (var item in Model.LstAttribVal)
+                //{
+                <div class="form-inline form-horizontal">
+                    <div class="form-group" style="margin-left:0px">
+                        <label>Attribute Value1*</label>
+                        <div class="col-md-10" >
+                            <input type="hidden" id="AttrValId1" />
+                            <input type="text" id="AttributeValue1" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative1" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Attribute Value2*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId2" />
+                            <input type="text" id="AttributeValue2" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative2" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:0px">
+                        <label>Attribute Value3*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId3" />
+                            <input type="text" id="AttributeValue3" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative3" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Attribute Value4*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId4" />
+                            <input type="text" id="AttributeValue4" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative4" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:0px">
+                        <label>Attribute Value5*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId5" />
+                            <input type="text" id="AttributeValue5" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative5" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Attribute Value6*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId6" />
+                            <input type="text" id="AttributeValue6" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative6" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:0px">
+                        <label>Attribute Value7*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId7" />
+                            <input type="text" id="AttributeValue7" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative7" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Attribute Value8*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId8" />
+                            <input type="text" id="AttributeValue8" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative8" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:0px">
+                        <label>Attribute Value9*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId9" />
+                            <input type="text" id="AttributeValue9" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative9" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Attribute Value10*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId10" />
+                            <input type="text" id="AttributeValue10" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative10" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:0px">
+                        <label>Attribute Value11*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId11" />
+                            <input type="text" id="AttributeValue11" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative11" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:-25px">
+                        <label>Attribute Value12*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId12" />
+                            <input type="text" id="AttributeValue12" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative12" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:0px">
+                        <label>Attribute Value13*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId13" />
+                            <input type="text" id="AttributeValue13" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative13" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:-25px">
+                        <label>Attribute Value14*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId14" />
+                            <input type="text" id="AttributeValue14" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative14" type="checkbox" name="" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:0px">
+                        <label>Attribute Value15*</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="AttrValId15" />
+                            <input type="text" id="AttributeValue15" maxlength="50" />&nbsp;&nbsp;
+                            <label>IsNegative</label>
+                            <input id="IsNegative15" type="checkbox" name="" />
+                        </div>
+                    </div>
+                </div>
+                @*}*@
+
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-7">
+                        @*<input type="submit" value="Add" name="action:Add" class="btn btn-lg" />*@
+                        <button id="btnSave" type="button" class="btn btn-default; button">Save</button>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<br />
+<div>
+    <a id="backlink" href="">Back</a>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(document).on('click', '#backlink', function () {
+                this.href = "@Session["PreviousURL"]";
+            });
+
+            $("#AttributeDesc").on('change', function () {
+                populateValues(this);
+            });
+
+            $("#btnSave").on("click", function (e) {
+
+                if ($("#AttributeValue1").val() == "" && $("#AttributeValue2").val() == "" && $("#AttributeValue3").val() == "" && $("#AttributeValue4").val() == "" && $("#AttributeValue5").val() == "" && $("#AttributeValue6").val() == ""
+                 && $("#AttributeValue7").val() == "" && $("#AttributeValue8").val() == "" && $("#AttributeValue9").val() == "" && $("#AttributeValue10").val() == "" && $("#AttributeValue11").val() == "" && $("#AttributeValue12").val() == ""
+                 && $("#AttributeValue13").val() == "" && $("#AttributeValue14").val() == "" && $("#AttributeValue15").val() == "") {
+                    alert("Atleast one value must be non empty");
+                    return;
+                }
+                var isDuplicate = Checkduplicate();
+                if (isDuplicate) {
+                    alert("Attribute Value already exists");
+                    return false;
+                }
+                var specialCharExist = CheckforSpecialCharacters();
+
+                if (specialCharExist)
+                {
+                    alert("Remove Special Characters to Proceed");
+                    return false;
+                }
+                var jsondata = getJSONRecord();
+
+                // setting the URL where ajax is used
+                var MyAppUrlSettings = {
+                    MyUsefulUrl: '@Url.Action("SaveData", "AttributeValue")'
+                }
+                // checks for record
+                if (jsondata.length > 0) {
+                    $.ajax({
+
+                        url: MyAppUrlSettings.MyUsefulUrl,
+                        data: JSON.stringify(jsondata),
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (result) {
+                            isSuccess = result;
+                        },
+                        error: function (result) {
+                            isSuccess = result;
+                        }
+
+                    }).done(function () {
+                        if (isSuccess == "1") {           // Successfully saved
+                            alert("Record Inserted");
+                            // clean records
+                            ClearValues();
+                            // set to default description
+                            $('#AttributeDesc').prop('selectedIndex', 0);
+                        }
+                        else {                      // Data Error
+                            alert("Error. Please, check the data");
+                        }
+                    });
+                }
+            });
+        });
+
+
+
+        //duplicate entry
+        function Checkduplicate() {
+            //debugger;
+            for (var i = 1 ; i <= 15; i++) {
+                if ($("#AttributeValue" + i).val() != "") {
+                    var attrVal = $("#AttributeValue" + i).val();
+                    var cnt = 0;
+                    for (var j = 1 ; j <= 15; j++) {
+                        if ($("#AttributeValue" + j).val().toUpperCase() == attrVal.toUpperCase()) {
+                            cnt++
+                            if (cnt == 2) {
+                                return true;
+                            }
+                        }
+                    }
+
+                }
+            }
+            return false;
+        }
+        //Checking for Special Characters
+        function CheckforSpecialCharacters() {
+           // debugger;
+            var specialChar = new RegExp("^[a-zA-Z0-9<>=]+$");                              
+            for (var i = 1 ; i <= 15; i++) {
+                if ($("#AttributeValue" + i).val() != "") {
+                     var attrVal = $("#AttributeValue" + i).val();
+                    if (!specialChar.test(attrVal))
+                    {
+                        return true;
+                    }                    
+                }
+            }
+            return false;
+        }
+        function getJSONRecord() {
+            var AttrValues = [];
+            // check to see if any record exists
+            //debugger;
+            if ($("#AttributeDesc").val() != "") {
+                for (var i = 1 ; i <= 15; i++) {
+                    var item = null;
+                    item = {};
+                    item["AttributeID"] = $("#AttributeDesc").val();
+                    item["AttributeValue"] = $("#AttributeValue" + i).val();
+                    if ($("#IsNegative" + i).prop("checked") == true)
+                        item["IsNegative"] = "1";
+                    else
+                        item["IsNegative"] = "0";
+                    item["AttrValueID"] = $("#AttrValId" + i).val();
+                    item["DaId"] = $("#DaId").val();
+                    AttrValues.push(item);
+                }
+            }
+            return AttrValues;
+        }
+
+        function populateValues(self) {
+            var attrSelected = self.value;
+
+            if (attrSelected != "") {
+                // setting the URL where ajax is used
+                var MyAppUrlSettings = {
+                    MyUsefulUrl: '@Url.Action("GetValues", "AttributeValue")'
+                }
+                $(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: MyAppUrlSettings.MyUsefulUrl,
+                        data: { "attributeId": attrSelected },
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        cache: false,
+                        success: function (r) {
+                            if (r.length == 0) {
+                                // clean records
+                                ClearValues();
+                            }
+                            else {
+                                // clean previous values
+                                ClearValues();
+                                $.each(r, function (index, Value) {
+                                    var i = index + 1;
+                                    $("#AttributeValue" + i).val(Value.AttributeValue);
+                                    //set the IsNegative/Negative values
+                                    if (Value.IsNegative == "1")
+                                        $("#IsNegative" + i).prop('checked', true);
+                                    else
+                                        $("#IsNegative" + i).prop('checked', false);
+                                    $("#AttrValId" + i).val(Value.AttrValueID);
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+
+                            alert(xhr.responseText);
+
+                        }
+                    });
+                });
+            }
+
+        }
+
+        function ClearValues() {
+            for (var i = 1 ; i <= 15; i++) {
+                $("#AttributeValue" + i).val("");
+                $("#IsNegative" + i).prop('checked', false);
+                $("#AttrValId" + i).val("");
+            }
+        }
+
+
+
+        $("#AttributeValue1").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue2").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue3").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue4").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue5").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue6").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue7").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue8").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue9").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue10").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue11").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue12").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue13").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+        $("#AttributeValue14").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+        $("#AttributeValue15").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+
+
+    </script>
+
+}
+

@@ -1,0 +1,992 @@
+﻿@model DesignAccelerator.Models.ViewModel.ChannelsAndAlertsViewModel
+
+@{
+    ViewBag.Title = "Channels and Alerts";
+}
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+<h2>Channel Alerts Mapping</h2>
+<hr />
+
+<style type="text/css">
+    table, tr, td, th {
+        border: 1px solid #000;
+        position: relative;
+        padding: 10px;
+        white-space: nowrap;
+        text-align:center;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    th span.temp {
+        transform-origin: 115px;
+        transform: rotate(-90deg);
+        margin: 2px 2px 2px 0;
+        vertical-align: bottom;
+        margin-top: 0px;
+        font-size: 11px;
+        width: 13.35px;
+        height: 230px;
+        white-space: nowrap;
+        /*position: relative;*/
+        display: block;
+        float: right;
+        border-top: 0px;
+        border-right: 0px;
+        border-left: 0px;
+        border-bottom: 0px;
+    }
+
+
+    .no-js #loader {
+        display: none;
+    }
+
+    .js #loader {
+        display: block;
+        position: absolute;
+        left: 100px;
+        top: 0;
+    }
+
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/DesignAccelerator/Content/Images/pageLoad.gif') center no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    #tooltip {
+        position: relative;
+    }
+
+        #tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    td span.tooltiptext {
+        transform-origin: 100px;
+        margin: 2px 2px 2px 0;
+        vertical-align: bottom;
+        margin-top: 0px;
+        font-size: 11px;
+        width: 13.35px;
+        white-space: nowrap;
+        /*position: relative;*/
+        display: block;
+        float: right;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+    #tooltip .tooltiptext {
+        visibility: hidden;
+        width: 220px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+    #TT {
+        overflow-x: scroll;
+        margin-left: 38.6em;
+        overflow-y: visible;
+        padding: 0px;
+    }
+
+    /*Sno header*/
+    #headcol {
+        position: absolute;
+        width: 3.6em;
+        left: 0;
+        height: 254px;
+        border-right: 0px none black;
+        padding-left: 3.6px;
+        padding-top: 110px;
+        /*text-align: center;*/
+        border: 1px solid #000;
+    }
+    /*Sno body*/
+    #colid {
+        position: absolute;
+        width: 3.6em;
+        left: 0;
+        border-right: 0px none black;
+        height: 3.74em;
+        border-top: 0px;
+        border: 1px solid #000;
+    }
+
+    /*rr header*/
+    #rridth {
+        position: absolute;
+        /*width: 7.9em;*/
+        width: 300px;
+        left: 0;
+        height: 254px;
+        border-right: 0px none black;
+        margin-left: 50px;
+        padding-top: 110px;
+        /*text-align: center;*/
+        border: 1px solid #000;
+    }
+    /*rr body*/
+    #rowidtd {
+        position: absolute;
+        /*width: 7.9em;*/
+        width: 300px;
+        left: 0;
+        border-right: 0px none black;
+        margin-left: 50px;
+        border-top: 0px;
+        height: 3.74em;
+        border: 1px solid #000;
+    }
+
+    /*src header*/
+    #Attrid {
+        width: 205px;
+        /*padding: 106px;*/
+        left: 190px;
+        position: absolute;
+        margin-left: 160px;
+        height: 254px;
+        border-right: 0px;
+        padding-top: 110px;
+        /*text-align: center;*/
+        border: 1px solid #000;
+    }
+    /*src body*/
+    #attrtd {
+        width: 205px;
+        padding: 11.5px;
+        left: 190px;
+        position: absolute;
+        margin-left: 160px;
+        border-top: 0px;
+        height: 3.74em;
+        border-right: 0px none black;
+        max-width: 310px;
+        border: 1px solid #000;
+    }
+
+    .form-control {
+        height: 30px;
+    }
+</style>
+@using (Html.BeginForm("Index", "ChannelsAndAlerts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.daID)
+    <div class="row clearfix">
+        <span class="navbar-left">
+            &nbsp;&nbsp;&nbsp;&nbsp;<a class="" href="@Url.Action("Index", "Reports", new { id = Model.daID })">Link To Reports</a>
+            <span class="glyphicon glyphicon-expand"></span>
+        </span>
+        <div class="col-md-12 column" id="divCA">
+        </div>
+        <div class="col-md-12 column">
+            <button id="btnSave" type="button" class="btn btn-primary">Save Changes</button>
+            <button id="btnAdd" type="button" class="btn btn-primary">Add New Row</button>
+        </div>
+    </div>
+    <div class="se-pre-con"></div>
+
+}
+@section Scripts {
+    <script type="text/javascript">
+        //$(document).ready(function(){
+        //    $('[data-toggle="tooltip"]').tooltip({
+        //        placement : 'top'
+        //    });
+        //});
+        var highleveltransactions = [];
+        var attributelist = [];
+        var srno=1;
+
+        $(document).ready(function () {
+            $(".se-pre-con").fadeOut("slow");
+
+            var model = @Html.Raw(Json.Encode(Model));
+
+
+
+            var transactionAttributeTable = makeTable(model, model.lstTransactions, model.lstchannelsalerts);
+            rindex();
+            var header_height = 220;
+            $('table th span').each(function () {
+                if ($(this).outerWidth() > header_height) header_height = $(this).outerWidth();
+            });
+
+            $('table th').height(header_height);
+
+            //to add new row
+            $("#btnAdd").on("click", function (e) {
+                e.preventDefault();
+                var valdationstatus = dovalidations();
+                if (valdationstatus == true)
+                {
+                    var row = AddRow(model);
+                    $("#TT tbody").append(row);
+                    rindex();
+                }
+            });
+
+            //Mohseen
+            $("#divCA").on('click', 'button.removebutton', function () {
+
+                if (confirm("Do you want to delete this row?")) {
+                    //debugger;
+                    var rlength = $('#TT tr').length;
+                    if (rlength == 2){
+                        alert("Cannot delete this row...");
+                    }
+                    else{
+
+                        var $item = $(this).closest("tr")   // Finds the closest row <tr>
+
+                        var $tds = $item.find("td:last-child")//("td:nth-child(2)")
+                                                     .text()         // Retrieves the text within <td>
+
+                        var sno = $item.find("td:first-child").text();
+
+                        //  $("#resultas").append($item);       // Outputs the answer
+                        var MyAppUrlSettings = {
+                            MyUsefulUrl: '@Url.Action("DeleteRowChannelAlert", "ChannelsAndAlerts")'
+                        }
+
+                        $.ajax({
+                            type: 'POST',
+                            dataType: "json",
+                            traditional: true,
+                            contentType: "application/json; charset=utf-8",
+                            url:MyAppUrlSettings.MyUsefulUrl,
+                            // url:"/ChannelsAndAlerts/DeleteRowChannelAlert/",
+                            //data: JSON.stringify(obj),
+                            data: JSON.stringify({ postData: $tds}),//sending the id to delete from the db
+                            // async: false,
+
+                            success: function (result) {
+                                alert("Selected value has been deleted for row No :"+ sno);
+                                isSuccess = result;
+                            }
+
+                        });
+
+
+                        $(this).closest('tr').remove();
+                        srno--;
+                        rindex(this);
+                    }
+                }
+                return false;
+            });
+
+            $('#divCA').on('change','select' ,function() {
+                populateValues(this);
+            });
+
+            $("#btnSave").on("click", function (e) {
+                var valdationstatus = dovalidations();
+                // setting the URL where ajax is used
+                var MyAppUrlSettings = {
+                    MyUsefulUrl: '@Url.Action("SaveData", "ChannelsAndAlerts")'
+                }
+                if (valdationstatus == true)
+                {
+                    var jsondata = getJSONFromTable(model);
+                    $.blockUI(
+                    {
+                        message: '<h8><img src="@Url.Content("~/Content/Images/busy.gif")" /> StandBy...</h8>'
+                    });
+                    $.ajax({
+
+                        url: MyAppUrlSettings.MyUsefulUrl,
+                        data: JSON.stringify(jsondata),
+                        async: false,
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (result) {
+                            isSuccess = result;
+                        },
+                        error: function (result) {
+                            isSuccess = result;
+                        }
+
+                    }).done(function () {
+                        if (isSuccess == "1") {           // Successfully saved
+                            //alert ("Record Inserted");
+                            //$('#divCA div').empty();
+                            location.reload();
+                            $.unblockUI();
+
+                            //location.reload();
+                        }
+                        else {                      // Data Error
+                            $.unblockUI();
+                            alert("Error. Please, check the data");
+                        }
+                    });
+                }
+            });
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = Model.ClientID })"><span>' + "@Model.ProjectName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = Model.ProjectID })"><span>' + "@Model.ApplicationName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Module", new {id = Model.ApplicationID })"><span>' + "@Model.ModuleName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = Model.ModuleId })"><span>' + "@Model.daName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Products", new {id = Model.daID })"><span>' + "Products" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Transactions", new {id = Model.daID })"><span>' + "Transactions" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "AttributeList", new {id = Model.daID })"><span>' + "Attribute" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "TransactionAttribute", new {id = Model.daID })"><span>' + "Transaction Attribute" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "BusinessRules", new {id = Model.daID })"><span>' + "BusinessRules" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "SMD", new {id = Model.daID })"><span>' + "SourceDestinationMode" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Interface", new {id = Model.daID })"><span>' + "Interface" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DF", new {id = Model.daID })"><span>' + "DF" + '</span></a></li>');
+        });
+
+        function dovalidations()
+        {
+            var text1,srcflag, chk, auto, attrflag, attrvalflag, autoflag,modeflag, destflag,distflag,freqflag;
+
+            $('#TT').each(function(){
+                $('tbody tr').each(function () {
+                    chk= false; attrflag=false; attrvalflag =false; srcflag=false; autoflag=false; modeflag=false; destflag=false; distflag=false; freqflag=false;
+                    //$(this).closest('tr').find('input:text').each(function(){
+                    //    if($(this).attr("name") == "BuzRuleDesc") text1 = $(this).val();
+                    //});
+
+                    //if (text1 =="")
+                    //{
+                    //    alert("Business Rules Description should not be empty in row " + ($(this).index() + 1));
+                    //    return false;
+                    //}
+
+                    //Source
+                    $(this).closest('tr').find('select').each(function(){
+                        var srcid = $(this).prop('name').indexOf('source');
+                        //alert("Source ID "+srcid);
+                        if (srcid !=-1  && $(this).val() !="0")
+                        {
+                            srcflag = true;
+                            return false;
+                        }
+                    });
+                    if (srcflag ==false)
+                    {
+                        alert("Atleast one Source should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    $(this).closest('tr').find('input:checkbox').each(function(){
+                        if($(this).prop('checked') == true) {
+                            chk = true;
+                            return false;
+                        }
+                    });
+
+                    if (chk ==false)
+                    {
+                        alert("Atleast one high level transaction checkbox should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    $(this).closest('tr').find('select').each(function(){
+                        var attrid = $(this).prop('name').indexOf('Attribute');
+                        if (attrid !=-1  && $(this).val() !="0")
+                        {
+                            attrflag = true;
+                            return false;
+                        }
+                    });
+
+                    $(this).closest('tr').find('select').each(function(){
+                        var attrvalid = $(this).prop('name').indexOf('Value');
+                        if (attrvalid !=-1  && $(this).val() !="0")
+                        {
+                            attrvalflag = true;
+                            return false;
+                        }
+                    });
+
+                    if (attrflag ==false)
+                    {
+                        alert("Atleast one Attribute should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    if (attrvalflag ==false)
+                    {
+                        alert("Atleast one Attribute value should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    //AutoGenerated_Manual
+                    //debugger;
+                    $(this).closest('tr').find('select').each(function(){
+                        var autoid = $(this).prop('name').indexOf('autogenerated');
+                        //alert ("auto ID" +autoid)
+                        if (autoid !=-1  && $(this).val() !="0")
+                            //if($(this).prop('value') == '0') {
+                        {
+                            autoflag = true;
+                            return false;
+                        }
+                    });
+                    if (autoflag ==false)
+                    {
+                        alert("Atleast one AutoGenerated/Manual should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    //Mode
+                    $(this).closest('tr').find('select').each(function(){
+                        var modeid = $(this).prop('name').indexOf('mode');
+                        //alert("mode ID "+modeid);
+                        if (modeid !=-1  && $(this).val() !="0")
+                        {
+                            modeflag = true;
+                            return false;
+                        }
+                    });
+                    if (modeflag ==false)
+                    {
+                        alert("Atleast one Modetype should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    //Destination
+                    $(this).closest('tr').find('select').each(function(){
+                        var destid = $(this).prop('name').indexOf('Destination');
+                        if (destid !=-1  && $(this).val() !="0")
+                        {
+                            destflag = true;
+                            return false;
+                        }
+                    });
+                    if (destflag ==false)
+                    {
+                        alert("Atleast one Destination should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    //Distribution
+                    $(this).closest('tr').find('select').each(function(){
+                        var distid = $(this).prop('name').indexOf('Distribution');
+                        if (distid !=-1  && $(this).val() !="0")
+                        {
+                            distflag = true;
+                            return false;
+                        }
+                    });
+                    if (distflag ==false)
+                    {
+                        alert("Atleast one Distribution should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    //Frequency
+                    $(this).closest('tr').find('select').each(function(){
+                        var freqid = $(this).prop('name').indexOf('Frequency');
+                        if (freqid !=-1  && $(this).val() !="0")
+                        {
+                            freqflag = true;
+                            return false;
+                        }
+                    });
+                    if (freqflag ==false)
+                    {
+                        alert("Atleast one Frequency should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                });
+            });
+            //text1,srcflag, chk, attrflag, attrvalflag, autoflag,modeflag, destflag,distflag,freqflag
+            if (text1 != "" && srcflag == true && chk == true && attrflag== true && attrvalflag == true && autoflag == true && modeflag == true && destflag == true && distflag == true && freqflag == true )
+                return true;
+            else
+                return false;
+        }
+
+        function rindex()
+        {
+            $("#TT table").each(function(){
+
+
+                $('tr').each(function (index) {
+                    $(this).find('td:nth-child(1)').html(index);
+                });
+            });
+        }
+
+        function makeTable(model, highleveltransactions, attributelist) {
+            var table = $("<div id = 'TT'><table id = 'tblChannelAlerts' class='table table-bordered table-hover'>");
+            html = "<thead>" +
+                   "    <tr>" +
+                   "        <th id ='headcol'>S No.</th>" +
+                   "        <th id ='rridth'>Requirement Reference</th>" +
+                   "        <th id='Attrid'>Source</th>"
+
+            $.each(highleveltransactions , function (index, value){
+                html = html +  "        <th><span class='temp'>" + value.HighLevelTxnID + '_' + value.HighLevelTxnDesc + "</span></th>";
+            });
+            // html = html +  "        <th>     Business Rule Description</th>";
+            for ( var i = 1; i <= 10; i++ ) {
+                html = html +  "        <th> Attribute" + i + "</th>";
+                html = html +  "        <th> Value" + i + "</th>";
+            }
+            html = html +  "        <th> Auto Generated / Manual</th>";
+            html = html +  "        <th> Mode</th>";
+            html = html +  "        <th> Message desc</th>";
+            html = html +  "        <th> Destination Application / Device</th>";
+            html = html +  "        <th> Distribution</th>";
+            html = html +  "        <th> Frequency</th>";
+            html = html +  "        <th class='hidethis'>Delete</th>";
+            html = html +  "        <th class='hide'>id</th> </tr>" +
+                           "</thead>";
+
+
+
+            var tableHead = $(html);
+            table.append(tableHead);
+
+            var tbody = $("<tbody/>");
+            if (model.lstchannelsalerts.length > 0)
+            {
+                var channelalertslst = [];
+                $.each(model.lstchannelsalerts, function(index, value) {
+                    if ($.inArray(value.ChannelAlertAttrMapID, channelalertslst)==-1) {
+                        channelalertslst.push((value.ChannelAlertAttrMapID)); // pushing unique MapID to channelalertslst array from all channel alerts list
+                    }
+                });
+
+                var transseq = [];
+                $.each(channelalertslst,function(index,val1){           // looping through Unique ChannelAlertAttrMapID array (channelalertslst)
+                    $.each(model.lstchannelsalerts, function(index, val2) {
+                        if (val2.ChannelAlertAttrMapID==val1){
+                            transseq.push((val2.TransactionSeq));   //pushing transaction sequence to array
+                        }
+                    });
+                    var currow=  $(model.lstchannelsalerts).filter(function (i,n){return n.ChannelAlertAttrMapID == val1});
+                    var row = LoadRow(currow,transseq,model);
+                    tbody.append(row);
+                    transseq.length = 0;
+                });
+
+                table.append(tbody);
+                return $('#divCA').append(table);
+            }
+            else
+            {
+                var row = AddRow(model);
+                tbody.append(row);
+                table.append(tbody);
+                return $('#divCA').append(table);
+            }
+        }
+
+        function LoadRow(currow, transeq,model)
+        {
+            
+            var chnlalrtsrownum =0;
+            currentrow = currow[0];
+            var srno = 1;
+            var row = $("<tr/>");
+            $(row).html("<td id='colid'>"+ (srno++) +"</td>" + //1
+                        "<td id='rowidtd'><input type='hidden' name='hdnMapID' value=" + currentrow.ChannelAlertAttrMapID +"><input name='reqref1' type='text' onkeypress='return DisableSpecialChars(event)' maxlength='100' placeholder='Requirement Reference' class='form-control input-md' value ='" + currentrow.ReqReference  + "' /></td>");//Mohseen
+
+            var src=  "<td id='attrtd'><select name='source' class ='selectpicker'><option value='0'>--Select-- </option>";
+
+
+            $.each(model.lstSource,function(key,val){
+                if(val!=null)
+                {
+                    if(val.SourceID==currentrow.SourceID)
+                        src=src+ "<option value='"+val.SourceID+ "'selected>"+val.SourceDesc+"</option>"
+                    else
+                        src=src+ "<option value='"+val.SourceID+ "'>"+val.SourceDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(src);
+
+            $.each(model.lstTransactions , function (index, value){
+                var chkfound = $.inArray(value.TransactionSeq, transeq);
+                if (chkfound != -1)
+                {
+                    $(row).append("<td id='tooltip'><span class='tooltiptext'>"+value.HighLevelTxnID + '_' + value.HighLevelTxnDesc+"</span><input type='hidden' name='hdnchk' value='" + currow[chnlalrtsrownum].ChannelAlertID +"'><input type='checkbox' value='" + value.TransactionSeq +"' checked=checked /> </td>"); //5
+                    chnlalrtsrownum += 1;
+                }
+                else
+                {
+                    $(row).append("<td id='tooltip'><span class='tooltiptext'>"+value.HighLevelTxnID + '_' + value.HighLevelTxnDesc+"</span><input type='hidden' name='hdnchk' value='0'><input type='checkbox' value='" + value.TransactionSeq +"' /> </td>"); //5
+                }
+            });
+
+            // $(row).append("<td><input name='BuzRuleDesc' type='text' placeholder='Business Rules Description' class='form-control input-md' data-rule-required='true' value='"+ currentrow.BuzRuleDesc +"' /></td>");
+
+            for ( var j = 1; j <= 10; j++ ) {
+
+                var attr = "<td><select name='Attribute"+j+"' class='selectpicker'> <option value='0'>--Select Attribute--</option>";
+
+                var attrsel = currentrow["AttrID" + j];
+
+                $.each(model.lstAttributes, function(key, val) {
+                    if(val != null)
+                    {
+                        if (val.AttributeID == currentrow["AttrID" + j])
+                            attr = attr +  "<option value='" + val.AttributeID + "' selected>" + val.AttributeDesc + "</option>"
+                        else
+                            attr = attr +  "<option value='" + val.AttributeID + "'>" + val.AttributeDesc + "</option>"
+                    }
+                }) + "</select> </td>";
+                $(row).append(attr);
+
+                //*********************** Attribute Values population start ************************************
+                if (attrsel ==0)
+                {
+                    //debugger;
+                    $(row).append("<td><select name='Value"+j+"' class='selectWidth'><option value='0'>--Select Value--</option></select></td>");
+                }
+                else{
+
+                    var attrval = "<td><select name='Value"+j+"' class='selectWidth'><option value='0'>--Select Value--</option>";
+                    var MyAppUrlSettings = {
+                        MyUsefulUrl: '@Url.Action("GetValues", "ChannelsAndAlerts")'
+                    }
+                    $.ajax({
+                        url: MyAppUrlSettings.MyUsefulUrl,
+                        async: false,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: { input: attrsel },
+                        cache: false,
+                        success: function(data){
+                            $.each(data, function(key, val) {
+                                if(val != null)
+                                {
+                                    if (val.AttrValueID == currentrow["AttrValueID" + j])
+                                        attrval = attrval +  "<option value='" + val.AttrValueID + "' selected>" + val.AttributeValue + "</option>";
+                                    else
+                                        attrval = attrval +  "<option value='" + val.AttrValueID + "'>" + val.AttributeValue + "</option>";
+                                }
+                            });
+                        }
+                    })+ "</select> </td>";
+
+                    $(row).append(attrval);
+                }
+                //*********************** Attribute Values population end ************************************
+            }
+
+            var autognrtd=  "<td><select name='autogenerated' class ='selectpicker'><option value='0'>--Select-- </option>";
+            if(currentrow.IsManual!=null)
+            {
+                if(currentrow.IsManual=='N')
+                    autognrtd=autognrtd+ "<option value='N'selected>autogenerated</option><option value='Y'>Manual</option>"
+                else if (currentrow.IsManual=='Y')
+                    autognrtd=autognrtd+ "<option value='N'>autogenerated</option><option value='Y' selected>Manual</option>"
+                else
+                    autognrtd=autognrtd+ "<option value='N'>autogenerated</option><option value='Y'>Manual</option>"
+            }
+            $(row).append(autognrtd);
+
+            var obmode=  "<td><select name='mode' class ='selectpicker'><option value='0'>--Select-- </option>";
+
+            $.each(model.lstModeType,function(key,val){
+                if(val!=null)
+                {
+                    if(val.ModeTypeID==currentrow.ModeTypeID)
+                        obmode=obmode+ "<option value='"+val.ModeTypeID+ "'selected>"+val.ModeTypeDesc+"</option>"
+                    else
+                        obmode=obmode+ "<option value='"+val.ModeTypeID+ "'>"+val.ModeTypeDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(obmode);
+
+            $(row).append("<td><input name='msgdesc' type='text' placeholder='Message Desc' onkeypress='return DisableSomeSpecialChars(event)' maxlength='250' class='form-control input-md' value='"+ currentrow.MessageDesc +"' /></td>");
+
+            var destn=  "<td><select name='Destination' class ='selectpicker'><option value='0'>--Select--</option>";
+
+            $.each(model.lstDestination,function(key,val){
+                if(val!=null)
+                {
+                    if(val.DestID==currentrow.DestID)
+                        destn=destn+ "<option value='"+val.DestID+ "'selected>"+val.DestDesc+"</option>"
+                    else
+                        destn=destn+ "<option value='"+val.DestID+ "'>"+val.DestDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(destn);
+
+            var distrbn=  "<td><select name='Distribution' class ='selectpicker'><option value='0'>--Select--</option>";
+
+            $.each(model.lstDistribution,function(key,val){
+                if(val!=null)
+                {
+                    if(val.DistributionTypeID==currentrow.DistributionTypeID)
+                        distrbn=distrbn+ "<option value='"+val.DistributionTypeID+ "'selected>"+val.DistributionDesc+"</option>"
+                    else
+                        distrbn=distrbn+ "<option value='"+val.DistributionTypeID+ "'>"+val.DistributionDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(distrbn);
+
+            var freqncy=  "<td><select name='Frequency' class ='selectpicker'><option value='0'>--Select--</option>";
+
+            $.each(model.lstFrequency,function(key,val){
+                if(val!=null)
+                {
+                    if(val.FreqTypeID==currentrow.FreqID)
+                        freqncy=freqncy+ "<option value='"+val.FreqTypeID+ "'selected>"+val.FreqTypeDesc+"</option>"
+                    else
+                        freqncy=freqncy+ "<option value='"+val.FreqTypeID+ "'>"+val.FreqTypeDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(freqncy);
+
+            $(row).append("<td><button type='button' class='removebutton' title='Remove this row'>X</button></td>");
+
+            $(row).append("<td class=hide>"+currentrow.ChannelAlertID+"<input type='hidden' name='hdnMapID'</td>");
+
+            return row;
+        }
+
+        function AddRow(model)
+        {
+            var srno = 1;
+            var row = $("<tr/>");
+            $(row).html("<td id='colid'>"+ srno +"</td>" + //1
+                        "<td id='rowidtd'><input type='hidden' name='hdnMapID' value='" + Date.now().toString().substr(6) + "00'><input name='reqref1' type='text' onkeypress='return DisableSpecialChars(event)' maxlength='100' placeholder='Requirement Reference' class='form-control input-md' /></td>");
+
+            var src=  "<td id='attrtd'><select name='source' class ='selectpicker'><option value='0' selected>--Select-- </option>";
+
+            $.each(model.lstSource,function(key,val){
+                if(val!=null)
+                {
+                    src=src+ "<option value='"+val.SourceID+ "'>"+val.SourceDesc+"</option>";
+                }
+            })+"</select></td>";
+            $(row).append(src);
+
+            $.each(model.lstTransactions , function (index, value){
+                $(row).append("<td id='tooltip'><span class='tooltiptext'>"+value.HighLevelTxnID + '_' + value.HighLevelTxnDesc+"</span><input type='hidden' name='hdnchk' value='0'><input type='checkbox' value='" + value.TransactionSeq +"' /> </td>"); //5
+            });
+
+            // $(row).append("<td><input name='BuzRuleDesc' type='text' placeholder='Business Rules Description'  class='form-control input-md' data-rule-required='true' /></td>");
+
+            for ( var j = 1; j <= 10; j++ ) {
+
+                var attr = "<td><select name='Attribute"+j+"' class='selectpicker'> <option value='0'>--Select Attribute--</option>";
+
+                $.each(model.lstAttributes, function(key, val) {
+                    if(val != null)
+                    {
+                        attr = attr +  "<option value='" + val.AttributeID + "'>" + val.AttributeDesc + "</option>"
+                    }
+                }) + "</select> </td>";
+                $(row).append(attr);
+
+                $(row).append("<td><select name='Value"+j+"' class='selectWidth'><option value='0'>--Select Value--</option></select></td>");
+            }
+
+
+            $(row).append("<td><select name='autogenerated' class ='selectpicker'><option value='0' selected>--Select-- </option><option value='N'>autogenerated</option><option value='Y'>Manual</option>");
+
+            var obmode=  "<td><select name='mode' class ='selectpicker'><option value='0'>--Select-- </option>";
+
+            $.each(model.lstModeType,function(key,val){
+                if(val!=null)
+                {
+                    obmode=obmode+ "<option value='"+val.ModeTypeID+ "'>"+val.ModeTypeDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(obmode);
+
+            $(row).append("<td><input name='msgdesc' type='text' onkeypress='return DisableSomeSpecialChars(event)' placeholder='Message Desc' maxlength='250' class='form-control input-md' /></td>");
+
+            var destn=  "<td><select name='Destination' class ='selectpicker'><option value='0'>--Select--</option>";
+
+            $.each(model.lstDestination,function(key,val){
+                if(val!=null)
+                {
+                    destn=destn+ "<option value='"+val.DestID+ "'>"+val.DestDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(destn);
+
+            var distrbn=  "<td><select name='Distribution' class ='selectpicker'><option value='0'>--Select--</option>";
+
+            $.each(model.lstDistribution,function(key,val){
+                if(val!=null)
+                {
+                    distrbn=distrbn+ "<option value='"+val.DistributionTypeID+ "'>"+val.DistributionDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(distrbn);
+
+            var freqncy=  "<td><select name='Frequency' class ='selectpicker'><option value='0'>--Select--</option>";
+
+            $.each(model.lstFrequency,function(key,val){
+                if(val!=null)
+                {
+                    freqncy=freqncy+ "<option value='"+val.FreqTypeID+ "'>"+val.FreqTypeDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(freqncy);
+
+
+            // $(row).append("<td><input name='Remarks' type='text' placeholder='Remarks' class='form-control input-md' /></td>");
+            $(row).append("<td><button type='button'  class='removebutton' title='Remove this row'>X</button></td>");
+
+            return row;
+        }
+
+        function populateValues(self)
+        {
+            var attrid = self.name.indexOf('Attribute');
+            if (attrid != -1)
+            {
+                // setting the URL where ajax is used
+                var MyAppUrlSettings = {
+                    MyUsefulUrl: '@Url.Action("GetValues", "ChannelsAndAlerts")'
+                }
+                var attrvalSelected = self.value;
+                var thisvalue = $(self).find("option:selected").text();
+                var nextValelemnt =$(self).closest('td').next().find('select');
+                nextValelemnt.empty();
+                $(nextValelemnt).append("<option value='0'>--Select Value--</option>");
+
+                $.blockUI(
+                {
+                    message: '<h8><img src="../../Content/Images/busy.gif" /> StandBy...</h8>'
+                });
+                $.getJSON(MyAppUrlSettings.MyUsefulUrl, { input: attrvalSelected }, function (data) {
+                    $.each(data, function(key, val) {
+                        if(val != null)
+                        {
+                            $(nextValelemnt).append("<option value='" + val.AttrValueID + "'>" + val.AttributeValue + "</option>");
+                        }
+                    });
+                }).done(function () {
+                    $.unblockUI();
+                });
+            }
+        }
+
+        function getJSONFromTable(model) {
+
+            var cntHighlvlTrans = model.lstTransactions.length;
+            var newRow = 0;
+            var tableRows = [];
+            $("#TT table").each(function(){
+
+
+                $('tbody tr').each(function () {
+                    var self = $(this);
+                    var i = 4;
+
+                    $.each(model.lstTransactions, function (index, value){
+                        var isLinked='false';
+                        var channelalertid =0;
+                        var channelalertAttrMapID = 0;
+                        var item = null;
+                        item = {};
+
+                        if (self.find("td:nth-child(" + i + ") input[type=checkbox]").is(":checked"))
+                            isLinked = 'true';
+
+                        channelalertid = self.find("td:nth-child(" + i + ") input[type=hidden]").val();
+                        item["ReqReference"] = self.find("td:nth-child(2) input[type=text]").val();
+                        channelalertAttrMapID = self.find("td:nth-child(2) input[type=hidden]").val();
+                        item["SourceID"] = self.find("td:nth-child(3) select").val();
+
+                        // item["BuzRuleDesc"] = self.find("td:nth-child("+ (cntHighlvlTrans + 3) +") input[type=text]").val();
+
+                        item["AttrID1"] = self.find("td:nth-child(" + (cntHighlvlTrans + 4) + ") select").val();
+                        item["AttrValueID1"] = self.find("td:nth-child(" + (cntHighlvlTrans + 5) + ") select").val();
+                        item["AttrID2"] = self.find("td:nth-child(" + (cntHighlvlTrans + 6) + ") select").val();
+                        item["AttrValueID2"] =  self.find("td:nth-child(" + (cntHighlvlTrans + 7) + ") select").val();
+                        item["AttrID3"] = self.find("td:nth-child(" + (cntHighlvlTrans + 8) + ") select").val();
+                        item["AttrValueID3"] =  self.find("td:nth-child(" + (cntHighlvlTrans + 9) + ") select").val();
+                        item["AttrID4"] = self.find("td:nth-child(" + (cntHighlvlTrans + 10) + ") select").val();
+                        item["AttrValueID4"] = self.find("td:nth-child(" + (cntHighlvlTrans + 11) + ") select").val();
+                        item["AttrID5"] = self.find("td:nth-child(" + (cntHighlvlTrans + 12) + ") select").val();
+                        item["AttrValueID5"] = self.find("td:nth-child(" + (cntHighlvlTrans + 13) + ") select").val();
+                        item["AttrID6"] = self.find("td:nth-child(" + (cntHighlvlTrans + 14) + ") select").val();
+                        item["AttrValueID6"] = self.find("td:nth-child(" + (cntHighlvlTrans + 15) + ") select").val();
+                        item["AttrID7"] = self.find("td:nth-child(" + (cntHighlvlTrans + 16) + ") select").val();
+                        item["AttrValueID7"] = self.find("td:nth-child(" + (cntHighlvlTrans + 17) + ") select").val();
+                        item["AttrID8"] = self.find("td:nth-child(" + (cntHighlvlTrans + 18) + ") select").val();
+                        item["AttrValueID8"] = self.find("td:nth-child(" + (cntHighlvlTrans + 19) + ") select").val();
+                        item["AttrID9"] = self.find("td:nth-child(" + (cntHighlvlTrans + 20) + ") select").val();
+                        item["AttrValueID9"] = self.find("td:nth-child(" + (cntHighlvlTrans + 21) + ") select").val();
+                        item["AttrID10"] = self.find("td:nth-child(" + (cntHighlvlTrans + 22) + ") select").val();
+                        item["AttrValueID10"] = self.find("td:nth-child(" + (cntHighlvlTrans + 23) + ") select").val();
+
+                        item["IsManual"] = self.find("td:nth-child(" + (cntHighlvlTrans + 24) + ") select").val();
+                        item["ModeTypeID"] = self.find("td:nth-child(" + (cntHighlvlTrans + 25) + ") select").val();
+                        item["MessageDesc"] = self.find("td:nth-child(" + (cntHighlvlTrans + 26) + ") input[type=text]").val();
+                        item["DestID"] = self.find("td:nth-child(" + (cntHighlvlTrans + 27) + ") select").val();
+                        item["DistributionTypeID"] = self.find("td:nth-child(" + (cntHighlvlTrans + 28) + ") select").val();
+                        item["FreqID"] = self.find("td:nth-child(" + (cntHighlvlTrans + 29) + ") select").val();
+
+                        //item["Remarks"] = self.find("td:nth-child(" + (cntHighlvlTrans + 24) + ") input[type=text]").val();
+
+                        item["IsLinked"] = isLinked;
+                        item["TransactionSeq"] = value["TransactionSeq"];
+                        item["ChannelAlertID"] = channelalertid;
+                        item["ChannelAlertAttrMapID"] = channelalertAttrMapID;
+                        item["daID"] = $("#daID").val();
+                        tableRows.push(item);
+                        i++;
+                    });
+                });
+            });
+            return tableRows;
+        };
+
+        function DisableSpecialChars(e) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode!=46) {//if key stroke is space bar, then pass. ASCII code for space bar is 32, dot is for 46
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+
+        function DisableSomeSpecialChars(e) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32, dot is for 46
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+
+    </script>
+
+}

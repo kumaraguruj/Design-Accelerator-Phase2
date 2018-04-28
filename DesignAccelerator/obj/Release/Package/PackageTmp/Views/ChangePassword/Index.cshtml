@@ -1,0 +1,192 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model ChangePasswordViewModel
+
+@{
+    ViewBag.Title = "Change Password";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<h2>Change Password</h2>
+<hr style="width:75%;"/>
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="ChangePasswordForm">
+            @using (Html.BeginForm("Index", "ChangePassword", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.userName, "User Name*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.TextBoxFor(m => m.userName, new { @maxlength = "50", @class = "form-control", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.oldPassword, "Old Password*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.TextBoxFor(m => m.oldPassword, new { @maxlength = "25", @class = "form-control", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.oldPassword, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.newPassword, "New Password*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.TextBoxFor(m => m.newPassword, new { @maxlength = "25", @class = "form-control", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.newPassword, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.confirmPassword, "Confirm Password*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.TextBoxFor(m => m.confirmPassword, new { @maxlength = "25", @class = "form-control", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.confirmPassword, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:165px">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" onclick="" class="btn btn-default; button" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index", "Login")">Back</a>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).ready(function(){$("#userName").focus();})
+         @*@Html.Raw(ViewBag.abc);*@
+
+            $("#userName").blur(function (e) {
+                var userName = $.trim($("#userName").val());
+                if (userName == '')
+                    $('#userName').css('border-color', 'red');
+                else
+                    $('#userName').css('border-color', '');
+            })
+
+            $("#oldPassword").blur(function (e) {
+                var oPassword = $.trim($("#oldPassword").val());
+                if (oPassword == '')
+                    $('#oldPassword').css('border-color', 'red');
+                else
+                    $('#oldPassword').css('border-color', '');
+                    
+            })
+
+            $("#newPassword").blur(function (e) {
+                var nPassword = $.trim($("#newPassword").val());
+                if (nPassword == '')
+                    $('#newPassword').css('border-color', 'red');
+                else
+                    $('#newPassword').css('border-color', '');
+
+            })
+
+            $("#confirmPassword").blur(function (e) {
+
+                var cPassword = $.trim($("#confirmPassword").val());
+                if (cPassword == '')
+                    $('#confirmPassword').css('border-color', 'red');
+                else {
+                    $('#confirmPassword').css('border-color', '');
+                    if (!Validate()) {
+                        alert("New Password and Confirm Password does not match");
+                        $("#confirmPassword").focus();
+                    }
+                }
+            })
+
+            function Validate() {
+              
+                var nPassword = $("#newPassword").val().trim();
+                
+                var confirmPassword = $("#confirmPassword").val().trim();
+                //confirmPassword = $.trim(confirmPassword);
+
+                var usrName = $("#userName").val().trim();
+                //usrName = $.trim(usrName);
+
+                if (nPassword == confirmPassword) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+
+            $("#btnSave").on("click", function (e) {
+                //var oPassword = $("#oldPassword").val();
+                //oPassword = $.trim(oPassword);
+               
+                var nPassword = $("#newPassword").val().trim();
+                
+                var cPassword = $("#confirmPassword").val().trim();
+                
+                var oPassword = $("#oldPassword").val().trim();
+
+                var userName = $("#userName").val().trim();
+
+                if (userName == '') {
+                    alert("Please enter User Name");
+                    e.preventDefault();
+                }
+
+                if (oPassword == '') {
+                    alert("Please enter Old Password");
+                    e.preventDefault();
+                }
+               
+                if (nPassword != cPassword) {
+                    //if (!Validate()) {
+                        alert("Password does not match");
+                        e.preventDefault();
+                    //}
+                }
+               
+              
+                //if (nPassword != cPassword) {
+                //}
+                //else {
+                //    alert("Please enter password");
+                //    e.preventDefault();
+                //}
+            })
+
+        })
+    </script>
+
+    @if (ViewBag.Message != null)
+        {
+        <script>
+                alert('@ViewBag.Message');
+                $("#userName").val("");
+                $('#oldPassword').val("");
+                $('#newPassword').val("");
+                $('#confirmPassword').val("");
+        </script>
+    }
+}

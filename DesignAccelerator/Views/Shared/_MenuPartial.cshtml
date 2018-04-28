@@ -1,0 +1,39 @@
+﻿
+<ul class="nav navbar-nav ">
+                        <li> @Html.ActionLink("Home", "Index", "Home")</li>
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-menu-left" href="#">Master Data Entry<b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>@Html.ActionLink("Client Details", "Index", "Client")</li>
+                                <li>@Html.ActionLink("Project Details", "Index", "Project")</li>
+                                <li>@Html.ActionLink("Application", "", "")</li>
+                                <li>@Html.ActionLink("Design Accelerator", "", "")</li>
+                                <li>@Html.ActionLink("LOB", "Index", "LOB")</li>
+                                <li>@Html.ActionLink("Business Product", "Index", "BusinessProducts")</li>
+                                <li>@Html.ActionLink("Life Cycle", "Index", "LifeCycles")</li>
+                                <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                                <li>@Html.ActionLink("Transactions", "", "")</li>
+                                <li>@Html.ActionLink("Attributes", "", "")</li>
+                                <li>@Html.ActionLink("Attribute Values", "", "")</li>
+                                <li>@Html.ActionLink("Business Rules", "", "")</li>
+                                <li>@Html.ActionLink("Interfaces", "", "")</li>
+                                <li>@Html.ActionLink("Sources", "Index", "Source")</li>
+                                <li>@Html.ActionLink("Destinations", "Index", "Destination")</li>
+                                <li>@Html.ActionLink("Channels & Alerts", "", "")</li>
+                                <li>@Html.ActionLink("Distributions", "Index", "DistributionType")</li>
+                                <li>@Html.ActionLink("Mode", "Index", "ModeType")</li>
+                                <li>@Html.ActionLink("Frequency", "Index", "FrequencyType")</li>
+                                <li>@Html.ActionLink("Reports", "", "")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Mapping<b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>@Html.ActionLink("Transaction-Attribute Mapping", "", "")</li>
+                                <li>@Html.ActionLink("Business Rule-Attribute Mapping", "", "")</li>
+                                <li>@Html.ActionLink("Interface-Attribute Mapping", "", "")</li>
+                                <li>@Html.ActionLink("Channels & Alerts-Attribute Mapping", "", "")</li>
+                                <li>@Html.ActionLink("Reports Mapping", "", "")</li>
+                            </ul>
+                        </li>
+                    </ul>

@@ -1,0 +1,219 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model AttributeListViewModel
+
+@{
+    ViewBag.Title = "AttributeList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .js #loader {
+        display: block;
+        position: absolute;
+        left: 100px;
+        top: 0;
+    }
+
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/DesignAccelerator/Content/Images/pageLoad.gif') center no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+
+<h2> Attribute List Input</h2>
+<hr />
+
+@if (!string.IsNullOrEmpty(ViewBag.Status))
+{
+    <script>
+        alert('Data saved successfully !'); // place your comment.
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="AttributeInputForm">
+            @using (Html.BeginForm("Index", "AttributeList", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "AttributeListInput creation was unsuccessful. Please enter correctly and try again", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.daId)
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AttributeDesc, "Attribute Name*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-6">
+                        <span class="form-inline" style="margin-left:-80px">
+                            @Html.TextBoxFor(m => m.AttributeDesc, new { @maxlength = "30", @class = "form-control", @required = "required", @style = "width:300px" })
+                            @Html.ValidationMessageFor(m => m.AttributeDesc, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="navbar-left">
+                            @*<a class="" href="@Url.Action("Index", "AttributeValue", new {id = Model.daId })">Link To Attribute Values</a>*@
+                            <a class="" id="linkToTransAttr" href="@Url.Action("Index", "TransactionAttribute", new {id = Model.daId })">Link To Transaction Attribute Mapping</a>
+                            <span class="glyphicon glyphicon-expand" id="glyphiconHide"></span>
+                        </span>
+                    </div>
+                </div>
+                //for (var i=0; i < Model.LstAttrib(); i++)
+                //    {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AttributeTypeDesc, "Attribute Type", htmlAttributes: new { @class = "col-sm-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-6">
+                        <span style="margin-left:-80px">
+                            <label radio="inline" style="margin:8px 0 0">
+                                @Html.CheckBoxFor(m => m.CommonAttributeTypeID, new { id = 1, @checked = "false", @class = "" })
+                                <span>Common</span>
+
+                                @Html.CheckBoxFor(m => m.CriticalAttributeTypeID, new { id = 2, @checked = "false", @class = "" })
+                                <span>Critical</span>
+                            </label>
+                        </span>
+                    </div>
+                    <div>
+                        <div class="col-md-4">
+                            <span class="navbar-left">
+                                <a class="" id="linkToAttrVal" href="@Url.Action("Index", "AttributeValue", new {id = Model.daId })">Link To Attribute Values</a>
+                                @*<a class="" href="@Url.Action("Index", "TransactionAttribute", new {id = Model.daId })">Link To Transaction Attribute Mapping</a>*@
+                                <span class="glyphicon glyphicon-expand" id="glyphiconHide1"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                //  }
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:115px">
+                        <input id="btnSave" type="submit" value="Save" name="action:Add" class="btn btn-default; button" />
+                        @*<input type="submit" value="Cancel" onclick="Cancel()" class="btn btn-warning" />*@
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<hr />
+<div class="se-pre-con"></div>
+
+<div style="width:70%;">
+    @{
+        WebGrid grid = new WebGrid(Model.LstAttrib);
+        var count = grid.Rows.Count;
+        <input id="totalCount" type="hidden" value="@count" />
+        @grid.GetHtml(
+           tableStyle: "table table-bordered table-hover",
+           fillEmptyRows: false,
+           headerStyle: "gvHeading",
+           alternatingRowStyle: "gvAlternateRow",
+           rowStyle: "gvRow",
+           footerStyle: "gvFooter",
+           mode: WebGridPagerModes.All,
+           firstText: "<< First",
+           previousText: "< Prev",
+           nextText: "Next >",
+           lastText: "Last >>",
+           columns: new[] {
+                                grid.Column(header: "S.No", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("AttributeDesc",header: "Attribute Name",canSort:true ),
+                                grid.Column("AttributeTypeDesc",header: "Attribute Type",canSort:true),
+                                //grid.Column("AttributeValue",header: "Attribute Value",canSort:true),
+                                grid.Column("AttributeID",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                    @if(Model.EdiPermission) {
+                                        @Html.ActionLink("Edit | ", "Edit", new { id=item.AttributeID});
+                                              }
+                                              else {
+                                        <text>Edit | </text>
+                                              }
+
+                                    @if(Model.DeletePermission){
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.AttributeID})
+                                              }
+                                             else {
+                                        <text>Delete</text>
+                                             }
+
+                                </text>
+                                            )
+                               }
+                     )
+}
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".se-pre-con").fadeOut("slow");
+
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = Model.ClientID })"><span>' + "@Model.ProjectName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = Model.ProjectID })"><span>' + "@Model.ApplicationName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Module", new {id = Model.ApplicationID })"><span>' + "@Model.ModuleName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = Model.ModuleId })"><span>' + "@Model.daName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Products", new {id = Model.daId })"><span>' + "Products" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Transactions", new {id = Model.daId })"><span>' + "Transactions" + '</span></a></li>');
+        });
+
+        var gridCount = $("#totalCount").val();
+
+        if (gridCount != 0 && gridCount != null) {
+            $("#linkToTransAttr").show();
+            $("#glyphiconHide").show();
+            $("#linkToAttrVal").show();
+            $("#glyphiconHide1").show();
+        }
+        else {
+            $("#linkToTransAttr").hide();
+            $("#glyphiconHide").hide();
+            $("#linkToAttrVal").hide();
+            $("#glyphiconHide1").hide();
+        }
+
+        $("#btnSave").on("click", function (e) {
+            //debugger;
+            var AttrbDesc = $("#AttributeDesc").val();
+            //debugger;
+            $("table tbody tr").each(function () {
+                var get_desc = $(this).find("td:nth-child(2)")[0].innerHTML;
+                //debugger;
+                if (get_desc.toUpperCase() == AttrbDesc.toUpperCase()) {
+                    alert("This Attribute already exists");
+                    e.preventDefault();
+                }
+            });
+        });
+
+        $("#AttributeDesc").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+        var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+        if (model == true)
+            $('#btnSave').prop("disabled", "");
+        else
+            $('#btnSave').prop("disabled", "disabled");
+
+
+    </script>
+}

@@ -1,0 +1,81 @@
+﻿@model DesignAccelerator.Models.ViewModel.ProductsViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Edit Product</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ProductID)
+        @Html.HiddenFor(model => model.daid)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.lstLOB, "Line Of Business", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline">
+                    @Html.DropDownListFor(model => model.LobID, new SelectList(Model.lstLOB, "LobID", "LobDesc"), "Select LOB", new { @class = "form-control", @required = "Required" })
+                    @*<a href="@Url.Action("Index", "LOB", new {id = Model.daid})">Add LOB</a>*@
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.lstBuzProd, "Business Product", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline">
+                    @Html.DropDownListFor(model => model.BuzProdID, new SelectList(Model.lstBuzProd, "BuzProdID", "BuzProdDesc"), "Select Business Product", new { @class = "form-control", @required = "Required" })
+                    @*<a href="@Url.Action("Index", "BusinessProducts", new { id = Model.daid})">Add BusinessProducts</a>*@
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ReqReference, "Requirement Reference", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.ReqReference, new { @maxlength = "50", @class = "form-control", @required = "Required" })
+                @Html.ValidationMessageFor(m => m.ReqReference, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default; button" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
+
+@section scripts{
+    <script>
+        $("#ReqReference").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+
+    </script>
+}

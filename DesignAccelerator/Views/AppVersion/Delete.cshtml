@@ -1,0 +1,56 @@
+﻿@model  DesignAccelerator.Models.ViewModel.AppVersionViewModel
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Delete AppVersion</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.Label("Application Version No", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <span class="form-inline">
+                    @Html.EditorFor(model => model.AppVersion, new { htmlAttributes = new { @class = "form-control", @readonly = "true", @style = "width:100px" } })
+                    @Html.ValidationMessageFor(model => model.AppVersion, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Delete" class="btn btn-default; button" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+    @*<a href="" id="backlink">Back</a>*@
+</div>
+
+@*@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger;
+            $(document).on('click', '#backlink', function () {
+                this.href = "@Session["PreviousURL"]";
+            });
+        });
+    </script>
+}*@

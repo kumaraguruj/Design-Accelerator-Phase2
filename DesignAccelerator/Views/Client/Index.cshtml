@@ -1,0 +1,179 @@
+﻿@model DesignAccelerator.Models.ViewModel.ClientViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<div  class="navbar-static-top">
+    <div id="Adminactivities" class="breadcrumb">
+        <a style="color:white;" class="" id="linkToUsr" href="@Url.Action("Index", "User", new {})">Create Users</a> &nbsp;&nbsp;
+        <a style="color:white;" id="linkToAuthUsr" href="@Url.Action("Index", "AuthUser", new {})">Authorize Users</a>  &nbsp;&nbsp;
+        <a style="color:white;" id="linkToRoles" href="@Url.Action("Index", "Role", new {})">Create Roles</a> &nbsp;&nbsp;
+        <a style="color:white;" id="idRolePermission" href="@Url.Action("Index", "RolesPermissions", new {})">Access Rights</a> &nbsp;&nbsp;
+        <a style="color:white;" id="linkToMISReports" href="@Url.Action("Index", "MISReports", new {})">MISReports</a> &nbsp;&nbsp;
+    </div>
+</div>
+
+<h2>Client Details</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="ClientForm">
+            @using (Html.BeginForm("Index", "Client", FormMethod.Post, new { @class = "form-horizontal", role = "form", @id = "formId" })) 
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.Label("Client Name*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-4">
+                        <span class="form-inline" style="margin-left:-100px">
+                            @Html.TextBoxFor(m => m.ClientName, new { @maxlength = "50", @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.ClientName, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:95px">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" disabled="disabled" />
+                        @*&nbsp;&nbsp;&nbsp;<input id="btnExportToExcel" type="submit" value="ExportToExcel" name="action:Export" class="btn btn-default" />*@
+                        @*<input type="submit" value="Cancel" onclick="Cancel()" class="btn btn-default" />*@                      
+                        
+                    </div>
+                </div>               
+            }
+</section>
+    </div>
+</div>
+<hr />
+<div id="gridId" style="width:50%;">
+
+    @{
+        try
+        {
+            
+            WebGrid grid = new WebGrid(Model.ClientList);
+            @grid.GetHtml(
+                           tableStyle: "table table-bordered table-hover",
+                           fillEmptyRows: false,
+                           headerStyle: "gvHeading",
+                           alternatingRowStyle: "gvAlternateRow",
+                           rowStyle: "gvRow",
+                           footerStyle: "gvFooter",
+                           mode: WebGridPagerModes.All,
+                           firstText: "<< First",
+                           previousText: "< Prev",
+                           nextText: "Next >",
+                           lastText: "Last >>",
+                           columns: new[] {
+                                grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("ClientName",header: "Client Name",canSort:true, format: (item) => Html.ActionLink(((string)item.ClientName), "Index", "Project", new { id = item.ClientID }, null)),
+                                grid.Column("ClientID",header:"Edit/Delete",canSort:false,
+                                 format: @<text>
+                                            @if(Model.EdiPermission) {
+                                                @Html.ActionLink("Edit | ", "Edit", new { id=item.ClientID});
+                                             }
+                                            else {
+                                                <text>Edit | </text>    
+                                            }                                        
+                            
+                                            @if(Model.DeletePermission){
+                                                @Html.ActionLink("Delete", "Delete", new { id=item.ClientID})
+                                            }
+                                            else {
+                                                <text>Delete</text>
+                                            }
+                                    
+                                        </text>
+                                            )
+                                            }
+                                  )
+        }
+
+        catch (Exception)
+        {
+
+        }
+    }
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+            if (model == true)
+                $('#btnSave').prop("disabled", "");
+            else
+                $('#btnSave').prop("disabled", "disabled");
+
+            $('#ClientName').val("");
+
+            var usrrole = @Html.Raw(Json.Encode(Model.RoleName));
+            if (usrrole == "Admin" || usrrole == "Test Manager" || usrrole == "Business Analyst")
+            {                
+                $('#Adminactivities').show();               
+            }
+            else
+            {       
+                $('#Adminactivities').hide();
+            }
+        })
+    </script>
+        @*var lstActionTypes = JSON.parse('@Html.Raw(Json.Encode(ViewData["ActionTypesList"]))');
+
+        var view = "View";
+
+        var clientScreenID = 1;
+
+        if (clientScreenID == 1 && view == "View") {
+            //$("#formId input").prop("disabled", true);
+            //$("#gridId").bind("click.myDisable", function () { return false; });
+            //$("#linkToRoles").bind("click.myDisable", function () { return false; });
+            //$("#linkToUsr").bind("click.myDisable", function () { return false; });
+            //$("#idRolePermission").bind("click.myDisable", function () { return false; });
+        }
+
+
+
+
+        //code to disable all the special characters in the text box including space bar
+        $("#ClientName").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });*@
+
+
+
+
+    
+
+    @*@if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                alert('@ViewBag.Message');
+                $("#ClientName").val("");
+
+            });
+
+        </script>
+    }@*@
+}

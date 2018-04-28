@@ -1,0 +1,122 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model BuzProdViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@*<div class="navbar-static-top">
+        <ul class="breadcrumb"></ul>
+    </div>*@
+
+<h2>Business Products</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="BusinessProductsForm">
+            @using (Html.BeginForm("Index", "BusinessProducts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.daId)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BuzProdDesc, "Business Product*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-60px">
+                            @Html.TextBoxFor(m => m.BuzProdDesc, new { @maxlength = "50", @class = "form-control", @required = "Required" })
+                            @Html.ValidationMessageFor(m => m.BuzProdDesc, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:135px">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<div>
+    @*<a href="@Url.Action("Index", "Products", new { id = Model.daId})">Back</a>*@
+    <a id="backlink" href="">Back</a>
+</div>
+<hr />
+<div style="width:50%;">
+    @{
+        WebGrid grid = new WebGrid(Model.lstBuzProd);
+        @grid.GetHtml(
+              tableStyle: "table table-bordered table-hover",
+              fillEmptyRows: false,
+              headerStyle: "gvHeading",
+              alternatingRowStyle: "gvAlternateRow",
+              rowStyle: "gvRow",
+              footerStyle: "gvFooter",
+              mode: WebGridPagerModes.All,
+              firstText: "<< First",
+              previousText: "< Prev",
+              nextText: "Next >",
+              lastText: "Last >>",
+              columns: new[] {
+                                grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("BuzProdDesc",header: "Business Product",canSort:true),
+                                grid.Column("BuzProdID",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                    @if(Model.EdiPermission) {
+                                        @Html.ActionLink("Edit | ", "Edit", new { id=item.BuzProdID});
+                                              }
+                                              else {
+                                        <text>Edit | </text>
+                                              }
+
+                                    @if(Model.DeletePermission){
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.BuzProdID})
+                                              }
+                                             else {
+                                        <text>Delete</text>
+                                             }
+
+                                </text>
+                                            )
+                               }
+                     )
+}
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('click', '#backlink', function () {
+                this.href = "@Session["PreviousURL"]";
+            });
+        });
+
+        $("#BuzProdDesc").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+        var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+        if (model == true)
+            $('#btnSave').prop("disabled", "");
+        else
+            $('#btnSave').prop("disabled", "disabled");
+
+
+    </script>
+}

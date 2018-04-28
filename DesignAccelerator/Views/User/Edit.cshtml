@@ -1,0 +1,168 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model UserModel
+
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Edit User</h4>
+        <hr style="width:65%;" />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.userId)
+        @Html.HiddenFor(model => model.CreatorID)
+        @Html.HiddenFor(model => model.AuthID)
+        @Html.HiddenFor(model => model.UserType)
+        @Html.HiddenFor(model => model.CreatedDate)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.userName, "User Name", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline" style="margin-left:-30px">
+                    @Html.TextBoxFor(m => m.userName, new { @class = "form-control", @style = "width:300px", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+        <div class="form-group" id="dvpwd">
+            @Html.LabelFor(m => m.password, "Password", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline" style="margin-left:-30px">
+                    <input type="password" name="password" id="password" value="@Model.password" style="width:200px" class="form-control" />                    
+                    @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+        <div class="form-group" id="dvcpwd">
+            @Html.LabelFor(m => m.ConfirmPassword, "Confirm Password", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline" style="margin-left:-30px">
+                    <input type="password" name="confirmpassword" id="password" value="@Model.password" style="width:200px" class="form-control" />                    
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.RoleId, "Roles", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline" style="margin-left:-30px">
+                    @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.lstRoles, "RoleId", "Rolename"), "--Select Role--", new { @class = "form-control", @required = "Required", @style = "width:200px" })
+                    @Html.ValidationMessageFor(m => m.RoleId, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Status, "Active", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10" style="margin:6px 0 0">
+                <span class="form-inline" style="margin-left:-30px">
+                    @Html.CheckBoxFor(m => m.Status, new { @class =""  })
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="margin-left:165px">
+                <input type="submit" value="Save" class="btn btn-default; button" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if (@Model.UserType == 1)
+            {                
+                $("#dvpwd").hide();
+                $("#dvcpwd").hide();
+            }
+            else {
+                $("#dvpwd").show();
+                $("#dvcpwd").show();
+            }
+
+            
+
+            if (@Model.UserType != 2)
+            {
+                $("#password").blur(function (e) {
+                    var Password = $.trim($("#password").val());
+                    if (Password == '')
+                        $('#password').css('border-color', 'red');
+                    else
+                        $('#password').css('border-color', '');
+
+                })
+
+                $("#ConfirmPassword").blur(function (e) {
+
+                    var cPassword = $.trim($("#ConfirmPassword").val());
+                    if (cPassword == '')
+                        $('#ConfirmPassword').css('border-color', 'red');
+                    else
+                    {
+                        $('#ConfirmPassword').css('border-color', '');
+                        if (!Validate()) {
+                            alert("Password does not match");
+                            $("#ConfirmPassword").focus();
+                        }
+                    }
+                })
+
+                function Validate() {
+                    var Password = $("#password").val();
+                    Password = $.trim(Password);
+
+                    var confirmPassword = $("#ConfirmPassword").val();
+                    confirmPassword = $.trim(confirmPassword);
+
+                    if (Password == confirmPassword) {
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                $("#btnSave").on("click", function (e) {
+                    var Password = $("#password").val();
+                    Password = $.trim(Password);
+
+                    var confirmPassword = $("#ConfirmPassword").val();
+                    confirmPassword = $.trim(confirmPassword);
+
+                    if (Password != '' && confirmPassword != '') {
+                        if (!Validate()) {
+                            alert("Password does not match");
+                            e.preventDefault();
+                        }
+                    }
+                    else {
+                        alert("Please enter password");
+                        e.preventDefault();
+                    }
+                })
+            }
+
+        })
+    </script>
+}

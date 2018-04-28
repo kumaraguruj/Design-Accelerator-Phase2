@@ -1,0 +1,63 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model RoleViewModel
+
+@{ 
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Delete Role</h4>
+        <hr/>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.roleId)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.rolename, "Role Name", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline" style="margin-left:-30px">
+                    @Html.TextBoxFor(m => m.rolename, new { @class = "form-control", @style = "width:200px", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.rolename, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.status, "Active", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+            <div class="col-md-10" style="margin:6px 0 0">
+                <span class="form-inline" style="margin-left:-30px">
+                    @Html.CheckBoxFor(m => m.status, new { id = 1, @checked = "false", @class = "", disabled = "disabled" })
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="margin-left:160px">
+                <input id="confirm-Delete" type="submit" value="Delete" class="btn btn-default; button" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+         $('#confirm-Delete').click(function () {
+             return confirm("Are you sure you want to delete this record ?")
+         })
+    </script>
+}
+
+

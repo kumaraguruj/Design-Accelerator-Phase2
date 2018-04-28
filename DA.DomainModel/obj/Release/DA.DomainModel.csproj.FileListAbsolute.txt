@@ -1,0 +1,4 @@
+D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\bin\Release\DA.DomainModel.dll
+D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\bin\Release\DA.DomainModel.pdb
+D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Release\DA.DomainModel.dll
+D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Release\DA.DomainModel.pdb

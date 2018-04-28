@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6fee2440fa3a465fbcdb92644f9829ba" Name="Diagram1">
+        <EntityTypeShape EntityType="DAModel.tbl_Actions" Width="1.5" PointX="5.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Applications" Width="1.5" PointX="5.25" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_AppVersion" Width="1.5" PointX="5.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Attribute" Width="1.5" PointX="15" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_AttributeType" Width="1.5" PointX="12.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_AttributeValues" Width="1.5" PointX="17.25" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_BusinessRule" Width="1.5" PointX="15" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_BuzProd" Width="1.5" PointX="12" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_BuzRulesAttrMapping" Width="1.5" PointX="12.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_ChannelAlert" Width="1.5" PointX="17" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_ChannelAlertAttrMapping" Width="1.5" PointX="14.25" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Clients" Width="1.5" PointX="0.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_DesignAccelerator" Width="1.5" PointX="9.75" PointY="28.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Destination" Width="1.5" PointX="12" PointY="32" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_DistributionType" Width="1.5" PointX="12" PointY="35" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_ErrorLog" Width="1.5" PointX="5.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_FrequencyType" Width="1.5" PointX="12" PointY="37.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Interface" Width="1.5" PointX="21.5" PointY="35.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_InterfaceAttrMapping" Width="1.5" PointX="17.25" PointY="39.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_LifeCycle" Width="1.5" PointX="12" PointY="40.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_LOB" Width="1.5" PointX="12" PointY="43.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_ModeType" Width="1.5" PointX="12" PointY="45.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Module" Width="1.5" PointX="7.5" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_PeriodType" Width="1.5" PointX="19.25" PointY="46.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Products" Width="1.5" PointX="14.25" PointY="34.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Projects" Width="1.5" PointX="3" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Region" Width="1.5" PointX="0.75" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Reports" Width="1.5" PointX="21.5" PointY="39.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Roles" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_RoleScreenMapping" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Screens" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Source" Width="1.5" PointX="12" PointY="48.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_Transactions" Width="1.5" PointX="19.25" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_TxnAttributeMapping" Width="1.5" PointX="21.5" PointY="31.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_UserActionArchives" Width="1.5" PointX="7.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_UserData" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DAModel.tbl_DocsReferred" Width="1.5" PointX="7.5" PointY="26.5" IsExpanded="true" />
+        <AssociationConnector Association="DAModel.FK_tbl_DocsReferred_tbl_Applications" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Module_tbl_Applications" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Projects_tbl_Applications" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Attribute_tbl_AttributeType" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_AttributeValues_tbl_Attribute" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_Attribute" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_TxnAttributeMapping_tbl_Attribute" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_AttributeValues" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_BusinessRule_tbl_BusinessRule" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_BusinessRule" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Transactions_tbl_BusinessRule" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_BuzProd" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Products_tbl_BuzProd" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_ChannelAlert_tbl_ChannelAlertAttrMapping" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_ChannelAlert_tbl_DesignAccelerator" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_ChannelAlert_tbl_Transactions" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_ChannelAlertAttrMapping_tbl_Destination" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_ChannelAlertAttrMapping_tbl_DistributionType" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_ChannelAlertAttrMapping_tbl_FrequencyType" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_ChannelAlertAttrMapping_tbl_ModeType" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_ChannelAlertAttrMapping_tbl_Source" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Clients_tbl_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DocsReferred_tbl_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_Destination" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_DistributionType" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_FrequencyType" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_Interface" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_LifeCycle" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_LOB" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_ModeType" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_Module" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_Reports" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_Source" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_Transactions" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DesignAccelerator_tbl_TxnAttributeMapping" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_InterfaceAttrMapping_tbl_Destination" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Interface_tbl_InterfaceAttrMapping" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Transactions_tbl_Interface" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_InterfaceAttrMapping_tbl_ModeType" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_InterfaceAttrMapping_tbl_Source" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_LifeCycle_tbl_Transactions" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Products_tbl_LOB" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_PeriodType_tbl_Reports" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_DocsReferred_tbl_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Projects_tbl_Region" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Reports_tbl_Source" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Transactions_tbl_Reports" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK__tbl_RoleS__RoleI__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_UserData_tbl_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK__tbl_RoleS__Scree__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="DAModel.FK_tbl_Transactions_tbl_TxnAttributeMapping" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

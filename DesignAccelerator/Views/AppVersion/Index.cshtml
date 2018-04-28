@@ -1,0 +1,171 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model AppVersionViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@*<div class="navbar-static-top">
+        <ul class="breadcrumb"></ul>
+    </div>
+    <div>
+        <br />
+    </div>*@
+
+<h2>Application Version</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="ApplicationForm">
+            @using (Html.BeginForm("Index", "AppVersion", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @*<div class="form-group">
+                        @Html.Label("Application Version No*", new { @class = "col-md-12 control-label" })
+                        <div class="col-xs-3">
+
+                            <span class="form-inline">
+
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            <div id='AppVer' class="col-md-12">
+                                @Html.TextBoxFor(m => m.AppVersion, new { @maxlength = "5", @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(m => m.AppVersion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    @Html.Label("Application Version No*", new { @class = "col-md-2 control-label" })
+                    <div id='AppVer' class="col-md-10">
+                        @*<span class="form-inline">*@
+                            @Html.TextBoxFor(m => m.AppVersion, new { @maxlength = "5", @class = "form-control", @required = "required", @style="width:100px" })
+                            @Html.ValidationMessageFor(m => m.AppVersion, "", new { @class = "text-danger" })
+                        @*</span>*@
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:190px">
+                        &nbsp;&nbsp;<input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />
+                        @*<input type="submit" value="Cancel" onclick="Cancel()" class="btn btn-default" />*@
+                    </div>
+                </div>
+
+            }
+        </section>
+    </div>
+</div>
+
+<div>
+    <a id="backlink" href="">Back</a>
+    @*<a href="@Url.Action("Index", "Application")">Back</a>*@
+</div>
+<hr />
+<div style="width:50%;">
+    @{
+        WebGrid grid = new WebGrid(Model.AppVersionList);
+        @grid.GetHtml(
+              tableStyle: "table table-bordered table-hover",
+              fillEmptyRows: false,
+              headerStyle: "gvHeading",
+              alternatingRowStyle: "gvAlternateRow",
+              rowStyle: "gvRow",
+              footerStyle: "gvFooter",
+              mode: WebGridPagerModes.All,
+              firstText: "<< First",
+              previousText: "< Prev",
+              nextText: "Next >",
+              lastText: "Last >>",
+              columns: new[] {
+                                grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("AppVersion",header: "Application Version No",canSort:true),
+                                //format: (item) => Html.ActionLink(((decimal)item.AppVersion).ToString(), "Index", "AppVersion", new { id = item.Id }, null)),
+                                grid.Column("AppVersion",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                    @if(Model.EdiPermission) {
+                                        @Html.ActionLink("Edit | ", "Edit", new { id=item.Id});
+                                              }
+                                              else {
+                                        <text>Edit | </text>
+                                              }
+
+                                    @if(Model.DeletePermission){
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.Id})
+                                              }
+                                             else {
+                                        <text>Delete</text>
+                                             }
+
+                                </text>
+                                            )
+                               }
+                     )
+}
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //debugger;
+            $(document).on('click', '#backlink', function () {
+                this.href = "@Session["PreviousURL"]";
+            });
+
+            $("#btnSave").on("click", function (e) {
+              
+                var VerNm = $("#AppVersion").val();
+                //VerNm = jQuery.trim(VerNm);
+                //if (VerNm == "")
+                //{
+                //    alert('Cannot save empty value')
+                //    return false;
+                //}
+                $("table tbody tr").each(function () {
+                    var get_Vername = $(this).find("td:nth-child(2)")[0].innerText;
+                    //debugger;
+                    if (get_Vername.toUpperCase() == VerNm.toUpperCase()) {
+                        alert("This Version No/Name already exists..");
+                        //$("#AppVer").val("");
+                        e.preventDefault();
+                    }
+                });
+            });
+
+            var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+            if (model == true)
+                $('#btnSave').prop("disabled", "");
+            else
+                $('#btnSave').prop("disabled", "disabled");
+
+        });
+
+
+        $("#AppVersion").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+
+
+    </script>
+}
+

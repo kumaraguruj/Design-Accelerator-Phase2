@@ -1,0 +1,135 @@
+﻿@model DesignAccelerator.Models.ViewModel.DestinationViewModel
+
+@{
+    ViewBag.Title = "Destination";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<div>
+    <br />
+</div>
+
+<h2>Destination Details</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <section id="DestinationForm">
+            @using (Html.BeginForm("Index", "Destination", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.DAID)
+
+                <div class="form-group">
+                    @Html.Label("Destination*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-6">
+                        <span class="form-inline" style="margin-left:-40px">
+                            @Html.TextBoxFor(m => m.destDesc, new { @maxlength = "50", @class = "form-control", @required = "required", @style = "width:300px" })
+                            @Html.ValidationMessageFor(m => m.destDesc, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:90px">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />
+                        @*<input type="submit" value="Cancel"  onclick="Cancel()" class="btn btn-default" />*@
+                    </div>
+                </div>            }
+        </section>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index", "SMD")">Back</a>
+</div>
+<hr />
+<div style="width:50%;">
+    @{
+        WebGrid grid = new WebGrid(Model.DestList);
+        @grid.GetHtml(
+        tableStyle: "table table-bordered table-hovered",
+        fillEmptyRows: false,
+        headerStyle: "gvHeading",
+        alternatingRowStyle: "gvAlternateRow",
+        rowStyle: "gvRow",
+        footerStyle: "gvFooter",
+        mode: WebGridPagerModes.All,
+        firstText: "<< First",
+        previousText: "< Prev",
+        nextText: "Next >",
+        lastText: "Last >>",
+        columns: new[] {
+                            grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                            grid.Column ("destDesc",header :"Destination",canSort :true),
+                            grid.Column ("DestID", header :"Edit/Delete",canSort :false,
+                                 format:@<text>
+                                @if(Model.EdiPermission) {
+                                    @Html.ActionLink("Edit | ", "Edit", new { destId = item.destID});
+                                              }
+                                              else {
+                                    <text>Edit | </text>
+                                              }
+
+                                @if(Model.DeletePermission){
+                                    @Html.ActionLink("Delete", "Delete", new { destId = item.destID})
+                                              }
+                                             else {
+                                    <text>Delete</text>
+                                             }
+
+                                </text>
+                                         )
+                       }
+
+       )
+}
+</div>
+
+@section scripts{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSave").on("click", function (e) {
+            var DNm = $("#destDesc").val();
+            $("table tbody tr").each(function () {
+                var get_Dname = $(this).find("td:nth-child(2)")[0].innerText;
+                //debugger;
+                if (get_Dname.toUpperCase() == DNm.toUpperCase()) {
+                    alert("This Destination already exists");
+                    e.preventDefault();
+                }
+            });
+        });
+    })
+
+    var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+    if (model == true)
+        $('#btnSave').prop("disabled", "");
+    else
+        $('#btnSave').prop("disabled", "disabled");
+
+    $("#destDesc").bind('keypress', function (event) {
+
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                event.preventDefault();
+                return false;
+            }
+        }
+    });
+    
+
+</script>    
+}
+
+
+
+

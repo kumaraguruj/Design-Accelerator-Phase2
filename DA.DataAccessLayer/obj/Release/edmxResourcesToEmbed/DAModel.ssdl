@@ -1,0 +1,1355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbl_Actions">
+    <Key>
+      <PropertyRef Name="ActionID" />
+    </Key>
+    <Property Name="ActionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActionName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_Applications">
+    <Key>
+      <PropertyRef Name="ApplicationID" />
+    </Key>
+    <Property Name="ApplicationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicationName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DocVersion" Type="int" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+    <Property Name="AppVersion" Type="int" />
+    <Property Name="BankType" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_AppVersion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AppVersion" Type="nvarchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_Attribute">
+    <Key>
+      <PropertyRef Name="AttributeID" />
+    </Key>
+    <Property Name="AttributeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AttributeDesc" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="AttributeTypeID" Type="int" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_AttributeType">
+    <Key>
+      <PropertyRef Name="AttributeTypeID" />
+    </Key>
+    <Property Name="AttributeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AttributeTypeDesc" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_AttributeValues">
+    <Key>
+      <PropertyRef Name="AttrValueID" />
+    </Key>
+    <Property Name="AttrValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AttributeID" Type="int" Nullable="false" />
+    <Property Name="AttributeValue" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="isNegative" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_BusinessRule">
+    <Key>
+      <PropertyRef Name="BuzRuleID" />
+    </Key>
+    <Property Name="BuzRuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TransactionSeq" Type="int" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+    <Property Name="BuzRuleAttrMapID" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_BuzProd">
+    <Key>
+      <PropertyRef Name="BuzProdID" />
+    </Key>
+    <Property Name="BuzProdID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BuzProdDesc" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_BuzRulesAttrMapping">
+    <Key>
+      <PropertyRef Name="BuzRulesAttrMapID" />
+    </Key>
+    <Property Name="BuzRulesAttrMapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReqReference" Type="varchar" MaxLength="100" />
+    <Property Name="BuzRuleDesc" Type="varchar" MaxLength="512" Nullable="false" />
+    <Property Name="Remarks" Type="varchar" MaxLength="100" />
+    <Property Name="AttrID1" Type="int" />
+    <Property Name="AttrID2" Type="int" />
+    <Property Name="AttrID3" Type="int" />
+    <Property Name="AttrID4" Type="int" />
+    <Property Name="AttrID5" Type="int" />
+    <Property Name="AttrID6" Type="int" />
+    <Property Name="AttrID7" Type="int" />
+    <Property Name="AttrID8" Type="int" />
+    <Property Name="AttrID9" Type="int" />
+    <Property Name="AttrID10" Type="int" />
+    <Property Name="AttrValueID1" Type="int" />
+    <Property Name="AttrValueID2" Type="int" />
+    <Property Name="AttrValueID3" Type="int" />
+    <Property Name="AttrValueID4" Type="int" />
+    <Property Name="AttrValueID5" Type="int" />
+    <Property Name="AttrValueID6" Type="int" />
+    <Property Name="AttrValueID7" Type="int" />
+    <Property Name="AttrValueID8" Type="int" />
+    <Property Name="AttrValueID9" Type="int" />
+    <Property Name="AttrValueID10" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_ChannelAlert">
+    <Key>
+      <PropertyRef Name="ChannelAlertID" />
+    </Key>
+    <Property Name="ChannelAlertID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TransactionSeq" Type="int" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+    <Property Name="ChannelAlertAttrMapID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_ChannelAlertAttrMapping">
+    <Key>
+      <PropertyRef Name="ChannelAlertAttrMapID" />
+    </Key>
+    <Property Name="ChannelAlertAttrMapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReqReference" Type="varchar" MaxLength="100" />
+    <Property Name="MessageDesc" Type="varchar" MaxLength="250" />
+    <Property Name="SourceID" Type="int" />
+    <Property Name="ModeTypeID" Type="int" />
+    <Property Name="DestnID" Type="int" />
+    <Property Name="DistributionTypeID" Type="int" />
+    <Property Name="FreqID" Type="int" />
+    <Property Name="IsManual" Type="char" MaxLength="1" />
+    <Property Name="AttrID1" Type="int" />
+    <Property Name="AttrID2" Type="int" />
+    <Property Name="AttrID3" Type="int" />
+    <Property Name="AttrID4" Type="int" />
+    <Property Name="AttrID5" Type="int" />
+    <Property Name="AttrID6" Type="int" />
+    <Property Name="AttrID7" Type="int" />
+    <Property Name="AttrID8" Type="int" />
+    <Property Name="AttrID9" Type="int" />
+    <Property Name="AttrID10" Type="int" />
+    <Property Name="AttrValueID1" Type="int" />
+    <Property Name="AttrValueID2" Type="int" />
+    <Property Name="AttrValueID3" Type="int" />
+    <Property Name="AttrValueID4" Type="int" />
+    <Property Name="AttrValueID5" Type="int" />
+    <Property Name="AttrValueID6" Type="int" />
+    <Property Name="AttrValueID7" Type="int" />
+    <Property Name="AttrValueID8" Type="int" />
+    <Property Name="AttrValueID9" Type="int" />
+    <Property Name="AttrValueID10" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_Clients">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_DesignAccelerator">
+    <Key>
+      <PropertyRef Name="daid" />
+    </Key>
+    <Property Name="daid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="daName" Type="varchar" MaxLength="50" />
+    <Property Name="dacomplete" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="ModuleId" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_Destination">
+    <Key>
+      <PropertyRef Name="DestID" />
+    </Key>
+    <Property Name="DestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DestDesc" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_DistributionType">
+    <Key>
+      <PropertyRef Name="DistributionTypeID" />
+    </Key>
+    <Property Name="DistributionTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DistributionDesc" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DA.dbo.tbl_DocsReferred' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl_DocsReferred">
+    <Key>
+      <PropertyRef Name="ClientID" />
+      <PropertyRef Name="ProjectID" />
+      <PropertyRef Name="ApplicationID" />
+      <PropertyRef Name="DocVersion" />
+    </Key>
+    <Property Name="ClientID" Type="int" Nullable="false" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="ApplicationID" Type="int" Nullable="false" />
+    <Property Name="DocVersion" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_ErrorLog">
+    <Key>
+      <PropertyRef Name="ErrorLogID" />
+    </Key>
+    <Property Name="ErrorLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StackTrace" Type="varchar(max)" />
+    <Property Name="ErrorDescription" Type="varchar(max)" />
+    <Property Name="ClassName" Type="varchar" MaxLength="150" />
+    <Property Name="ErrorDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tbl_FrequencyType">
+    <Key>
+      <PropertyRef Name="FreqTypeID" />
+    </Key>
+    <Property Name="FreqTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FreqTypeDesc" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_Interface">
+    <Key>
+      <PropertyRef Name="InterfaceID" />
+    </Key>
+    <Property Name="InterfaceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TransactionSeq" Type="int" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+    <Property Name="InterfaceAttrMapID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_InterfaceAttrMapping">
+    <Key>
+      <PropertyRef Name="InterfaceAttrMapID" />
+    </Key>
+    <Property Name="InterfaceAttrMapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReqReference" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="InterfaceDesc" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SourceId" Type="int" Nullable="false" />
+    <Property Name="DestinationId" Type="int" Nullable="false" />
+    <Property Name="ModeTypeId" Type="int" Nullable="false" />
+    <Property Name="AttrID1" Type="int" />
+    <Property Name="AttrValueID1" Type="int" />
+    <Property Name="AttrID2" Type="int" />
+    <Property Name="AttrValueID2" Type="int" />
+    <Property Name="AttrID3" Type="int" />
+    <Property Name="AttrValueID3" Type="int" />
+    <Property Name="AttrID4" Type="int" />
+    <Property Name="AttrValueID4" Type="int" />
+    <Property Name="AttrID5" Type="int" />
+    <Property Name="AttrValueID5" Type="int" />
+    <Property Name="AttrID6" Type="int" />
+    <Property Name="AttrValueID6" Type="int" />
+    <Property Name="AttrID7" Type="int" />
+    <Property Name="AttrValueID7" Type="int" />
+    <Property Name="AttrID8" Type="int" />
+    <Property Name="AttrValueID8" Type="int" />
+    <Property Name="AttrID9" Type="int" />
+    <Property Name="AttrValueID9" Type="int" />
+    <Property Name="AttrID10" Type="int" />
+    <Property Name="AttrValueID10" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_LifeCycle">
+    <Key>
+      <PropertyRef Name="LifeCycleID" />
+    </Key>
+    <Property Name="LifeCycleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LifeCycleDesc" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_LOB">
+    <Key>
+      <PropertyRef Name="LobID" />
+    </Key>
+    <Property Name="LobID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LobDesc" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_ModeType">
+    <Key>
+      <PropertyRef Name="ModeTypeID" />
+    </Key>
+    <Property Name="ModeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ModeTypeDesc" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_Module">
+    <Key>
+      <PropertyRef Name="ModuleID" />
+    </Key>
+    <Property Name="ModuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ModuleName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ApplicationId" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_PeriodType">
+    <Key>
+      <PropertyRef Name="PeriodTypeID" />
+    </Key>
+    <Property Name="PeriodTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PeriodTypeDesc" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_Products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReqReference" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LobID" Type="int" Nullable="false" />
+    <Property Name="BuzProdID" Type="int" Nullable="false" />
+    <Property Name="daid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_Projects">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="RegionId" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_Region">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Region" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_Reports">
+    <Key>
+      <PropertyRef Name="ReportID" />
+    </Key>
+    <Property Name="ReportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReqReference" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ReportName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ReportDesc" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="TransactionSeq" Type="int" Nullable="false" />
+    <Property Name="SourceID" Type="int" Nullable="false" />
+    <Property Name="PeriodID" Type="int" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+    <Property Name="IsLinked" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="tbl_Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_RoleScreenMapping">
+    <Key>
+      <PropertyRef Name="RoleScreenMappingID" />
+    </Key>
+    <Property Name="RoleScreenMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleID" Type="int" />
+    <Property Name="ScreenID" Type="int" />
+    <Property Name="ActionType" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="tbl_Screens">
+    <Key>
+      <PropertyRef Name="Screen_ID" />
+    </Key>
+    <Property Name="Screen_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ScreenName" Type="varchar" MaxLength="30" />
+    <Property Name="Purpose" Type="varchar" MaxLength="200" />
+    <Property Name="UserType" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="tbl_Source">
+    <Key>
+      <PropertyRef Name="SourceID" />
+    </Key>
+    <Property Name="SourceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SourceDesc" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_Transactions">
+    <Key>
+      <PropertyRef Name="TransactionSeq" />
+    </Key>
+    <Property Name="TransactionSeq" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReqReference" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="HighLevelTxnID" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="HighLevelTxnDesc" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LifeCycleID" Type="int" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_TxnAttributeMapping">
+    <Key>
+      <PropertyRef Name="MapID" />
+    </Key>
+    <Property Name="MapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReqReference" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="TransactionSeq" Type="int" Nullable="false" />
+    <Property Name="AttributeID" Type="int" Nullable="false" />
+    <Property Name="daId" Type="int" Nullable="false" />
+    <Property Name="isLinked" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="tbl_UserActionArchives">
+    <Key>
+      <PropertyRef Name="UserArchiveID" />
+    </Key>
+    <Property Name="UserArchiveID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="500" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="CreatorID" Type="int" Nullable="false" />
+    <Property Name="AuthID" Type="int" Nullable="false" />
+    <Property Name="UserType" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="Active" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="ArchiveCreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ActionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_UserData">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="500" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="CreatorID" Type="int" Nullable="false" />
+    <Property Name="AuthID" Type="int" Nullable="false" />
+    <Property Name="UserType" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="Active" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__tbl_RoleS__RoleI__628FA481">
+    <End Role="tbl_Roles" Type="Self.tbl_Roles" Multiplicity="0..1" />
+    <End Role="tbl_RoleScreenMapping" Type="Self.tbl_RoleScreenMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="tbl_RoleScreenMapping">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_RoleS__Scree__6383C8BA">
+    <End Role="tbl_Screens" Type="Self.tbl_Screens" Multiplicity="0..1" />
+    <End Role="tbl_RoleScreenMapping" Type="Self.tbl_RoleScreenMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Screens">
+        <PropertyRef Name="Screen_ID" />
+      </Principal>
+      <Dependent Role="tbl_RoleScreenMapping">
+        <PropertyRef Name="ScreenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Attribute_tbl_AttributeType">
+    <End Role="tbl_AttributeType" Type="Self.tbl_AttributeType" Multiplicity="1" />
+    <End Role="tbl_Attribute" Type="Self.tbl_Attribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_AttributeType">
+        <PropertyRef Name="AttributeTypeID" />
+      </Principal>
+      <Dependent Role="tbl_Attribute">
+        <PropertyRef Name="AttributeTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_AttributeValues_tbl_Attribute">
+    <End Role="tbl_Attribute" Type="Self.tbl_Attribute" Multiplicity="1" />
+    <End Role="tbl_AttributeValues" Type="Self.tbl_AttributeValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Attribute">
+        <PropertyRef Name="AttributeID" />
+      </Principal>
+      <Dependent Role="tbl_AttributeValues">
+        <PropertyRef Name="AttributeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_BusinessRule_tbl_BusinessRule">
+    <End Role="tbl_BuzRulesAttrMapping" Type="Self.tbl_BuzRulesAttrMapping" Multiplicity="0..1" />
+    <End Role="tbl_BusinessRule" Type="Self.tbl_BusinessRule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_BuzRulesAttrMapping">
+        <PropertyRef Name="BuzRulesAttrMapID" />
+      </Principal>
+      <Dependent Role="tbl_BusinessRule">
+        <PropertyRef Name="BuzRuleAttrMapID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_ChannelAlert_tbl_ChannelAlertAttrMapping">
+    <End Role="tbl_ChannelAlertAttrMapping" Type="Self.tbl_ChannelAlertAttrMapping" Multiplicity="1" />
+    <End Role="tbl_ChannelAlert" Type="Self.tbl_ChannelAlert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_ChannelAlertAttrMapping">
+        <PropertyRef Name="ChannelAlertAttrMapID" />
+      </Principal>
+      <Dependent Role="tbl_ChannelAlert">
+        <PropertyRef Name="ChannelAlertAttrMapID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_ChannelAlert_tbl_DesignAccelerator">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_ChannelAlert" Type="Self.tbl_ChannelAlert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_ChannelAlert">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_ChannelAlert_tbl_Transactions">
+    <End Role="tbl_Transactions" Type="Self.tbl_Transactions" Multiplicity="1" />
+    <End Role="tbl_ChannelAlert" Type="Self.tbl_ChannelAlert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Transactions">
+        <PropertyRef Name="TransactionSeq" />
+      </Principal>
+      <Dependent Role="tbl_ChannelAlert">
+        <PropertyRef Name="TransactionSeq" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_ChannelAlertAttrMapping_tbl_Destination">
+    <End Role="tbl_Destination" Type="Self.tbl_Destination" Multiplicity="0..1" />
+    <End Role="tbl_ChannelAlertAttrMapping" Type="Self.tbl_ChannelAlertAttrMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Destination">
+        <PropertyRef Name="DestID" />
+      </Principal>
+      <Dependent Role="tbl_ChannelAlertAttrMapping">
+        <PropertyRef Name="DestnID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_ChannelAlertAttrMapping_tbl_DistributionType">
+    <End Role="tbl_DistributionType" Type="Self.tbl_DistributionType" Multiplicity="0..1" />
+    <End Role="tbl_ChannelAlertAttrMapping" Type="Self.tbl_ChannelAlertAttrMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DistributionType">
+        <PropertyRef Name="DistributionTypeID" />
+      </Principal>
+      <Dependent Role="tbl_ChannelAlertAttrMapping">
+        <PropertyRef Name="DistributionTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_ChannelAlertAttrMapping_tbl_FrequencyType">
+    <End Role="tbl_FrequencyType" Type="Self.tbl_FrequencyType" Multiplicity="0..1" />
+    <End Role="tbl_ChannelAlertAttrMapping" Type="Self.tbl_ChannelAlertAttrMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_FrequencyType">
+        <PropertyRef Name="FreqTypeID" />
+      </Principal>
+      <Dependent Role="tbl_ChannelAlertAttrMapping">
+        <PropertyRef Name="FreqID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_ChannelAlertAttrMapping_tbl_ModeType">
+    <End Role="tbl_ModeType" Type="Self.tbl_ModeType" Multiplicity="0..1" />
+    <End Role="tbl_ChannelAlertAttrMapping" Type="Self.tbl_ChannelAlertAttrMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_ModeType">
+        <PropertyRef Name="ModeTypeID" />
+      </Principal>
+      <Dependent Role="tbl_ChannelAlertAttrMapping">
+        <PropertyRef Name="ModeTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_ChannelAlertAttrMapping_tbl_Source">
+    <End Role="tbl_Source" Type="Self.tbl_Source" Multiplicity="0..1" />
+    <End Role="tbl_ChannelAlertAttrMapping" Type="Self.tbl_ChannelAlertAttrMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Source">
+        <PropertyRef Name="SourceID" />
+      </Principal>
+      <Dependent Role="tbl_ChannelAlertAttrMapping">
+        <PropertyRef Name="SourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Clients_tbl_Projects">
+    <End Role="tbl_Clients" Type="Self.tbl_Clients" Multiplicity="1" />
+    <End Role="tbl_Projects" Type="Self.tbl_Projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Clients">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="tbl_Projects">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_Attribute">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_Attribute" Type="Self.tbl_Attribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_Attribute">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_AttributeValues">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_AttributeValues" Type="Self.tbl_AttributeValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_AttributeValues">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_BusinessRule">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_BusinessRule" Type="Self.tbl_BusinessRule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_BusinessRule">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_BuzProd">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_BuzProd" Type="Self.tbl_BuzProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_BuzProd">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_Destination">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_Destination" Type="Self.tbl_Destination" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_Destination">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_DistributionType">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_DistributionType" Type="Self.tbl_DistributionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_DistributionType">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_FrequencyType">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_FrequencyType" Type="Self.tbl_FrequencyType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_FrequencyType">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_Interface">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_Interface" Type="Self.tbl_Interface" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_Interface">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_LifeCycle">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_LifeCycle" Type="Self.tbl_LifeCycle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_LifeCycle">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_LOB">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_LOB" Type="Self.tbl_LOB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_LOB">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_ModeType">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_ModeType" Type="Self.tbl_ModeType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_ModeType">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_Module">
+    <End Role="tbl_Module" Type="Self.tbl_Module" Multiplicity="0..1" />
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Module">
+        <PropertyRef Name="ModuleID" />
+      </Principal>
+      <Dependent Role="tbl_DesignAccelerator">
+        <PropertyRef Name="ModuleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_Products">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_Products" Type="Self.tbl_Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_Products">
+        <PropertyRef Name="daid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_Reports">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_Reports" Type="Self.tbl_Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_Reports">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_Source">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_Source" Type="Self.tbl_Source" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_Source">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_Transactions">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_Transactions" Type="Self.tbl_Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_Transactions">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DesignAccelerator_tbl_TxnAttributeMapping">
+    <End Role="tbl_DesignAccelerator" Type="Self.tbl_DesignAccelerator" Multiplicity="1" />
+    <End Role="tbl_TxnAttributeMapping" Type="Self.tbl_TxnAttributeMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_DesignAccelerator">
+        <PropertyRef Name="daid" />
+      </Principal>
+      <Dependent Role="tbl_TxnAttributeMapping">
+        <PropertyRef Name="daId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DocsReferred_tbl_Applications">
+    <End Role="tbl_Applications" Type="Self.tbl_Applications" Multiplicity="1" />
+    <End Role="tbl_DocsReferred" Type="Self.tbl_DocsReferred" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Applications">
+        <PropertyRef Name="ApplicationID" />
+      </Principal>
+      <Dependent Role="tbl_DocsReferred">
+        <PropertyRef Name="ApplicationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DocsReferred_tbl_Clients">
+    <End Role="tbl_Clients" Type="Self.tbl_Clients" Multiplicity="1" />
+    <End Role="tbl_DocsReferred" Type="Self.tbl_DocsReferred" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Clients">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="tbl_DocsReferred">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_DocsReferred_tbl_Projects">
+    <End Role="tbl_Projects" Type="Self.tbl_Projects" Multiplicity="1" />
+    <End Role="tbl_DocsReferred" Type="Self.tbl_DocsReferred" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Projects">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="tbl_DocsReferred">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Interface_tbl_InterfaceAttrMapping">
+    <End Role="tbl_InterfaceAttrMapping" Type="Self.tbl_InterfaceAttrMapping" Multiplicity="1" />
+    <End Role="tbl_Interface" Type="Self.tbl_Interface" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_InterfaceAttrMapping">
+        <PropertyRef Name="InterfaceAttrMapID" />
+      </Principal>
+      <Dependent Role="tbl_Interface">
+        <PropertyRef Name="InterfaceAttrMapID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_InterfaceAttrMapping_tbl_Destination">
+    <End Role="tbl_Destination" Type="Self.tbl_Destination" Multiplicity="1" />
+    <End Role="tbl_InterfaceAttrMapping" Type="Self.tbl_InterfaceAttrMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Destination">
+        <PropertyRef Name="DestID" />
+      </Principal>
+      <Dependent Role="tbl_InterfaceAttrMapping">
+        <PropertyRef Name="DestinationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_InterfaceAttrMapping_tbl_ModeType">
+    <End Role="tbl_ModeType" Type="Self.tbl_ModeType" Multiplicity="1" />
+    <End Role="tbl_InterfaceAttrMapping" Type="Self.tbl_InterfaceAttrMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_ModeType">
+        <PropertyRef Name="ModeTypeID" />
+      </Principal>
+      <Dependent Role="tbl_InterfaceAttrMapping">
+        <PropertyRef Name="ModeTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_InterfaceAttrMapping_tbl_Source">
+    <End Role="tbl_Source" Type="Self.tbl_Source" Multiplicity="1" />
+    <End Role="tbl_InterfaceAttrMapping" Type="Self.tbl_InterfaceAttrMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Source">
+        <PropertyRef Name="SourceID" />
+      </Principal>
+      <Dependent Role="tbl_InterfaceAttrMapping">
+        <PropertyRef Name="SourceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_LifeCycle_tbl_Transactions">
+    <End Role="tbl_LifeCycle" Type="Self.tbl_LifeCycle" Multiplicity="1" />
+    <End Role="tbl_Transactions" Type="Self.tbl_Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_LifeCycle">
+        <PropertyRef Name="LifeCycleID" />
+      </Principal>
+      <Dependent Role="tbl_Transactions">
+        <PropertyRef Name="LifeCycleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Module_tbl_Applications">
+    <End Role="tbl_Applications" Type="Self.tbl_Applications" Multiplicity="0..1" />
+    <End Role="tbl_Module" Type="Self.tbl_Module" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Applications">
+        <PropertyRef Name="ApplicationID" />
+      </Principal>
+      <Dependent Role="tbl_Module">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_PeriodType_tbl_Reports">
+    <End Role="tbl_PeriodType" Type="Self.tbl_PeriodType" Multiplicity="1" />
+    <End Role="tbl_Reports" Type="Self.tbl_Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_PeriodType">
+        <PropertyRef Name="PeriodTypeID" />
+      </Principal>
+      <Dependent Role="tbl_Reports">
+        <PropertyRef Name="PeriodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Products_tbl_BuzProd">
+    <End Role="tbl_BuzProd" Type="Self.tbl_BuzProd" Multiplicity="1" />
+    <End Role="tbl_Products" Type="Self.tbl_Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_BuzProd">
+        <PropertyRef Name="BuzProdID" />
+      </Principal>
+      <Dependent Role="tbl_Products">
+        <PropertyRef Name="BuzProdID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Products_tbl_LOB">
+    <End Role="tbl_LOB" Type="Self.tbl_LOB" Multiplicity="1" />
+    <End Role="tbl_Products" Type="Self.tbl_Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_LOB">
+        <PropertyRef Name="LobID" />
+      </Principal>
+      <Dependent Role="tbl_Products">
+        <PropertyRef Name="LobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Projects_tbl_Applications">
+    <End Role="tbl_Projects" Type="Self.tbl_Projects" Multiplicity="1" />
+    <End Role="tbl_Applications" Type="Self.tbl_Applications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Projects">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="tbl_Applications">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Projects_tbl_Region">
+    <End Role="tbl_Region" Type="Self.tbl_Region" Multiplicity="0..1" />
+    <End Role="tbl_Projects" Type="Self.tbl_Projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Region">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_Projects">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Reports_tbl_Source">
+    <End Role="tbl_Source" Type="Self.tbl_Source" Multiplicity="1" />
+    <End Role="tbl_Reports" Type="Self.tbl_Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Source">
+        <PropertyRef Name="SourceID" />
+      </Principal>
+      <Dependent Role="tbl_Reports">
+        <PropertyRef Name="SourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Transactions_tbl_BusinessRule">
+    <End Role="tbl_Transactions" Type="Self.tbl_Transactions" Multiplicity="1" />
+    <End Role="tbl_BusinessRule" Type="Self.tbl_BusinessRule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Transactions">
+        <PropertyRef Name="TransactionSeq" />
+      </Principal>
+      <Dependent Role="tbl_BusinessRule">
+        <PropertyRef Name="TransactionSeq" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Transactions_tbl_Interface">
+    <End Role="tbl_Transactions" Type="Self.tbl_Transactions" Multiplicity="1" />
+    <End Role="tbl_Interface" Type="Self.tbl_Interface" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Transactions">
+        <PropertyRef Name="TransactionSeq" />
+      </Principal>
+      <Dependent Role="tbl_Interface">
+        <PropertyRef Name="TransactionSeq" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Transactions_tbl_Reports">
+    <End Role="tbl_Transactions" Type="Self.tbl_Transactions" Multiplicity="1" />
+    <End Role="tbl_Reports" Type="Self.tbl_Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Transactions">
+        <PropertyRef Name="TransactionSeq" />
+      </Principal>
+      <Dependent Role="tbl_Reports">
+        <PropertyRef Name="TransactionSeq" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Transactions_tbl_TxnAttributeMapping">
+    <End Role="tbl_Transactions" Type="Self.tbl_Transactions" Multiplicity="1" />
+    <End Role="tbl_TxnAttributeMapping" Type="Self.tbl_TxnAttributeMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Transactions">
+        <PropertyRef Name="TransactionSeq" />
+      </Principal>
+      <Dependent Role="tbl_TxnAttributeMapping">
+        <PropertyRef Name="TransactionSeq" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_TxnAttributeMapping_tbl_Attribute">
+    <End Role="tbl_Attribute" Type="Self.tbl_Attribute" Multiplicity="1" />
+    <End Role="tbl_TxnAttributeMapping" Type="Self.tbl_TxnAttributeMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Attribute">
+        <PropertyRef Name="AttributeID" />
+      </Principal>
+      <Dependent Role="tbl_TxnAttributeMapping">
+        <PropertyRef Name="AttributeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_UserData_tbl_Roles">
+    <End Role="tbl_Roles" Type="Self.tbl_Roles" Multiplicity="1" />
+    <End Role="tbl_UserData" Type="Self.tbl_UserData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="tbl_UserData">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_BusinessRuleMappingData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_ExportExcelAttributes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_ExportExcelBusinessRules" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_ExportExcelChannelsAlerts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_ExportExcelInterface" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Daid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_ExportExcelProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_ExportExcelReports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_ExportExcelTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_ExportExcelTransactionAttribute" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetAllBusinessRules" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetAllChannelsAndAlerts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetAuthorizers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoleName" Type="varchar" Mode="In" />
+    <Parameter Name="UserID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetChannelsAndAlertsMappingData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetInterfaceMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetMappingViewModelData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetReports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetReportsMappingData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetTransactionAttributesMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetTransactionsForHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetUserAccessInView" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ScreenName" Type="varchar" Mode="In" />
+    <Parameter Name="RoleID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetUsersToAuthorize" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AuthId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_InterfaceMappingData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DAid" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="DAModelStoreContainer">
+    <EntitySet Name="tbl_Actions" EntityType="Self.tbl_Actions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Applications" EntityType="Self.tbl_Applications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_AppVersion" EntityType="Self.tbl_AppVersion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Attribute" EntityType="Self.tbl_Attribute" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_AttributeType" EntityType="Self.tbl_AttributeType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_AttributeValues" EntityType="Self.tbl_AttributeValues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_BusinessRule" EntityType="Self.tbl_BusinessRule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_BuzProd" EntityType="Self.tbl_BuzProd" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_BuzRulesAttrMapping" EntityType="Self.tbl_BuzRulesAttrMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_ChannelAlert" EntityType="Self.tbl_ChannelAlert" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_ChannelAlertAttrMapping" EntityType="Self.tbl_ChannelAlertAttrMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Clients" EntityType="Self.tbl_Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_DesignAccelerator" EntityType="Self.tbl_DesignAccelerator" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Destination" EntityType="Self.tbl_Destination" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_DistributionType" EntityType="Self.tbl_DistributionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_ErrorLog" EntityType="Self.tbl_ErrorLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_FrequencyType" EntityType="Self.tbl_FrequencyType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Interface" EntityType="Self.tbl_Interface" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_InterfaceAttrMapping" EntityType="Self.tbl_InterfaceAttrMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_LifeCycle" EntityType="Self.tbl_LifeCycle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_LOB" EntityType="Self.tbl_LOB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_ModeType" EntityType="Self.tbl_ModeType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Module" EntityType="Self.tbl_Module" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_PeriodType" EntityType="Self.tbl_PeriodType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Products" EntityType="Self.tbl_Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Projects" EntityType="Self.tbl_Projects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Region" EntityType="Self.tbl_Region" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Reports" EntityType="Self.tbl_Reports" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Roles" EntityType="Self.tbl_Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_RoleScreenMapping" EntityType="Self.tbl_RoleScreenMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Screens" EntityType="Self.tbl_Screens" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Source" EntityType="Self.tbl_Source" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Transactions" EntityType="Self.tbl_Transactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_TxnAttributeMapping" EntityType="Self.tbl_TxnAttributeMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_UserActionArchives" EntityType="Self.tbl_UserActionArchives" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_UserData" EntityType="Self.tbl_UserData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_DocsReferred" EntityType="Self.tbl_DocsReferred" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl_DocsReferred].[ClientID] AS [ClientID], 
+    [tbl_DocsReferred].[ProjectID] AS [ProjectID], 
+    [tbl_DocsReferred].[ApplicationID] AS [ApplicationID], 
+    [tbl_DocsReferred].[DocVersion] AS [DocVersion]
+    FROM [dbo].[tbl_DocsReferred] AS [tbl_DocsReferred]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__tbl_RoleS__RoleI__628FA481" Association="Self.FK__tbl_RoleS__RoleI__628FA481">
+      <End Role="tbl_Roles" EntitySet="tbl_Roles" />
+      <End Role="tbl_RoleScreenMapping" EntitySet="tbl_RoleScreenMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_RoleS__Scree__6383C8BA" Association="Self.FK__tbl_RoleS__Scree__6383C8BA">
+      <End Role="tbl_Screens" EntitySet="tbl_Screens" />
+      <End Role="tbl_RoleScreenMapping" EntitySet="tbl_RoleScreenMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Attribute_tbl_AttributeType" Association="Self.FK_tbl_Attribute_tbl_AttributeType">
+      <End Role="tbl_AttributeType" EntitySet="tbl_AttributeType" />
+      <End Role="tbl_Attribute" EntitySet="tbl_Attribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_AttributeValues_tbl_Attribute" Association="Self.FK_tbl_AttributeValues_tbl_Attribute">
+      <End Role="tbl_Attribute" EntitySet="tbl_Attribute" />
+      <End Role="tbl_AttributeValues" EntitySet="tbl_AttributeValues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_BusinessRule_tbl_BusinessRule" Association="Self.FK_tbl_BusinessRule_tbl_BusinessRule">
+      <End Role="tbl_BuzRulesAttrMapping" EntitySet="tbl_BuzRulesAttrMapping" />
+      <End Role="tbl_BusinessRule" EntitySet="tbl_BusinessRule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_ChannelAlert_tbl_ChannelAlertAttrMapping" Association="Self.FK_tbl_ChannelAlert_tbl_ChannelAlertAttrMapping">
+      <End Role="tbl_ChannelAlertAttrMapping" EntitySet="tbl_ChannelAlertAttrMapping" />
+      <End Role="tbl_ChannelAlert" EntitySet="tbl_ChannelAlert" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_ChannelAlert_tbl_DesignAccelerator" Association="Self.FK_tbl_ChannelAlert_tbl_DesignAccelerator">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_ChannelAlert" EntitySet="tbl_ChannelAlert" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_ChannelAlert_tbl_Transactions" Association="Self.FK_tbl_ChannelAlert_tbl_Transactions">
+      <End Role="tbl_Transactions" EntitySet="tbl_Transactions" />
+      <End Role="tbl_ChannelAlert" EntitySet="tbl_ChannelAlert" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_ChannelAlertAttrMapping_tbl_Destination" Association="Self.FK_tbl_ChannelAlertAttrMapping_tbl_Destination">
+      <End Role="tbl_Destination" EntitySet="tbl_Destination" />
+      <End Role="tbl_ChannelAlertAttrMapping" EntitySet="tbl_ChannelAlertAttrMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_ChannelAlertAttrMapping_tbl_DistributionType" Association="Self.FK_tbl_ChannelAlertAttrMapping_tbl_DistributionType">
+      <End Role="tbl_DistributionType" EntitySet="tbl_DistributionType" />
+      <End Role="tbl_ChannelAlertAttrMapping" EntitySet="tbl_ChannelAlertAttrMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_ChannelAlertAttrMapping_tbl_FrequencyType" Association="Self.FK_tbl_ChannelAlertAttrMapping_tbl_FrequencyType">
+      <End Role="tbl_FrequencyType" EntitySet="tbl_FrequencyType" />
+      <End Role="tbl_ChannelAlertAttrMapping" EntitySet="tbl_ChannelAlertAttrMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_ChannelAlertAttrMapping_tbl_ModeType" Association="Self.FK_tbl_ChannelAlertAttrMapping_tbl_ModeType">
+      <End Role="tbl_ModeType" EntitySet="tbl_ModeType" />
+      <End Role="tbl_ChannelAlertAttrMapping" EntitySet="tbl_ChannelAlertAttrMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_ChannelAlertAttrMapping_tbl_Source" Association="Self.FK_tbl_ChannelAlertAttrMapping_tbl_Source">
+      <End Role="tbl_Source" EntitySet="tbl_Source" />
+      <End Role="tbl_ChannelAlertAttrMapping" EntitySet="tbl_ChannelAlertAttrMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Clients_tbl_Projects" Association="Self.FK_tbl_Clients_tbl_Projects">
+      <End Role="tbl_Clients" EntitySet="tbl_Clients" />
+      <End Role="tbl_Projects" EntitySet="tbl_Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_Attribute" Association="Self.FK_tbl_DesignAccelerator_tbl_Attribute">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_Attribute" EntitySet="tbl_Attribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_AttributeValues" Association="Self.FK_tbl_DesignAccelerator_tbl_AttributeValues">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_AttributeValues" EntitySet="tbl_AttributeValues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_BusinessRule" Association="Self.FK_tbl_DesignAccelerator_tbl_BusinessRule">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_BusinessRule" EntitySet="tbl_BusinessRule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_BuzProd" Association="Self.FK_tbl_DesignAccelerator_tbl_BuzProd">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_BuzProd" EntitySet="tbl_BuzProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_Destination" Association="Self.FK_tbl_DesignAccelerator_tbl_Destination">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_Destination" EntitySet="tbl_Destination" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_DistributionType" Association="Self.FK_tbl_DesignAccelerator_tbl_DistributionType">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_DistributionType" EntitySet="tbl_DistributionType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_FrequencyType" Association="Self.FK_tbl_DesignAccelerator_tbl_FrequencyType">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_FrequencyType" EntitySet="tbl_FrequencyType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_Interface" Association="Self.FK_tbl_DesignAccelerator_tbl_Interface">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_Interface" EntitySet="tbl_Interface" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_LifeCycle" Association="Self.FK_tbl_DesignAccelerator_tbl_LifeCycle">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_LifeCycle" EntitySet="tbl_LifeCycle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_LOB" Association="Self.FK_tbl_DesignAccelerator_tbl_LOB">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_LOB" EntitySet="tbl_LOB" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_ModeType" Association="Self.FK_tbl_DesignAccelerator_tbl_ModeType">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_ModeType" EntitySet="tbl_ModeType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_Module" Association="Self.FK_tbl_DesignAccelerator_tbl_Module">
+      <End Role="tbl_Module" EntitySet="tbl_Module" />
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_Products" Association="Self.FK_tbl_DesignAccelerator_tbl_Products">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_Products" EntitySet="tbl_Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_Reports" Association="Self.FK_tbl_DesignAccelerator_tbl_Reports">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_Reports" EntitySet="tbl_Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_Source" Association="Self.FK_tbl_DesignAccelerator_tbl_Source">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_Source" EntitySet="tbl_Source" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_Transactions" Association="Self.FK_tbl_DesignAccelerator_tbl_Transactions">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_Transactions" EntitySet="tbl_Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DesignAccelerator_tbl_TxnAttributeMapping" Association="Self.FK_tbl_DesignAccelerator_tbl_TxnAttributeMapping">
+      <End Role="tbl_DesignAccelerator" EntitySet="tbl_DesignAccelerator" />
+      <End Role="tbl_TxnAttributeMapping" EntitySet="tbl_TxnAttributeMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DocsReferred_tbl_Applications" Association="Self.FK_tbl_DocsReferred_tbl_Applications">
+      <End Role="tbl_Applications" EntitySet="tbl_Applications" />
+      <End Role="tbl_DocsReferred" EntitySet="tbl_DocsReferred" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DocsReferred_tbl_Clients" Association="Self.FK_tbl_DocsReferred_tbl_Clients">
+      <End Role="tbl_Clients" EntitySet="tbl_Clients" />
+      <End Role="tbl_DocsReferred" EntitySet="tbl_DocsReferred" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_DocsReferred_tbl_Projects" Association="Self.FK_tbl_DocsReferred_tbl_Projects">
+      <End Role="tbl_Projects" EntitySet="tbl_Projects" />
+      <End Role="tbl_DocsReferred" EntitySet="tbl_DocsReferred" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Interface_tbl_InterfaceAttrMapping" Association="Self.FK_tbl_Interface_tbl_InterfaceAttrMapping">
+      <End Role="tbl_InterfaceAttrMapping" EntitySet="tbl_InterfaceAttrMapping" />
+      <End Role="tbl_Interface" EntitySet="tbl_Interface" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_InterfaceAttrMapping_tbl_Destination" Association="Self.FK_tbl_InterfaceAttrMapping_tbl_Destination">
+      <End Role="tbl_Destination" EntitySet="tbl_Destination" />
+      <End Role="tbl_InterfaceAttrMapping" EntitySet="tbl_InterfaceAttrMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_InterfaceAttrMapping_tbl_ModeType" Association="Self.FK_tbl_InterfaceAttrMapping_tbl_ModeType">
+      <End Role="tbl_ModeType" EntitySet="tbl_ModeType" />
+      <End Role="tbl_InterfaceAttrMapping" EntitySet="tbl_InterfaceAttrMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_InterfaceAttrMapping_tbl_Source" Association="Self.FK_tbl_InterfaceAttrMapping_tbl_Source">
+      <End Role="tbl_Source" EntitySet="tbl_Source" />
+      <End Role="tbl_InterfaceAttrMapping" EntitySet="tbl_InterfaceAttrMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_LifeCycle_tbl_Transactions" Association="Self.FK_tbl_LifeCycle_tbl_Transactions">
+      <End Role="tbl_LifeCycle" EntitySet="tbl_LifeCycle" />
+      <End Role="tbl_Transactions" EntitySet="tbl_Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Module_tbl_Applications" Association="Self.FK_tbl_Module_tbl_Applications">
+      <End Role="tbl_Applications" EntitySet="tbl_Applications" />
+      <End Role="tbl_Module" EntitySet="tbl_Module" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_PeriodType_tbl_Reports" Association="Self.FK_tbl_PeriodType_tbl_Reports">
+      <End Role="tbl_PeriodType" EntitySet="tbl_PeriodType" />
+      <End Role="tbl_Reports" EntitySet="tbl_Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Products_tbl_BuzProd" Association="Self.FK_tbl_Products_tbl_BuzProd">
+      <End Role="tbl_BuzProd" EntitySet="tbl_BuzProd" />
+      <End Role="tbl_Products" EntitySet="tbl_Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Products_tbl_LOB" Association="Self.FK_tbl_Products_tbl_LOB">
+      <End Role="tbl_LOB" EntitySet="tbl_LOB" />
+      <End Role="tbl_Products" EntitySet="tbl_Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Projects_tbl_Applications" Association="Self.FK_tbl_Projects_tbl_Applications">
+      <End Role="tbl_Projects" EntitySet="tbl_Projects" />
+      <End Role="tbl_Applications" EntitySet="tbl_Applications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Projects_tbl_Region" Association="Self.FK_tbl_Projects_tbl_Region">
+      <End Role="tbl_Region" EntitySet="tbl_Region" />
+      <End Role="tbl_Projects" EntitySet="tbl_Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Reports_tbl_Source" Association="Self.FK_tbl_Reports_tbl_Source">
+      <End Role="tbl_Source" EntitySet="tbl_Source" />
+      <End Role="tbl_Reports" EntitySet="tbl_Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Transactions_tbl_BusinessRule" Association="Self.FK_tbl_Transactions_tbl_BusinessRule">
+      <End Role="tbl_Transactions" EntitySet="tbl_Transactions" />
+      <End Role="tbl_BusinessRule" EntitySet="tbl_BusinessRule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Transactions_tbl_Interface" Association="Self.FK_tbl_Transactions_tbl_Interface">
+      <End Role="tbl_Transactions" EntitySet="tbl_Transactions" />
+      <End Role="tbl_Interface" EntitySet="tbl_Interface" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Transactions_tbl_Reports" Association="Self.FK_tbl_Transactions_tbl_Reports">
+      <End Role="tbl_Transactions" EntitySet="tbl_Transactions" />
+      <End Role="tbl_Reports" EntitySet="tbl_Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Transactions_tbl_TxnAttributeMapping" Association="Self.FK_tbl_Transactions_tbl_TxnAttributeMapping">
+      <End Role="tbl_Transactions" EntitySet="tbl_Transactions" />
+      <End Role="tbl_TxnAttributeMapping" EntitySet="tbl_TxnAttributeMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_TxnAttributeMapping_tbl_Attribute" Association="Self.FK_tbl_TxnAttributeMapping_tbl_Attribute">
+      <End Role="tbl_Attribute" EntitySet="tbl_Attribute" />
+      <End Role="tbl_TxnAttributeMapping" EntitySet="tbl_TxnAttributeMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_UserData_tbl_Roles" Association="Self.FK_tbl_UserData_tbl_Roles">
+      <End Role="tbl_Roles" EntitySet="tbl_Roles" />
+      <End Role="tbl_UserData" EntitySet="tbl_UserData" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

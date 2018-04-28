@@ -1,0 +1,439 @@
+﻿@model DesignAccelerator.Models.ViewModel.LinkingUIViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_UploadLayout.cshtml";
+}
+<style type="text/css">
+    .no-js #loader {
+        display: none;
+    }
+
+    .js #loader {
+        display: block;
+        position: absolute;
+        left: 100px;
+        top: 0;
+    }
+
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/DesignAccelerator/Content/Images/pageLoad.gif') center no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .navbar {
+        min-height: 0px;
+    }
+
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+
+    
+</style>
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+<h2>Linking</h2>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <section id="LinkingForm">
+            @using (Html.BeginForm("Index", "LinkingUI", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.daId)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <span class="navbar navbar-left">
+                            @*@Html.LabelFor(m => m.lstProcess, "Select the process", new { @class = "col-md-2 control-label" })*@
+                            <label>Select the process</label>
+                            <span class="form-inline" style="margin-left:45px">
+                                @Html.DropDownListFor(model => model.lstProcess, new SelectList(Model.lstProcess, "", ""), "Select Process", new { @class = "form-control", @required = "Required" })
+                            </span>
+                            @*<span class="navbar navbar-right">
+                                <input type="checkbox" id="checkboxid" />
+                                </span>*@
+                        </span>
+                    </div>
+                    
+                    <div id='TMF' class="col-md-10">
+                        <span class="navbar navbar-left">
+                            <label>Transaction Matrix File</label>
+                            &nbsp;<span class="btn btn-file">
+                                <input id="btmf" type="file" accept="xls/xlsx" name="file">
+                            </span>
+                        </span>
+                    </div>
+
+                    <div id='SBF' class="col-md-10">
+                        <span class="navbar navbar-left">
+                            <label>Scenario Builder File</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="btn btn-file">
+                                <input id="bsbf" type="file" accept="xls/xlsx" name="file">
+                            </span>
+                        </span>
+                    </div>
+
+                    <div id='TSF' class="col-md-10">
+                        <span class="navbar navbar-left">
+                            <label>Test Scenario File</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="btn btn-file">
+                                <input id="btsf" type="file" accept="xls/xlsx" style="margin-left: -10px" name="file">
+                            </span>
+                        </span>
+                    </div>
+
+                    <div id='TDF' class="col-md-10">
+                        <span class="navbar navbar-left">
+                            <label>Test Design File</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="btn btn-file">
+                                <input id="btdf" type="file" accept="xls/xlsx" name="file">
+                            </span>
+                        </span>
+                    </div>
+
+                    <div id='TF' class="col-md-10">
+                        <span class="navbar navbar-left">
+                            <label>Traceability Matrix File</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="btn btn-file">
+                                <input id="btrf" type="file" accept="xls/xlsx" name="file">
+                            </span>
+                        </span>
+                    </div>
+
+                    <div id='runPlanid' class="col-md-10">
+                        <span class="navbar navbar-left">
+                            <label>Test Design File</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="btn btn-file">
+                                <input id="runPlanFileId" type="file" accept="xls/xlsx" style="margin-left:35px" name="file">
+                            </span>
+                        </span>
+                    </div>
+                    <div>
+                        @*<input type="button" class="btn btn-default; button" name="ExportDA" value="Export DA"  onclick="location.href='@Url.Action("Index", "ExportDesignAccelerator")'">*@
+                    </div>
+
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:175px">
+                        <input id="btnSave" type="submit" value="Submit" name="action:Add" class="btn btn-default; button" />
+                        &nbsp;&nbsp;&nbsp;<input id="btnReset" type="submit" value="Reset" name="action:Add" class="btn btn-default; button" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<div class="se-pre-con"></div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".se-pre-con").fadeOut("slow");
+
+            var process;
+            $("#TMF").hide(); //TransactionMatrixFile
+            $("#SBF").hide(); //ScenarioBuilderFile
+            $("#TDF").hide(); //TestDesignFile
+            $("#TSF").hide(); //TestScenarioFile
+            $("#TF").hide();  //TraceabilityMatrixFile
+            $("#runPlanid").hide(); //RunPlanFile
+            //$("#checkboxid").hide();
+
+            $("#lstProcess").on('change', function (e) {
+                var selectedVal = $('option:selected', this).val();
+                process = selectedVal;
+                switch (selectedVal) {
+                    case 'Rule of 1 - Txn Matrix':
+                        if (selectedVal == 'Rule of 1 - Txn Matrix') {
+                            $("#TMF").hide();
+                            $("#SBF").hide();
+                            $("#TDF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    case 'Rule of N - Txn Matrix':
+                        if (selectedVal == 'Rule of N - Txn Matrix') {
+                            $("#TMF").hide();
+                            $("#SBF").hide();
+                            $("#TDF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    case 'Business Rule':
+                        if (selectedVal == 'Business Rule') {
+                            $("#TMF").show();
+                            $("#SBF").hide();
+                            $("#TDF").hide();
+                            $("#TSF").hide();
+                            $("#TF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    case 'Interface':
+                        if (selectedVal == 'Interface') {
+                            $("#TMF").show();
+                            $("#SBF").hide();
+                            $("#TDF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    case 'Channels&Alerts':
+                        if (selectedVal == 'Channels&Alerts') {
+                            $("#TMF").show();
+                            $("#SBF").hide();
+                            $("#TDF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    case 'Reports':
+                        if (selectedVal == 'Reports') {
+                            $("#TMF").show();
+                            $("#SBF").hide();
+                            $("#TDF").hide();
+                            $("#TSF").hide();
+                            $("#TF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    case 'Scenario Builder Template':
+                        if (selectedVal == 'Scenario Builder Template') {
+                            $("#TMF").hide();
+                            $("#SBF").hide();
+                            $("#TDF").hide();
+                            $("#TSF").hide();
+                            $("#TF").hide();
+                            $("#runPlanid").hide();
+                        }
+                    case 'Scenario Stitching':
+                        if (selectedVal == 'Scenario Stitching') {
+                            $("#TMF").show();
+                            $("#SBF").show();
+                            $("#TSF").hide();
+                            $("#TDF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    case 'Test Design':
+                        if (selectedVal == 'Test Design') {
+                            $("#TMF").show();
+                            $("#TSF").show();
+                            $("#TDF").hide();
+                            $("#SBF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    case 'Traceability Matrix':
+                        if (selectedVal == 'Traceability Matrix') {
+                            //$("#DAF").show();
+                            $("#TMF").show();
+                            $("#TDF").show();
+                            $("#SBF").hide();
+                            $("#TSF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    case 'Run Plan':
+                        if (selectedVal == 'Run Plan') {
+                            $("#TMF").hide();
+                            $("#SBF").hide();
+                            $("#TDF").hide();
+                            $("#TSF").hide();
+                            $("#runPlanid").show();
+
+                        }
+                    case 'Export DA':
+                        if (selectedVal == 'Export DA') {
+                            $("#TMF").hide();
+                            $("#SBF").hide();
+                            $("#TDF").hide();
+                            $("#TSF").hide();
+                            $("#TF").hide();
+                            $("#runPlanid").hide();
+                        }
+                        break;
+                    default:
+
+                }
+            })
+
+            $("#btnSave").on("click", function (e) {
+
+                var valdationstatus;
+
+                if (process == "Rule of 1 - Txn Matrix" || process == "Rule of N - Txn Matrix" || process == "Scenario Builder Template"||process=="Export DA") {
+                    valdationstatus = true;
+                }
+                else if (process == "Business Rule" || process == "Interface" || process == "Channels&Alerts" || process == "Reports" ||
+                        process == "Scenario Stitching" || process == "Test Design" || process == "Traceability Matrix" || process == "Run Plan") {
+
+                    valdationstatus = dovalidations();
+                }
+                else { valdationstatus = dovalidations1(); }
+
+                if (valdationstatus) {
+                    var tmFile1 = $('#btmf').val();
+                    var tmFile2 = $('#bsbf').val();
+                    var tmFile3 = $('#btdf').val();
+                    var tmFile4 = $('#btsf').val();
+                    var runPlanfile = $("runPlanFileId").val();
+
+                    var files = $("#bsbf").get(0).files;
+                    var files1 = $("#btdf").get(0).files;
+                    var files2 = $("#btsf").get(0).files;
+                    var getRunPlanFile = $("#runPlanFileId").get(0).files;
+
+                    var formData = new FormData($('form')[0]);
+                    //var formData = new FormData();
+                    formData.append("sProcess", process);
+
+                    if (files.length > 0) {
+                        formData.append("files", files[0]);
+                    }
+                    else if (files1.length > 0) {
+                        formData.append(files1, files1[0]);
+                    }
+                    else if (files2.length > 0) {
+                        formData.append(files2, files2[0]);
+                    }
+                    else if (getRunPlanFile.length > 0) {
+                        formData.append(getRunPlanFile, getRunPlanFile[0]);
+                    }
+
+                    // setting the URL where ajax is used
+                    var MyAppUrlSettings = {
+                        MyUsefulUrl: '@Url.Action("Matrix", "LinkingUI")'
+                    }
+                    $.blockUI(
+                    {
+                        message: '<h8><img src="@Url.Content("~/Content/Images/busy.gif")" /> Standby </h8>'
+                    });
+                    $.ajax({
+                        cache: false,
+                        url: MyAppUrlSettings.MyUsefulUrl,
+                        enctype: "multipart/form-data",
+                        data: formData,//
+                        async: true,
+                        type: 'POST',
+                        contentType: false,
+                        processData: false
+
+                    }).done(function (data) {
+                        $.unblockUI();
+                        //get the file name for download
+                        if (data.fileName != "") {
+                            //use window.location.href for redirect to download action for download the file
+
+                            window.location.href = "@Url.RouteUrl(new
+                                               { Controller = "LinkingUI", Action = "Download" })/?filePath=" + data.fileName;
+                        }
+                    });
+                }
+                else {
+                    alert("Error. Please verify the file extension!");
+                    e.preventDefault();
+                }
+            })
+
+            function dovalidations() {
+
+                var tmFile1 = $('#btmf').val()
+                var tmFile3 = $('#btdf').val()
+                var tmFile4 = $('#btsf').val()
+                var tmFile5 = $('#runPlanFileId').val();
+                //var regex = new RegExp("(xls|xlsx)$");
+                if (tmFile1 == '' && tmFile3 == '' && tmFile4 == '' && tmFile5 == '') //
+                {
+                    alert("Please, check the correct file to upload..");
+                }
+                else {
+                    var extn1 = tmFile1.split('.').pop().toLowerCase();
+                    var extn3 = tmFile3.split('.').pop().toLowerCase();
+                    var extn4 = tmFile4.split('.').pop().toLowerCase();
+                    var extn5 = tmFile5.split('.').pop().toLowerCase();
+                    //var extn = $("#btsf").val().split('.').pop().toLowerCase();
+                    if ((extn1 == "xls" | extn1 == "xlsx") | (extn3 == "xls" | extn3 == "xlsx") | (extn4 == "xls" | extn4 == "xlsx") | (extn5 == "xls" | extn5 == "xlsx")) {
+                        //alert("Successfully uploaded...")
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+
+                    //if (!(regex.test(extn))) {
+                    //    $(extn1).val('');
+                    //    $(extn2).val('');
+                    //    $(extn3).val('');
+                    //    alert("Successfully uploaded...")
+                    //    return true;
+                    //}
+                    //else { return false };
+                }
+            }
+           
+            function dovalidations1() {
+
+                var tmFile1 = $('#btmf').val();
+                var tmFile2 = $('#bsbf').val();
+                var tmFile3 = $('#btdf').val();
+                var tmFile4 = $('#btrf').val();
+                var tmFile5 = $('#btsf').val();
+
+                if (tmFile1 == '' && tmFile2 == '' && tmFile3 == '' && tmFile4 == '' && tmFile5 == '') //
+                {
+                    alert("Please, check the correct file to upload..");
+                }
+                else {
+                    var extn = $("#btmf").val().split('.').pop().toLowerCase();
+                    var extn = $("#bsbf").val().split('.').pop().toLowerCase();
+                    var extn = $("#btsf").val().split('.').pop().toLowerCase();
+                    var extn = $("#btdf").val().split('.').pop().toLowerCase();
+                    var extn = $("#btrf").val().split('.').pop().toLowerCase();
+                    if (extn == "xls" || extn == "xlsx")
+                        return true;
+                    else
+                        return false;
+                }
+            }
+
+            $("#btnReset").on("click", function (e) {
+                //$("#DAF").val("");
+                //$("#TMF").val("");
+                //$("#SBF").val("");
+                //$("#TDF").val("");
+                //$("#TSF").val("");
+                //$("#checkboxid").prop('checked', false);
+            })
+
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = Model.ClientID })"><span>' + "@Model.ProjectName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = Model.ProjectID })"><span>' + "@Model.ApplicationName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Module", new {id = Model.ApplicationID })"><span>' + "@Model.ModuleName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = Model.ModuleId })"><span>' + "@Model.daName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Products", new {id = Model.daId })"><span>' + "Products" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Transactions", new {id = Model.daId })"><span>' + "Transactions" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "AttributeList", new {id = Model.daId })"><span>' + "Attribute" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "TransactionAttribute", new {id = Model.daId })"><span>' + "Transaction Attribute" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "BusinessRules", new {id = Model.daId })"><span>' + "BusinessRules" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "SMD", new {id = Model.daId })"><span>' + "SourceDestinationMode" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Interface", new {id = Model.daId })"><span>' + "Interface" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DF", new {id = Model.daId })"><span>' + "DF" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "ChannelsAndAlerts", new {id = Model.daId })"><span>' + "ChannelsAndAlerts" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Reports", new {id = Model.daId })"><span>' + "Reports" + '</span></a></li>');
+        })
+
+    </script>
+
+
+}

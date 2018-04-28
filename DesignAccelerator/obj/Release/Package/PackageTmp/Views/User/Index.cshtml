@@ -1,0 +1,265 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model UserModel
+
+@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<h2>Create User</h2>
+<hr style="width:65%;" />
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="createUserForm">
+            @using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.userId)
+
+                <div class="form-group">
+                    <div class="col-md-6" style="margin-left:100px">
+                        @foreach (var userType in Model.UserTypes)
+                        {
+                            if (userType.Type == "Internal")
+                            {
+                                <span style="margin-left:30px">
+                                    @Html.RadioButtonFor(m => m.UserTypeId, userType.ID, new { @checked = true, @id = "rbwindows" })
+                                    @Html.Label(userType.Type)
+                                </span>
+                            }
+                            else
+                            {
+                                <span style="margin-left:50px">
+                                    @Html.RadioButtonFor(m => m.UserTypeId, userType.ID, new { @id= "rbExternal"})
+                                    @Html.Label(userType.Type)
+                                </span>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.userName, "User Name*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.TextBoxFor(m => m.userName, new { @maxlength = "50", @class = "form-control", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" id="dvpwd" style="display:none;">
+                    @Html.LabelFor(m => m.password, "Password*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.PasswordFor(m => m.password, new { @maxlength = "25", @class = "form-control", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" id="dvcpwd" style="display:none;" >
+                    @Html.LabelFor(m => m.ConfirmPassword, "Confirm Password*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @maxlength = "25", @class = "form-control", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.lstRoles, "Roles*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.lstRoles, "RoleId", "Rolename"), "--Select Role--", new { @class = "form-control", @required = "Required", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.RoleId, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.lstAdminUsers, "Authorizer*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-30px">
+                            @Html.DropDownListFor(m => m.AuthID, new SelectList(Model.lstAdminUsers, "userId", "userName"), "--Select Authorizer--", new { @class = "form-control", @required = "Required", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.AuthID, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:160px">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" onclick="" class="btn btn-default; button" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index", "Client")">Back</a>
+</div>
+<hr style="width:65%;" />
+
+@{
+    IEnumerable<UserModel> Userviewmodel2 = ViewData["Userviewmodel1"] as IEnumerable<UserModel>;
+}
+<div style="width:75%;">
+    @{
+        WebGrid grid = new WebGrid(Userviewmodel2);
+        @grid.GetHtml(
+                  tableStyle: "table table-bordered table-hover",
+                  fillEmptyRows: false,
+                  headerStyle: "gvHeading",
+                  alternatingRowStyle: "gvAlternateRow",
+                  rowStyle: "gvRow",
+                  footerStyle: "gvFooter",
+                  mode: WebGridPagerModes.All,
+                  firstText: "<< First",
+                  previousText: "< Prev",
+                  nextText: "Next >",
+                  lastText: "Last >>",
+                  columns: new[] {
+                                    grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex, canSort:true),
+                                    grid.Column("UserName",header: "User Name",canSort:true),
+                                   // grid.Column("password",header: "Password",canSort:true),
+                                    grid.Column("Rolename",header: "Roles",canSort:true),
+                                    grid.Column("AuthName",header: "Authorizer",canSort:true),
+                                    grid.Column("CreatedDate",header: "Created Date",
+                                        format: (item) => string.Format("{0:dd/MM/yyyy}", item.CreatedDate), canSort:false),
+                                    grid.Column(header: "Status", format: @<text><input name="chkStatus" disabled="disabled" type="checkbox" value="@item.status" @(item.status == false ? null : "checked") /></text>),
+                                    grid.Column("userId",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                    
+                                        @if(Model.EdiPermission  && item.Status == true) {
+                                            @Html.ActionLink("Edit | ", "Edit", new { id=item.userId});
+                                              }
+                                              else {
+                                            <text>Edit | </text>
+                                              }
+
+                                        @if(Model.DeletePermission && item.Rolename != "Admin"){
+                                            @Html.ActionLink("Delete", "Delete", new { id=item.userId})
+                                              }
+                                             else {
+                                            <text>Delete</text>
+                                             }
+
+                                </text>
+                                                )
+                                   }
+                         )
+}
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#password").blur(function (e) {
+                var Password = $.trim($("#password").val());
+                if (Password == '') 
+                    $('#password').css('border-color', 'red');
+                else 
+                    $('#password').css('border-color', '');
+                    
+            })
+
+            $("#ConfirmPassword").blur(function (e) {
+               
+                var cPassword = $.trim($("#ConfirmPassword").val());
+                if (cPassword == '') 
+                    $('#ConfirmPassword').css('border-color', 'red');
+                else
+                {
+                    $('#ConfirmPassword').css('border-color', '');
+                    if (!Validate()) {
+                        alert("Password does not match");
+                        $("#ConfirmPassword").focus();
+                    }
+                }
+            })
+
+            var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+            if (model == true)
+                $('#btnSave').prop("disabled", "");
+            else
+                $('#btnSave').prop("disabled", "disabled");
+
+            function Validate() {
+                var Password = $("#password").val();
+                Password = $.trim(Password);
+                 
+                var confirmPassword = $("#ConfirmPassword").val();
+                confirmPassword = $.trim(confirmPassword);
+               
+                if (Password == confirmPassword) {
+                    
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            $("#btnSave").on("click", function (e) {
+                var Password = $("#password").val();
+                Password = $.trim(Password);
+
+                var confirmPassword = $("#ConfirmPassword").val();
+                confirmPassword = $.trim(confirmPassword);
+
+                
+                if ($(this).attr('id') == 'rbExternal') {
+                    if (Password != '' && confirmPassword != '') {
+                        if (!Validate()) {
+                            alert("Password does not match");
+                            e.preventDefault();
+                        }
+                    }
+                    else {
+                        alert("Please enter password");
+                        e.preventDefault();
+                    }
+                }
+            })
+
+            $('input[type="radio"]').click(function () {
+                
+                if ($(this).attr('id') == 'rbwindows') {
+                    $('#dvcpwd').hide();
+                    $('#dvpwd').hide();
+                }
+                else {
+                    $('#dvcpwd').show();
+                    $('#dvpwd').show();
+                }
+            });
+
+
+        })
+    </script>
+
+
+    @if (ViewBag.Message != null)
+    {
+        <script>
+            alert('@ViewBag.Message');
+            $("#userName").val("");
+            $('#password').val("");
+            $('#ConfirmPassword').val("");
+            $('#RoleId').find('option:first').attr('selected', 'selected');
+            $('#AuthID').find('option:first').attr('selected', 'selected');
+            $('#rbwindows').find('option:first').attr('selected', 'selected');            
+            $('#Status').prop('checked', false);
+        </script>
+    }
+
+}

@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{511248DC-8DBD-4F42-9BD5-BE82338A8328}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DA.DomainModel</RootNamespace>
+    <AssemblyName>DA.DomainModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sp_BusinessRuleMappingData_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ExportExcelAttributes_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ExportExcelBusinessRules_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ExportExcelChannelsAlerts_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ExportExcelInterface_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ExportExcelProduct_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ExportExcelReports_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ExportExcelTransactionAttribute_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ExportExcelTransaction_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetAllBusinessRules_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetAllChannelsAndAlerts_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetAuthorizers_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetChannelsAndAlertsMappingData_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetInterfaceMapping_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetMappingViewModelData_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetReportsMappingData_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetReports_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetTransactionAttributesMapping_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetTransactionsForHeader_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetUserAccessInView_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetUsersToAuthorize_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_InterfaceMappingData_Result.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Actions.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Applications.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_AppVersion.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Attribute.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_AttributeType.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_AttributeValues.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_BusinessRule.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_BuzProd.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_BuzRulesAttrMapping.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ChannelAlert.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ChannelAlertAttrMapping.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Clients.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_DesignAccelerator.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Destination.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_DistributionType.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_DocsReferred.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ErrorLog.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_FrequencyType.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Interface.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_InterfaceAttrMapping.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_LifeCycle.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_LOB.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ModeType.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Module.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_PeriodType.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Products.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Projects.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Region.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Reports.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Roles.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_RoleScreenMapping.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Screens.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Source.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Transactions.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_TxnAttributeMapping.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_UserActionArchives.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_UserData.cs">
+      <DependentUpon>DAModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DAModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DAModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

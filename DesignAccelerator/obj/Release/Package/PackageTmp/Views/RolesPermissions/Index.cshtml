@@ -1,0 +1,320 @@
+﻿@model DesignAccelerator.Models.ViewModel.RolesActionsViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    table, tr, td, th {
+        border: 1px solid #000;
+        position: relative;
+        padding: 10px;
+    }
+
+    .table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+        overflow: hidden;
+    }
+
+        .table-bordered > thead > tr > th:hover {
+            overflow: visible;
+            cursor: pointer;
+        }
+</style>
+
+<div class="navbar-static-top">
+</div>
+<h2>Roles and Permissions</h2>
+<hr style="width:100%;"/>
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="ClientForm">
+            @using (Html.BeginForm("Index", "Client", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RolesList, "Roles", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-50px">
+                            @Html.DropDownListFor(model => model.roleID, new SelectList(Model.RolesList, "roleID ", "roleName"), "Select a role", new { @class = "form-control", @required = "Required" })
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <a href="@Url.Action("Index", "Client")">Back</a>
+                </div>
+                <div class="col-md-10">
+                    <span class="form-inline" style="margin-left:-100px">
+                        @*@Html.TextBoxFor(m => m.screenName, new { @maxlength = "50", @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.purpose, "", new { @class = "text-danger" })*@
+                    </span>
+                </div>
+
+                <div class="col-md-12 column" id="divTA">
+
+                </div>
+
+                <div class="col-md-12 column">
+                    <button id="btnSave" type="button" class="btn btn-primary">Save Changes</button>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+@*<div>
+    <a href="@Url.Action("Index", "Client")">Back</a>
+</div>*@
+@*<hr/>*@
+    
+    @section Scripts {
+        <script type="text/javascript">
+
+            var roleid;
+            var screenList = [];
+            var lstScreens = JSON.parse('@Html.Raw(Json.Encode(ViewData["ScreenList"]))');
+            var lstActionTypes = JSON.parse('@Html.Raw(Json.Encode(ViewData["ActionType"]))');
+            var lstMappedScreensRoles = JSON.parse('@Html.Raw(Json.Encode(ViewData["MappedScreensRoles"]))');
+
+            $(document).ready(function () {
+
+                $("#btnSave").hide();
+
+                var model = @Html.Raw(Json.Encode(Model));
+
+                $.each(lstScreens, function (index, value) {
+                    screenList.push(value);
+                });
+               
+               
+                     
+                    //  var screensTable = makeTable(screenList,lstActionTypes,lstMappedScreensRoles,roleid);
+
+                    var header_height = 0;
+                    $('table th span').each(function () {
+                        if ($(this).outerWidth() > header_height) header_height = $(this).outerWidth();
+                    });
+
+                    $('table th').height(header_height);
+
+                    $("#btnSave").on("click", function (e) {
+
+                        if(roleid==null)
+                        {
+                            alert("Please select a Role from the Dropdown to assign Permissions");
+                            return;
+                            e.preventDefault();
+                        }
+
+                        var jsondata = getJSONFromTable(lstActionTypes);
+
+                        var MyAppUrlSettings = {
+                            MyUsefulUrl: '@Url.Action("SaveData", "RolesPermissions")'
+                        }
+                        $.blockUI(
+                    {
+                        message: '<h8><img src="@Url.Content("~/Content/Images/busy.gif")" /> StandBy...</h8>'
+                    });
+                        $.ajax({
+
+                            url: MyAppUrlSettings.MyUsefulUrl,
+                            data: JSON.stringify(jsondata),
+                            type: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (result) {
+
+                                isSuccess = result;
+                            },
+                            error: function (result) {
+                                isSuccess = result;
+                            }
+
+                        }).done(function () {
+                            if (isSuccess == "1") {           // Successfully saved
+                                $.unblockUI();
+                                alert("Selected permissions for corresponding screen and role have been updated");
+                                location.reload();
+                            }
+                            else {                      // Data Error
+                                alert("Error. Please, check the data");
+                                $.unblockUI();
+                            }
+                        });
+                    });
+            });
+            $("#roleID").on('change',function(){
+                //debugger;
+                $("#btnSave").show();
+                roleid =$(this).val();
+                $("#tblScreens").remove();
+            
+                var loadTable = makeTable(screenList,lstActionTypes,lstMappedScreensRoles,roleid);
+            });
+
+            function makeTable(screenList,lstActionTypes,lstMappedScreensRoles,roleid) {
+
+                var table = $("<table id='tblScreens' class='table table-bordered table-hover'>");
+
+                ///
+                /// Table head
+                ///
+                html = "<thead>" +
+                    "<tr>"+
+                        "<th>S No.</th>" +
+                        "<th>Screen Name</th>"
+                $.each(lstActionTypes , function (index, value){
+                    html = html +  "        <th>" + value + "</th>";
+                });
+
+                html = html +       "</tr>" +
+                         "</thead>";
+
+                var tableHead = $(html);
+                table.append(tableHead);
+
+                var tbody = $("<tbody/>");
+                var srno = 1;
+
+
+
+                $.each(screenList ,function(index,value){
+
+                    //  debugger;
+                    if (screenList.length > 0) {
+
+                        var row = $("<tr/>");
+                        $(row).html("<td>" + (srno++) + "</td>" +
+                            "<td style='display:none;'>" +value.screenID+ "</td>" +
+                                    "<td>"+value.screenName+"</td>"
+                                    );
+
+                       
+
+                        $.each(lstActionTypes, function (i,v){
+                            //debugger;
+                            var isChecked = getCheckedValues(lstMappedScreensRoles,v,value.screenID,roleid);
+
+                            if(isChecked)
+
+                                $(row).append("<td id='chkAdd'></span><input type='checkbox' checked=checked /> </td>");
+
+                            else
+                            {
+                                $(row).append("<td id ='chkAdd'></span><input type='checkbox'></td>");
+                            }
+
+                        });
+
+                        tbody.append(row);
+
+                    }
+                });
+
+
+                table.append(tbody);
+                var tableEnd = $("</div></table>");
+                table.append(tableEnd);
+                return $('#divTA').append(table);
+            }
+
+            function getCheckedValues(lstMappedScreensRoles, actiontype,screenid,roleid)
+            {
+                var isChecked = false;
+
+                $.each(lstMappedScreensRoles,function(integ, valu){
+                    //debugger;
+                  if(valu.actionType==actiontype && valu.roleID==roleid && valu.screenID==screenid)
+                    {
+                        isChecked=true;
+                        return isChecked;
+                    }
+                });
+                return isChecked;
+            }
+
+
+
+            //$("#roleID").on('change',function(){
+            //   // debugger;
+            //    roleid =$(this).val();
+            //   // var loadTable = makeTable(screenList,lstActionTypes,lstMappedScreensRoles,roleid);
+
+            //});
+
+
+            function getJSONFromTable()
+            {
+                var tableRows = [];
+
+
+                $('#tblScreens tbody tr').each(function () {
+
+                    var self = $(this);
+                    var i = 4;//check boxes start from the 4th column onwards and continue till the last column and then again resets from 4 for next row
+                    var t = 1;//t=1 is for add, t=2 is for edit and so on, t also resets as the column ends and a new row starts
+                    $.each(lstActionTypes , function (index, value){
+
+                        var screenID = self.find("td:nth-child(2)").text();
+                        if (self.find("td:nth-child(" + i + ") input[type=checkbox]").is(":checked"))
+                            var checked = true;
+
+
+                        var item =null;
+                        item = {};
+
+                        if(t==1 && checked==true)
+                        {
+                            item["actionType"] = "Add";
+
+                        }
+                        else if(t==2 && checked==true)
+                        {
+                            item["actionType"] = "Edit";
+
+                        }
+                        else if(t==3 && checked==true)
+                        {
+                            item["actionType"] = "Delete";
+
+                        }
+                        else if(t==4 && checked==true)
+                        {
+                            item["actionType"] = "View";
+
+                        }
+                        if(t==1)
+                        {
+                            item["columnAdd"] = "ColumnAdd";
+                        }
+                        else if(t==2)
+                        {
+                            item["columnAdd"] = "ColumnEdit";
+                        }
+                        else if(t==3)
+                        {
+                            item["columnAdd"] = "ColumnDelete";
+                        }
+                        else if(t==4)
+                        {
+                            item["columnAdd"] = "ColumnView";
+                        }
+
+
+                        item["roleID"] = roleid;
+                        item["screenID"] = screenID;
+                        tableRows.push(item);
+
+                        t++;
+
+                        i++;
+                    });
+
+                });
+
+                return tableRows;
+            };
+
+        </script>
+
+    }

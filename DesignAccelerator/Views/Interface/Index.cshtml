@@ -1,0 +1,1045 @@
+﻿@model DesignAccelerator.Models.ViewModel.InterfaceViewModel
+@{
+    ViewBag.Title = "Interface Mapping";
+}
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+<h2>Interface Mapping</h2>
+<hr />
+
+<style type="text/css">
+    table, tr, td, th {
+        border: 1px solid #000;
+        position: relative;
+        padding: 10px;
+        white-space: nowrap;
+        text-align:center;
+    }
+
+    .hide {
+        display: none;
+    }
+
+     th span.temp {
+        transform-origin: 115px;
+        transform: rotate(-90deg);
+        margin: 2px 2px 2px 0;
+        vertical-align: bottom;
+        margin-top: 0px;
+        font-size: 11px;
+        width: 13.35px;
+        height: 230px;
+        white-space: nowrap;
+        /*position: relative;*/
+        display: block;
+        float: right;
+        border-top: 0px;
+        border-right: 0px;
+        border-left: 0px;
+        border-bottom: 0px;
+    }
+
+    .no-js #loader {
+        display: none;
+    }
+
+    .js #loader {
+        display: block;
+        position: absolute;
+        left: 100px;
+        top: 0;
+    }
+
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/DesignAccelerator/Content/Images/pageLoad.gif') center no-repeat #808080;
+        opacity: .8;
+    }
+
+    #tooltip {
+        position: relative;
+    }
+
+    #tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    td span.tooltiptext {
+        transform-origin: 100px;
+        margin: 2px 2px 2px 0;
+        vertical-align: bottom;
+        margin-top: 0px;
+        font-size: 11px;
+        width: 13.35px;
+        white-space: nowrap;
+        /*position: relative;*/
+        display: block;
+        float: right;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+    #tooltip .tooltiptext {
+        visibility: hidden;
+        width: 220px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+    
+    #TT {
+        overflow-x: scroll;
+        margin-left: 38.3em;
+        overflow-y: visible;
+        padding: 0px;
+    }
+
+    /*Sno header*/
+    #headcol {
+        position: absolute;
+        width: 3.5em;
+        left: 0;
+        height: 254px;
+        border-right: 0px none black;
+        text-align: center;
+        padding-left: 1.22px;
+        padding-top: 115px;
+        border: 1px solid #000;
+    }
+    /*Sno body*/
+    #colid {
+        position: absolute;
+        width: 3.5em;
+        /*padding-left: 3.5px;*/
+        left: 0;
+        border-right: 0px none black;
+        height:3.6em;
+        border-top: 0px;
+        border: 1px solid #000;
+    }
+
+    /*rr header*/
+    #rridth {
+        position: absolute;
+        width: 14.50em;
+        left: 1px;
+        height: 254px;
+        border-right: 0px none black;
+        margin-left: 48px;
+        text-align: center;
+        padding-top : 115px;
+        border: 1px solid #000;
+    }
+    /*rr body*/
+    #rowidtd {
+        position: absolute;
+        width: 14.50em;
+        left: 1px;
+        border-right: 0px none black;
+        margin-left: 48px;
+        border-top: 0px;
+        height: 3.6em;
+        border: 1px solid #000;
+    }
+
+    /*idesc header*/
+    #idescidth {
+        position: absolute;
+        width: 21.5em;
+        left: 0px;
+        height: 254px;
+        border-right: 0px none black;
+        /*border-bottom: 0px none black;*/
+        margin-left: 250px;
+        text-align: center;
+        padding-top : 115px;
+        border: 1px solid #000;
+    }
+
+    /*idesc body*/
+    #irowidtd {
+        position: absolute;
+        width: 21.5em;
+        left: 0px;
+        height: 3.6em;
+        border-right: 0px none black;
+        /*border-bottom: 0px none black;*/ 
+        margin-left: 250px;
+        border: 1px solid #000;
+    }
+
+    #dd .dropdown-menu {
+        width: 140%; 
+    }
+
+    /*attr header*/
+    /*#aidth {
+        position: absolute;
+        /*left: 0px;
+        border-right: 0px none black;
+        /*border-bottom: 0px none black;*/
+        /*margin-left: 500px;
+        width: 12.8em;
+        text-align: center;
+        height: 504px;
+        padding-top: 115px;
+        border: 1px solid #000;
+        margin-left:25px;
+    }*/
+
+     /*Set width on the form input elements since they're 100% wide by default 
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+        
+    }*/
+
+     /*.table td.fit, 
+     .table th.fit {
+          white-space: nowrap;
+          width: 1%;
+     }*/
+
+    /*val header*/
+    /*#vidth {
+        position: absolute;
+        /*left: 0px;
+        border-right: 0px none black;
+        /*border-bottom: 0px none black;*/
+        /*margin-left: 500px;
+        width: 12.8em;
+        text-align: center;
+        height: 504px;
+        padding-top: 115px;
+        border: 1px solid #000;
+    }*/
+
+    /*source header
+    /*#sidth {
+        position: absolute;
+        width: 15.0em;
+        left: 0px;
+        height: 254px;
+        border-right: 0px none black;
+        border-bottom: 0px none black;
+        margin-left: 500px;
+        text-align: center;
+        padding-top : 115px;
+        /*border: 1px solid #000;
+    }*/
+    /*isource body*/
+    /*#isrowidtd {
+        position: absolute;
+        width: 15.0em;
+        left: 0px;
+        height: 3.7em;
+        margin-left: 500px;
+        border-right: 0px none black;
+        border-bottom: 0px none black;
+        /*border: 1px solid #000;
+    }*/
+
+    /*destination header*/
+    /*#didth {
+        position: absolute;
+        width: 15.10em;
+        left: 0px;
+        height: 254px;
+        border-right: 0px none black;
+        border-bottom: 0px none black;
+        margin-left: 720px;
+        text-align: center;
+        padding-top : 115px;
+        /*border: 1px solid #000;
+    }*/
+
+    /*destination body*/
+    /*#idrowidtd {
+        position: absolute;
+        width: 15.0em;
+        left: 0px;
+        height: 3.7em;
+        border-right: 0px none black;
+        margin-left: 740px;
+        /*border: 1px solid #000;
+    }*/
+
+    /*mode header*/
+    /*#midth {
+        position: absolute;
+        width: 8.0em;
+        left: 0px;
+        height: 254px;
+        border-right: 0px none black;
+        border-bottom: 0px none black;
+        margin-left: 980px;
+        text-align: center;
+        padding-top : 105px;
+        /*border: 1px solid #000;
+    }*/
+
+    /*mode body*/
+    /*#imrowidtd {
+        position: absolute;
+        width: 8.0em;
+        left: 0px;
+        height: 3.7em;
+        border-right: 0px none black;
+        margin-left: 980px;
+        /*border: 1px solid #000;
+    }*/
+
+    .form-control {
+        height: 30px;
+    }
+</style>
+@using (Html.BeginForm("Index", "Interface", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.daId)
+    <div class="row clearfix">
+        <span class="navbar-left">
+            &nbsp;&nbsp;&nbsp;&nbsp;<a class="" href="@Url.Action("Index", "DF", new {id = Model.daId })">Link To Channels & Alerts</a>
+            <span class="glyphicon glyphicon-expand"></span>
+        </span>
+        <div class="col-md-12 column" id="divIM">
+        </div>
+        <div class="col-md-12 column">
+            <button id="btnSave" type="button" class="btn btn-primary">Save Changes</button>
+            <button id="btnAddRow" type="button" class="btn btn-primary">Add New Row</button>
+        </div>
+    </div>
+    <div class="se-pre-con"></div>
+
+}
+@section Scripts{
+    <script type="text/javascript">
+        var highLevelTransactions = [];
+        var srno=1;
+        var rowCount;
+        var currentRow;
+
+        $(document).ready(function () {
+
+            $(".se-pre-con").fadeOut("slow");
+
+
+            $('.hiderow').hide();
+            //$('tr td:nth-child(2)').hide();
+            var model=@Html.Raw(Json.Encode(Model));
+
+            var interfaceMappingTable = makeTable(model,model.lstHighLevelTransaction);
+            
+            rindex();
+
+            var header_height = 220;
+            $('table th span').each(function () {
+                if ($(this).outerWidth() > header_height) header_height = $(this).outerWidth();
+            });
+
+            $('table th').height(header_height);
+
+            //On selection of attribute to populate values dropdown
+            $('#divIM').on('change','select', function() {
+                populateValues(this);
+            });
+
+            //to add new row
+           
+            $("#btnAddRow").click(function(e){
+                
+                // alert('inside add row btn click');
+                // alert("new Row serial num: "+srno);
+
+                //Stops or pauses Add function being exceuted
+                //e.preventDefault();
+
+                var valdationstatus = doValidations();
+                if (valdationstatus == true)
+                {
+                    var newrow=AddRow(model)
+                    //$('#TT>tbody>tr').filter(":last").after(newrow);
+                    $("#TT tbody").append(newrow);
+                    rindex();
+                }
+            });
+
+            //debugger;
+
+            //To delete row
+            $("#divIM").on('click', 'button.removebutton', function () {
+                if (confirm("Do you want to delete this row?")) {
+                    // debugger;
+                    //alert("In delete row function");
+                    rowCount=$('#TT tr').length;
+                    //alert('Total rows '+rowCount);
+
+                    if(rowCount ==2)
+                    {
+                        alert("Cannot delete all the rows");
+                    }
+                    else
+                    {
+
+                        var $item = $(this).closest("tr")   // Finds the closest row <tr>
+
+                        var $tds = $item.find("td:last-child")//("td:nth-child(2)")
+                                                       .text()         // Retrieves the text within <td>
+
+                        var sno = $item.find("td:first-child").text();
+                        //  $("#resultas").append($item);       // Outputs the answer
+                        var MyAppUrlSettings = {
+                            MyUsefulUrl: '@Url.Action("DeleteRowInterface", "Interface")'
+                        }
+
+                        $.ajax({
+                            type: 'POST',
+                            dataType: "json",
+                            traditional: true,
+                            contentType: "application/json; charset=utf-8",
+                            url:MyAppUrlSettings.MyUsefulUrl,
+                            //url:"/Interface/DeleteRowInterface/",
+                            //data: JSON.stringify(obj),
+                            data: JSON.stringify({ postData: $tds}),//sending the id to delete from the db
+                            // async: false,
+
+
+                            success: function (result) {
+                                alert("Selected value has been deleted for row No :"+ sno);
+                                isSuccess = result;
+                            }
+
+                        });
+
+                        $(this).closest('#TT tr').remove();
+                        srno--;
+                        rindex(this);
+                        //alert("Sr No after delete " +srno);
+                    }
+                }
+                return false;
+            });
+
+
+            //});
+
+            $("#btnSave").on("click", function (e) {
+               
+                var valdationstatus = doValidations();
+                // setting the URL where ajax is used
+                var MyAppUrlSettings = {
+                    MyUsefulUrl: '@Url.Action("SaveData", "Interface")'
+                }
+                if (valdationstatus == true)
+                {
+                    var jsondata = getJSONFromTable(model);//,model.lstHighLevelTransaction)
+                    //alert ("Data from table: "+jsondata);
+                    //debugger;
+                    $.blockUI(
+                    {
+                        message: '<h8><img src="@Url.Content("~/Content/Images/busy.gif")" /> StandBy...</h8>'
+                    });
+                    $.ajax({
+
+                        url: MyAppUrlSettings.MyUsefulUrl,
+                        data: JSON.stringify(jsondata),
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (result) {
+                            isSuccess = result;
+                        },
+                        error: function (result) {
+                            isSuccess = result;
+                        }
+
+                    }).done(function () {
+                        if (isSuccess == "1") {           // Successfully saved
+                            //alert("Record Inserted");
+                            //window.location.href='/Interface/Index'
+                            location.reload();
+                            $.unblockUI();
+                        }
+                        else {                      // Data Error
+                            $.unblockUI();
+                            alert("Error. Please, check the data");
+                        }
+                    });
+                }
+            });
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = Model.ClientID })"><span>' + "@Model.ProjectName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = Model.ProjectID })"><span>' + "@Model.ApplicationName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Module", new {id = Model.ApplicationID })"><span>' + "@Model.ModuleName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = Model.ModuleId })"><span>' + "@Model.daName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Products", new {id = Model.daId })"><span>' + "Products" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Transactions", new {id = Model.daId })"><span>' + "Transactions" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "AttributeList", new {id = Model.daId })"><span>' + "Attribute" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "TransactionAttribute", new {id = Model.daId })"><span>' + "Transaction Attribute" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "BusinessRules", new {id = Model.daId })"><span>' + "BusinessRules" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "SMD", new {id = Model.daId })"><span>' + "SourceDestinationMode" + '</span></a></li>');
+        });
+
+        function doValidations()
+        {
+            var text1,srcflag,destflag,modeflag, chk, attrflag, attrvalflag;
+            $('#TT').each(function(){
+
+                $('tbody tr').each(function(){
+                    srcflag=false;destflag=false;modeflag=false;chk=false;attrflag=false;attrvalflag=false;
+
+                    $(this).closest('tr').find('input:text').each(function(){
+                        if($(this).attr("name")=="interfaceDesc") text1=$(this).val();
+                    });
+                    if(text1=="")
+                    {
+                        alert("Interface description should not be empty in a row SlNo: "+ $(this).index()+1);
+                        return false;
+                    }
+
+                    $(this).closest('tr').find('select').each(function(){
+                        var srcid = $(this).prop('name').indexOf('source');
+                        //alert("Source ID "+srcid);
+                        if (srcid !=-1  && $(this).val() !="0")
+                        {
+                            srcflag = true;
+                            return false;
+                        }
+                    });
+                    if (srcflag ==false)
+                    {
+                        alert("Atleast one Source should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+                    $(this).closest('tr').find('select').each(function(){
+                        var destid = $(this).prop('name').indexOf('destination');
+                        if (destid !=-1  && $(this).val() !="0")
+                        {
+                            destflag = true;
+                            return false;
+                        }
+                    });
+                    if (destflag ==false)
+                    {
+                        alert("Atleast one Destination should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+                    $(this).closest('tr').find('select').each(function(){
+                        var modeid = $(this).prop('name').indexOf('mode');
+                        if (modeid !=-1  && $(this).val() !="0")
+                        {
+                            modeflag = true;
+                            return false;
+                        }
+                    });
+                    if (modeflag ==false)
+                    {
+                        alert("Atleast one Modetype should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    $(this).closest('tr').find('input:checkbox').each(function(){
+                        if($(this).prop('checked') == true) {
+                            chk = true;
+                            return false;
+                        }
+                    });
+
+                    if (chk ==false)
+                    {
+                        alert("Atleast one high level transaction checkbox should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    $(this).closest('tr').find('select').each(function(){
+                        var attrid = $(this).prop('name').indexOf('Attribute');
+                        if (attrid !=-1  && $(this).val() !="0")
+                        {
+                            attrflag = true;
+                            return false;
+                        }
+                    });
+
+                    $(this).closest('tr').find('select').each(function(){
+                        var attrvalid = $(this).prop('name').indexOf('Value');
+                        if (attrvalid !=-1  && $(this).val() !="0")
+                        {
+                            attrvalflag = true;
+                            return false;
+                        }
+                    });
+
+                    if (attrflag ==false)
+                    {
+                        alert("Atleast one Attribute should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                    if (attrvalflag ==false)
+                    {
+                        alert("Atleast one Attribute Value should be selected in row SlNo: " + ($(this).index() + 1));
+                        return false;
+                    }
+
+                });
+            });
+            if (text1 != "" && chk == true && srcflag==true && destflag==true && modeflag==true  && attrflag== true && attrvalflag == true)
+
+                return true;
+            else
+                return false;
+        }
+
+        function rindex()
+        {
+            //debugger;
+            $('#TT table').each(function(){
+                $('#tblInterface tr').each(function (index) {
+                    $(this).find('td:nth-child(1)').html(index);
+                });
+            });
+        }
+
+        //debugger;
+        function makeTable(model,highLevelTransactions){
+            //  debugger;
+            var table = $("<div id = 'TT'><table id = 'tblInterface' class='table table-bordered table-hover'>");
+
+            ///
+            /// Table head
+            ///
+            // id='r0', id ='idescidth', id ='sidth', id ='didth', id ='midth', id ='vidth'
+            html = "<thead>" +
+                   "    <tr>" +
+                   "        <th id ='headcol'>S No.</th>" +
+                   "        <th id ='rridth'>Requirement Reference*</th>" +
+                   "        <th id ='idescidth'>Interface Description*</th>" +
+                   "        <th id ='sidth'>Source*</th>" +
+                   "        <th id ='didth'>Destination*</th>" +
+                   "        <th>Mode*</th>"
+
+            $.each(highLevelTransactions , function (index, value){
+                html = html +  "        <th><span class='temp'>" + value.HighLevelTxnID+'_'+value.HighLevelTxnDesc + "</span></th>";
+            });
+            for ( var i = 1; i <= 10; i++ ) {
+                html = html +  "        <th> Attribute" + i + "</th>";
+                html = html +  "        <th> Value" + i + "</th>";
+            }
+
+
+            html = html +  "<th>Delete</th>";
+
+            html = html +  "<th class='hide'>ID</th> </tr>" +
+                           "</thead>" ;
+
+
+
+            var tableHead = $(html);
+            table.append(tableHead);
+
+            var tbody=$("<tbody/>");
+            var srno=1;
+            //To get the records already existing
+            //var r=  $(model.lstinterfaceData).filter(function (i,n){return n.interfaceAttrMapId !=0});
+
+            //alert("No of records which exist :"+ r.length);
+
+            //if(r.length>0)
+            if(model.lstinterfaceData.length>0)
+            {
+                var interfaceDataLst = [];
+                $.each(model.lstinterfaceData,function(index,value){
+                    if($.inArray(value.interfaceAttrMapId,interfaceDataLst)==-1){
+                        interfaceDataLst.push((value.interfaceAttrMapId));//pushing number of rows to be added
+                    }
+                });
+
+                var transseq = [];
+                $.each(interfaceDataLst,function(index,val1){
+                    $.each(model.lstinterfaceData, function(index, val2) {
+                        if (val2.interfaceAttrMapId==val1){
+                            transseq.push((val2.transactionSeq));   //pushing transaction sequence to array
+                        }
+                    });
+                    var currow=  $(model.lstinterfaceData).filter(function (i,n){return n.interfaceAttrMapId == val1});
+                    //var row = LoadRow(currow[0],transseq,model);
+                    var row = LoadRow(currow,transseq,model);
+                    //debugger;
+                    tbody.append(row);
+                    transseq.length = 0;
+                });
+                table.append(tbody);
+                return $('#divIM').append(table);
+            }
+            else// when now row exists display a empty row
+            {
+                var row = AddRow(model);
+                tbody.append(row);
+
+                table.append(tbody);
+                return $('#divIM').append(table);
+            }
+        }
+
+        function LoadRow(curRow,transeq,model)//,highLevelTransactions)
+        {
+            // debugger;
+            //var srno=1;
+            // ;  id='irowidtd', id='isrowidtd',  id='idrowidtd',  id='imrowidtd'
+            var interfaceRowNum=0;
+            currentRow=curRow[0];
+            var row = $("<tr/>");
+            $(row).html("<td id='colid'>"+ (srno++) +"</td>" + //1
+                         //"<td style='display:none;'>" + currentRow.interfaceId + "</td>"+
+                        "<td id='rowidtd'><input type='hidden' name='hdnIntmapID' value='" + currentRow.interfaceAttrMapId + "'><input name='reqref' oncopy='return false' oncut='return false' onpaste='return false' onkeypress='return DisableSpecialChars(event)' type='text' placeholder='Requirement Reference' maxlength='100' class='form-control input-md' value='"+currentRow.reqReference+"'   /></td>" + //2
+                        "<td id='irowidtd'><input name='interfaceDesc' type='text' placeholder='Interfa ce Description' oncopy='return false' oncut='return false' onpaste='return false' onkeypress='return DisableSomeSpecialChars(event)' maxlength='100' class='form-control input-md' value='"+currentRow.interfaceDesc+"' /></td>" //+ //3
+            );
+                         //"<td><input type='hidden' name='hdnmapID' value='" + currentRow.interfaceAttrMapId + "'></td>"
+            
+            var src=  "<td><select name='source' class ='selectpicker'><option value='0'>--Select-- </option>";//+ t[0].lstSource["SourceDesc"]+ "'    </td>"//+ //+ //4
+
+            $.each(model.lstSource,function(key,val){
+                if(val!=null)
+                {
+                    if(val.SourceID==currentRow.sourceId)
+                        src=src+ "<option value='"+val.SourceID+ "'selected>"+val.SourceDesc+"</option>"
+                    else
+                        src=src+ "<option value='"+val.SourceID+ "'>"+val.SourceDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(src);
+
+            var dest=  "<td><select name='destination' class ='selectpicker'><option value='0'>--Select-- </option>";
+            $.each(model.lstDestination,function(key,val){
+                if(val!=null)
+                {
+                    if(val.DestID==currentRow.destinationId)
+                        dest=dest+ "<option value='"+val.DestID+ "'selected>"+val.DestDesc+"</option>"
+                    else
+                        dest=dest+ "<option value='"+val.DestID+ "'>"+val.DestDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(dest);
+
+            var mode=  "<td><select name='mode' class ='selectpicker'><option value='0'>--Select-- </option>";
+            $.each(model.lstModeType,function(key,val){
+                if(val!=null)
+                {
+                    if(val.ModeTypeID==currentRow.modeTypeId)
+                        mode=mode+ "<option value='"+val.ModeTypeID+ "'selected>"+val.ModeTypeDesc+"</option>"
+                    else
+                        mode=mode+ "<option value='"+val.ModeTypeID+ "'>"+val.ModeTypeDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(mode);
+
+            $.each(model.lstHighLevelTransaction , function (index, value){
+                var chkfound = $.inArray(value.TransactionSeq, transeq);
+                if (chkfound != -1)
+                {
+                    $(row).append("<td id='tooltip'><span class='tooltiptext'>"+value.HighLevelTxnID + '_' + value.HighLevelTxnDesc+"</span><input type='hidden' name='hdnchk' value='" + curRow[interfaceRowNum].interfaceId +"'><input type='checkbox' value='" + value.TransactionSeq +"' checked=checked /> </td>"); //5
+                    interfaceRowNum +=1;
+                }
+                else
+                    $(row).append("<td id='tooltip'><span class='tooltiptext'>"+value.HighLevelTxnID + '_' + value.HighLevelTxnDesc+"</span><input type='hidden' name='hdnchk' value='0'><input type='checkbox' value='" + value.TransactionSeq +"' /> </td>"); //5
+            });
+            // debugger;
+            for(var j=1;j<=10;j++)
+            {
+                var attr=  "<td><select name='Attribute"+j+"' class ='selectpicker' ><option value='0'>--Select-- </option>";
+
+                var attrsel =currentRow["attrID"+j];
+
+                $.each(model.lstAttributes,function(key,val){
+                    if(val!=null)
+                    {
+                        if (val.AttributeID == currentRow["attrID"+j])
+                            attr = attr +  "<option value='" + val.AttributeID + "' selected>" + val.AttributeDesc + "</option>"
+                        else
+                            attr = attr +  "<option value='" + val.AttributeID + "'>" + val.AttributeDesc + "</option>"
+                    }
+                })+"</select></td>";
+                $(row).append(attr);
+
+                //*********************** Attribute Values population start ************************************
+                if (attrsel ==0)
+                {
+                    $(row).append("<td id='dd'><select name='Value"+j+"' class='selectWidth'><option value='0'>--Select Value--</option></select></td>");
+                }
+                else
+                {
+                    var attrVal = "<td id='dd'><select name='Value"+j+"' class='selectWidth'><option value='0'>--Select Value--</option>";
+                    // alert("ValueID: "+currentRow["attrValueID" + j]);
+
+                    // setting the URL where ajax is used
+                    var MyAppUrlsettings = {
+                        MyUsefulUrl : '@Url.Action("GetValues", "Interface")'
+                    }
+                    $.ajax({
+                        url: MyAppUrlsettings.MyUsefulUrl,
+                        async: false,
+                        type: 'GET',
+                        dataType:'json',
+                        data: {input:attrsel},
+                        cache:false,
+                        success: function (data) {
+                            $.each(data, function(key, val) {
+                                if (val != null)
+                                {
+                                    if (val.AttrValueID == currentRow["attrValueID" + j])
+                                        attrVal = attrVal +  "<option value='" + val.AttrValueID + "' selected>" + val.AttributeValue + "</option>";
+                                    else
+                                        attrVal = attrVal +  "<option value='" + val.AttrValueID + "'>" + val.AttributeValue + "</option>";
+                                }
+                            });
+                        }
+                    })+ "</select> </td>";
+
+                    $(row).append(attrVal);
+                }
+            }
+            // $(row).append("<td><input type='button' class='btnDeletRow' value='Delete Row' ></td>");
+            $(row).append("<td><button type='button' class='removebutton' title='Remove this row'>X</button></td>");
+            //  $(row).append("<td><input type='hidden' value='" + currentRow.interfaceAttrMapId +"' /> </td>");
+
+            // $(row).append("<td><button type='button' class='removebutton' id='hideid' title='Remove this row'>ddd</button></td>");
+
+            //srno++;
+            $(row).append("<td class=hide>"+currentRow.interfaceId+"<input type='hidden' name='hdnMapID'</td>");
+            return row;
+        }
+
+        function AddRow(model)//,highLevelTransactions)
+        {
+            // id='isrowidtd', id='idrowidtd', id='imrowidtd' 
+            //var row = $("<tr id='r"+srno+"'/>");
+            var row = $("<tr/>");
+            $(row).html("<td id='colid'>"+ srno +"</td>" + //1
+                        //"<td style='display:none;'></td>"+
+                        "<td id='rowidtd'><input type='hidden' name='hdnIntmapID' value='" + Date.now().toString().substr(6) + "00'><input name='reqref' oncopy='return false' oncut='return false' onpaste='return false' onkeypress='return DisableSpecialChars(event)' type='text' maxlength='100' placeholder='Requirement Reference' class='form-control input-md'   /></td>" + //2
+                        "<td id='irowidtd'><input name='interfaceDesc' type='text' placeholder='Interface Description' onkeypress='return DisableSomeSpecialChars(event)' oncopy='return false' oncut='return false' onpaste='return false' maxlength='100' class='form-control input-md' /></td>" //+ //3
+                        //"<td style='display:none;'></td>"
+            );
+            var src=  "<td><select name='source' class ='selectpicker'><option value='0'>--Select-- </option>";//+ t[0].lstSource["SourceDesc"]+ "'    </td>"//+ //+ //4
+
+            $.each(model.lstSource,function(key,val){
+                if(val!=null)
+                {
+                    src=src+ "<option value='"+val.SourceID+ "'>"+val.SourceDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(src);
+
+            var dest=  "<td><select name='destination' class ='selectpicker'><option value='0'>--Select-- </option>";
+            $.each(model.lstDestination,function(key,val){
+                if(val!=null)
+                {
+                    dest=dest+ "<option value='"+val.DestID+ "'>"+val.DestDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(dest);
+
+            var mode=  "<td><select name='mode' class ='selectpicker'><option value='0'>--Select-- </option>";
+            $.each(model.lstModeType,function(key,val){
+                if(val!=null)
+                {
+                    mode=mode+ "<option value='"+val.ModeTypeID+ "'>"+val.ModeTypeDesc+"</option>"
+                }
+            })+"</select></td>";
+            $(row).append(mode);
+
+            $.each(model.lstHighLevelTransaction , function (index, value){
+                $(row).append("<td id='tooltip'><span class='tooltiptext'>"+value.HighLevelTxnID + '_' + value.HighLevelTxnDesc+"</span><input type='hidden' name='hdnchk' value='0'><input type='checkbox' /> </td>");
+            });
+            for(j=0;j<10;j++)
+            {
+                var attr=  "<td><select name='Attribute"+j+"' class ='selectpicker' ><option value='0'>--Select-- </option>";
+                $.each(model.lstAttributes,function(key,val){
+                    if(val!=null)
+                    {
+                        attr=attr+ "<option value='"+val.AttributeID+ "'>"+val.AttributeDesc+"</option>"
+                    }
+                })+"</select></td>";
+                $(row).append(attr);
+                $(row).append("<td><select name='Value"+j+"' class='selectWidth'><option value='0'>--Select Value--</option></select></td>");
+            }
+            $(row).append("<td><button type='button' class='removebutton' title='Remove this row'>X</button></td>");
+            // $(row).append("<td><button type='button' class='hidden' id='hideid' title='Remove this row'>ddd"+currentRow.interfaceAttrMapId+"</button></td>");
+            srno++;
+            //alert('Updated id'+srno);
+            return row;
+        }
+
+        //TO populate attribute values according to selected attribute
+        function populateValues(selAttr)
+        {
+            var attrid = selAttr.name.indexOf('Attribute');
+            if (attrid != -1)
+            {
+                // setting the URL where ajax is used
+                var MyAppUrlSettings = {
+                    MyUsefulUrl: '@Url.Action("GetValues", "Interface")'
+                }
+                var attrvalSelected = selAttr.value;
+                var thisvalue = $(selAttr).find("option:selected").text();
+                var nextValelemnt =$(selAttr).closest('td').next().find('select');
+                nextValelemnt.empty();
+                $(nextValelemnt).append("<option value='0'>--Select Value--</option>");
+
+                $.blockUI(
+                {
+                    message: '<h8><img src="../../Content/Images/busy.gif" /> StandBy...</h8>'
+                });
+
+                $.getJSON(MyAppUrlSettings.MyUsefulUrl, { input: attrvalSelected }, function (data) {
+
+                    $.each(data, function(key, val) {
+                        if(val != null)
+                        {
+                            $(nextValelemnt).append("<option value='" + val.AttrValueID + "'>" + val.AttributeValue + "</option>");
+                        }
+                    });
+                }).done(function () {
+                    //if (isSuccess == "1") {           // Successfully Get Values
+
+                    $.unblockUI();
+                    //location.reload();
+                    //}
+                    //else {                      // Data Error
+                    //    alert("Error. Please, check the data");
+                    //}
+
+                });
+            }
+
+        }
+        //function getLinking(model, hlt, attribute)
+        //{
+        //    var islinked = false;
+        //    $.each(model, function (rowIndex, r) {
+        //        if(hlt == r.HighLevelTransaction && attribute == r.AttributeName)
+        //        {
+        //            islinked = r.IsLinked;
+        //            return islinked;
+        //        }
+        //    });
+        //    return islinked;
+        //}
+        function getJSONFromTable(model) {
+            var cntHighlvlTrans = model.lstHighLevelTransaction.length;
+            //debugger;
+            //var numOfcolumns=cntHighlvlTrans+26;//26 fixed columns
+            //alert("Inside get json function");
+
+            var tableRows = [];
+            $('#TT table').each(function(){
+                $('tbody tr').each(function () {
+                    var self = $(this);
+                    var i = 7;
+
+
+                    $.each(model.lstHighLevelTransaction,function(index,value){
+
+                        var isLinked='false';
+                        var interfaceMapId=0;
+                        var interfaceId=0;
+
+                        interfaceMapId=self.find("td:nth-child(2) input[type=hidden]").val();
+                        var reqReference = self.find("td:nth-child(2) input[type=text]").val();
+                        var interfaceDesc = self.find("td:nth-child(3) input[type=text]").val();
+                        //interfaceMapId=self.find("td:nth-child(4)").text();
+                        var sourceId = self.find("td:nth-child(4) select").val();
+                        var destinationId = self.find("td:nth-child(5) select").val();
+                        var modeId = self.find("td:nth-child(6) select").val();
+
+                        if (self.find("td:nth-child(" + i + ") input[type=checkbox]").is(":checked"))
+                            isLinked = 'true';
+                        interfaceId=self.find("td:nth-child(" + i + ") input[type=hidden]").val();
+
+                        var m=(6+cntHighlvlTrans);
+                        var n=m+1;
+                        var item = null;
+                        item = {};
+                        for(k=1;k<=10;k++)
+                        {
+                            //debugger;
+                            m=m+1;
+                            n=m+1;
+                            var attr="attrId"+k;
+                            var attrVal="attrvalueId"+k;
+                            attr = self.find("td:nth-child("+m+") select").val();
+                            if(attr!=0)
+                                item["attrID"+k]=attr;
+                            else
+                                item["attrID"+k]="";
+                            attrVal = self.find("td:nth-child("+n+") select").val();
+                            if(attrVal!=0)
+                                item["attrValueID"+k] = attrVal;
+                            else
+                                item["attrValueID"+k] = "";
+                            m++;
+                        }
+                        //item["interfaceId"]=interfaceId;
+                        item["reqReference"] = reqReference;
+                        item["interfaceDesc"] = interfaceDesc;
+                        item["interfaceAttrMapId"]=interfaceMapId;
+                        item["interfaceId"]=interfaceId;
+                        item["sourceId"]=sourceId;
+                        item["destinationId"]=destinationId;
+                        item["modeTypeId"]=modeId;
+                        item["transactionSeq"]=value["TransactionSeq"];
+                        item["highLevelTransaction"]=value["HighLevelTxnID"]+"_"+value["HighLevelTxnDesc"];
+                        item["IsLinked"]=isLinked;
+                        item["daId"] = $("#daId").val();
+                        tableRows.push(item);
+                        i++;
+                    });
+
+                });
+            });
+            return tableRows;
+
+        };
+
+        function DisableSpecialChars(e) {
+           
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode!=46) {//if key stroke is space bar, then pass. ASCII code for space bar is 32, dot is for 46
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+
+        function DisableSomeSpecialChars(e) {
+           
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 62 && event.charCode != 61 && event.charCode != 60) {//if key stroke is space bar, then pass. ASCII code for space bar is 32, dot is for 46
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+    </script>
+
+}

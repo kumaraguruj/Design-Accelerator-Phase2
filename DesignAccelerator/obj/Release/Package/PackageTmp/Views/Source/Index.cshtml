@@ -1,0 +1,129 @@
+﻿@model DesignAccelerator.Models.ViewModel.SourceViewModel
+
+@{
+    ViewBag.Title = "Source";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@*<div>
+        <br />
+    </div>*@
+
+<h2>Source Details</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <section id="SourceForm">
+            @using (Html.BeginForm("Index", "Source", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.DAID)
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.sourceDesc, "Source*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-6">
+                        <span class="form-inline" style="margin-left:-50px">
+                            @Html.TextBoxFor(m => m.sourceDesc, new { @maxlength = "50", @class = "form-control", @required = "required", @style = "width:200px" })
+                            @Html.ValidationMessageFor(m => m.sourceDesc, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:80px">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index", "SMD")">Back</a>
+</div>
+<hr />
+<div style="width:50%;">
+    @{
+        WebGrid grid = new WebGrid(Model.SourceList);
+        @grid.GetHtml(
+        tableStyle: "table table-bordered table-hovered",
+        fillEmptyRows: false,
+        headerStyle: "gvHeading",
+        alternatingRowStyle: "gvAlternateRow",
+        rowStyle: "gvRow",
+        footerStyle: "gvFooter",
+        mode: WebGridPagerModes.All,
+        firstText: "<< First",
+        previousText: "< Prev",
+        nextText: "Next >",
+        lastText: "Last >>",
+        columns: new[] {
+                            grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                            grid.Column ("sourceDesc",header: "Source",canSort:true),
+                            grid.Column ("SourceID",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                @if(Model.EdiPermission) {
+                                    @Html.ActionLink("Edit | ", "Edit", new {sourceId=item.sourceID });
+                                              }
+                                              else {
+                                    <text>Edit | </text>
+                                              }
+
+                                @if(Model.DeletePermission){
+                                    @Html.ActionLink("Delete", "Delete", new {sourceId=item.sourceID })
+                                              }
+                                             else {
+                                    <text>Delete</text>
+                                             }
+
+                                </text>
+                                         )
+                       }
+
+       )
+}
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSave").on("click", function (e) {
+                var SNm = $("#sourceDesc").val();
+                $("table tbody tr").each(function () {
+                    var get_Sname = $(this).find("td:nth-child(2)")[0].innerText;
+                    //debugger;
+                    if (get_Sname.toUpperCase() == SNm.toUpperCase()) {
+                        alert("This Source already exists");
+                        e.preventDefault();
+                    }
+                });
+            });
+        })
+
+        var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+        if (model == true)
+            $('#btnSave').prop("disabled", "");
+        else
+            $('#btnSave').prop("disabled", "disabled");
+
+        $("#sourceDesc").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+    </script>
+}

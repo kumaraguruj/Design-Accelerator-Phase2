@@ -1,0 +1,89 @@
+﻿@model DesignAccelerator.Models.ViewModel.PeriodTypeViewModel
+
+@{
+    ViewBag.Title = "Period Type";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+<div>
+    <br />
+</div>
+
+<h2>Period Type Details</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <section id="SourceForm">
+            @using (Html.BeginForm("Index", "PeriodType", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.DAID)
+                <div class="form-group">
+                    @Html.Label("PeriodType", new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.periodTypeDesc, new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.periodTypeDesc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Add" name="action:Add" class="btn btn-default" />
+                        <input type="submit" value="Cancel" onclick="Cancel()" class="btn btn-default" />
+                    </div>
+                </div>            }
+        </section>
+    </div>
+</div>
+<hr />
+
+<div style="width:100%;">
+    @{
+        WebGrid grid = new WebGrid(Model.PeriodTypeList);
+        @grid.GetHtml(
+        tableStyle: "table table-bordered table-hovered",
+        fillEmptyRows: false,
+        headerStyle: "gvHeading",
+        alternatingRowStyle: "gvAlternateRow",
+        rowStyle: "gvRow",
+        footerStyle: "gvFooter",
+        mode: WebGridPagerModes.All,
+        firstText: "<< First",
+        previousText: "< Prev",
+        nextText: "Next >",
+        lastText: "Last >>",
+        columns: new[] {
+                            grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                            grid.Column ("PeriodTypeDesc",header :"Period Type Description",canSort :true),
+                            grid .Column ("PeriodTypeID", header :"Edit/Delete",canSort :false,
+                                           format :@<text>
+                                @Html.ActionLink("Edit | ","Edit",new {periodTypeId=item.periodTypeID })
+                                @Html.ActionLink("Delete","Delete",new {periodTypeId=item.periodTypeID })
+                                        </text>
+                                         )
+                       }
+
+       )
+    }
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        function Cancel() {
+            $("PeriodTypeDesc").val = '';
+        }
+        $(document).ready(function () {
+
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = Model.ClientId })"><span>' + "@Model.ProjectName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = Model.ProjectId })"><span>' + "@Model.ApplicationName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = Model.ApplicationID })"><span>' + "@Model.DAName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Home", new {id = Model.DAID })"><span>' + "DA Home" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Masters", "Home", new {id = Model.DAID })"><span>' + "Masters Home" + '</span></a></li>');
+         });
+
+    </script>
+    }

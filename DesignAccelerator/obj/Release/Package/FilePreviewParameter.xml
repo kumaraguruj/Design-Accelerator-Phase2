@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="Default Web Site/DesignAccelerator" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\Guru\\DA\ 505\\Projects\\Design\ Accelerator\ Phase2\\DesignAccelerator\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\Guru\\DA\ 505\\Projects\\Design\ Accelerator\ Phase2\\DesignAccelerator\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DbConnection-Web.config Connection String" description="" value="Data Source=ATBLR04015\SQLEXPRESS; initial catalog = DA; persist security info=True; user id=sa; password=Admin@123;" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\Guru\\DA\ 505\\Projects\\Design\ Accelerator\ Phase2\\DesignAccelerator\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DbConnection']/@connectionString" />
+  </parameter>
+</parameters>

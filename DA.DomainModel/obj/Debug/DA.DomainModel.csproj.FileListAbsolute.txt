@@ -1,0 +1,5 @@
+D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\bin\Debug\DA.DomainModel.dll
+D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\bin\Debug\DA.DomainModel.pdb
+D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Debug\DA.DomainModel.dll
+D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Debug\DA.DomainModel.pdb
+D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Debug\DA.DomainModel.csprojResolveAssemblyReference.cache
