@@ -1,0 +1,123 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model FrequencyTypeViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<h2>Frequency</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <section id="FrequencyTypeForm">
+            @using (Html.BeginForm("Index", "FrequencyType", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {              
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.daid)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FreqTypeDesc, "Frequency Type*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-8">
+                        <span class="form-inline" style="margin-left:-40px">
+                            @Html.TextBoxFor(m => m.FreqTypeDesc, new { @maxlength = "50", @class = "form-control", @required = "Required" })
+                            @Html.ValidationMessageFor(m => m.FreqTypeDesc, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:120px">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />                        
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index", "DF")">Back</a>
+</div>
+<hr />
+<div style="width:50%;">
+    @{
+        WebGrid grid = new WebGrid(Model.lstFreqTypes);        
+        @grid.GetHtml(
+              tableStyle: "table table-bordered table-hover",
+              fillEmptyRows: false,
+              headerStyle: "gvHeading",
+              alternatingRowStyle: "gvAlternateRow",
+              rowStyle: "gvRow",
+              footerStyle: "gvFooter",
+              mode: WebGridPagerModes.All,
+              firstText: "<< First",
+              previousText: "< Prev",
+              nextText: "Next >",
+              lastText: "Last >>",
+              columns: new[] {
+                                grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("FreqTypeDesc",header: "Frequency Type",canSort:true),
+                                grid.Column("FreqTypeID",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                    @if(Model.EdiPermission) {
+                                        @Html.ActionLink("Edit | ", "Edit", new { id=item.FreqTypeID});
+                                              }
+                                              else {
+                                        <text>Edit | </text>
+                                              }
+
+                                    @if(Model.DeletePermission){
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.FreqTypeID})
+                                              }
+                                             else {
+                                        <text>Delete</text>
+                                             }
+
+                                </text>
+                                            )
+                               }
+                     )
+}
+</div>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        $("#btnSave").on("click", function (e) {
+            var Fdesc = $("#FreqTypeDesc").val();
+            $("table tbody tr").each(function () {
+                var get_Freqdesc = $(this).find("td:nth-child(2)")[0].innerText;
+                //debugger;
+                if (get_Freqdesc.toUpperCase() == Fdesc.toUpperCase()) {
+                    alert("This Frequency already exists");
+                    e.preventDefault();
+                }
+            });
+        });
+    })
+
+    var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+    if (model == true)
+        $('#btnSave').prop("disabled", "");
+    else
+        $('#btnSave').prop("disabled", "disabled");
+
+    $("#FreqTypeDesc").bind('keypress', function (event) {
+
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                event.preventDefault();
+                return false;
+            }
+        }
+    });
+</script>
+}

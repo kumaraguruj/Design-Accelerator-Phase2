@@ -9,3 +9,16 @@ D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\E
 D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.BusinessLayer\obj\Release\DA.BusinessLayer.csprojResolveAssemblyReference.cache
 D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.BusinessLayer\obj\Release\DA.BusinessLayer.dll
 D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.BusinessLayer\obj\Release\DA.BusinessLayer.pdb
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\DA.BusinessLayer.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\DA.BusinessLayer.pdb
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\DA.DataAccessLayer.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\DA.DomainModel.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\EPPlus.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\EntityFramework.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\DA.DataAccessLayer.pdb
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\DA.DomainModel.pdb
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\EPPlus.xml
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\bin\Release\EntityFramework.xml
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\obj\Release\DA.BusinessLayer.csprojResolveAssemblyReference.cache
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\obj\Release\DA.BusinessLayer.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.BusinessLayer\obj\Release\DA.BusinessLayer.pdb

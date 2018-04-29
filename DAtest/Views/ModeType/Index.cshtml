@@ -1,0 +1,123 @@
+﻿@model DesignAccelerator.Models.ViewModel.ModeTypeViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<h2>Mode Type</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <section id="ModeTypeForm">
+            @using (Html.BeginForm("Index", "ModeType", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {            
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.daid)
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ModeTypeDesc, "Mode Type*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-6">
+                        <span class="form-inline" style="margin-left:-40px">
+                            @Html.TextBoxFor(m => m.ModeTypeDesc, new { @maxlength = "20", @class = "form-control", @required = "Required" })
+                            @Html.ValidationMessageFor(m => m.ModeTypeDesc, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:90px">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />                        
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index", "SMD")">Back</a>
+</div>
+<hr />
+<div style="width:50%;">
+    @{
+        WebGrid grid = new WebGrid(Model.lstModeTypes);        
+        @grid.GetHtml(
+              tableStyle: "table table-bordered table-hover",
+              fillEmptyRows: false,
+              headerStyle: "gvHeading",
+              alternatingRowStyle: "gvAlternateRow",
+              rowStyle: "gvRow",
+              footerStyle: "gvFooter",
+              mode: WebGridPagerModes.All,
+              firstText: "<< First",
+              previousText: "< Prev",
+              nextText: "Next >",
+              lastText: "Last >>",
+              columns: new[] {
+                                grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("ModeTypeDesc",header: "Mode Type",canSort:true),
+                                grid.Column("ModeTypeID",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                    @if(Model.EdiPermission) {
+                                        @Html.ActionLink("Edit | ", "Edit", new { id=item.ModeTypeID});
+                                              }
+                                              else {
+                                        <text>Edit | </text>
+                                              }
+
+                                    @if(Model.DeletePermission){
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.ModeTypeID})
+                                              }
+                                             else {
+                                        <text>Delete</text>
+                                             }
+
+                                </text>
+                                            )
+                               }
+                     )
+}
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSave").on("click", function (e) {
+            var MDesc = $("#ModeTypeDesc").val();
+            $("table tbody tr").each(function () {
+                var get_ModeDesc = $(this).find("td:nth-child(2)")[0].innerText;
+                //debugger;
+                if (get_ModeDesc.toUpperCase() == MDesc.toUpperCase()) {
+                    alert("This ModeType already exists");
+                    e.preventDefault();
+                }
+            });
+        });
+    })
+
+    var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+    if (model == true)
+        $('#btnSave').prop("disabled", "");
+    else
+        $('#btnSave').prop("disabled", "disabled");
+         
+    $("#ModeTypeDesc").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+    </script>
+}

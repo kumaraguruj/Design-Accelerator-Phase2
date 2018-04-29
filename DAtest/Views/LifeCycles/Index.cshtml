@@ -1,0 +1,141 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model LifeCyclesViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<div class="navbar-static-top">
+        <ul class="breadcrumb"></ul>
+</div>*@
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<h2>Transactions Life Cycle</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="LifeCyclesForm">
+            @using (Html.BeginForm("Index", "LifeCycles", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {   
+                @Html.AntiForgeryToken()         
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.daid)
+                //@Model.daid
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LifeCycleDesc, "Life Cycle*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-100px">
+                            @Html.TextBoxFor(m => m.LifeCycleDesc, new { @maxlength = "30", @class = "form-control", @required = "Required" })
+                            @Html.ValidationMessageFor(m => m.LifeCycleDesc, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left:95px">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />                        
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<div>
+    @*<a href="@Url.Action("Index", "Products", new { id = Model.daId})">Back</a>*@
+    <a id="backlink" href="">Back</a>
+</div>
+<hr />
+<div style="width:50%;">
+    @{
+        WebGrid grid = new WebGrid(Model.lstLifeCycles);        
+        @grid.GetHtml(
+              tableStyle: "table table-bordered table-hover",
+              fillEmptyRows: false,
+              headerStyle: "gvHeading",
+              alternatingRowStyle: "gvAlternateRow",
+              rowStyle: "gvRow",
+              footerStyle: "gvFooter",
+              mode: WebGridPagerModes.All,
+              firstText: "<< First",
+              previousText: "< Prev",
+              nextText: "Next >",
+              lastText: "Last >>",
+              columns: new[] {
+                                grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("LifeCycleDesc",header: "Life Cycle",canSort:true),
+                                grid.Column("LifeCycleID",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                    @if(Model.EdiPermission) {
+                                        @Html.ActionLink("Edit | ", "Edit", new { id=item.LifeCycleID});
+                                              }
+                                              else {
+                                        <text>Edit | </text>
+                                              }
+
+                                    @if(Model.DeletePermission){
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.LifeCycleID})
+                                              }
+                                             else {
+                                        <text>Delete</text>
+                                             }
+
+                                </text>
+                                            )
+                               }
+                     )
+}
+</div>
+
+@*@section Scripts {
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+                $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = Model.ClientID })"><span>' + "@Model.ProjectName" + '</span></a></li>');
+                $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = Model.ProjectID })"><span>' + "@Model.ApplicationName" + '</span></a></li>');
+                $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = Model.ApplicationID })"><span>' + "@Model.daName" + '</span></a></li>');
+                $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Home", new {id = Model.daid })"><span>' + "DA Home" + '</span></a></li>');
+                $('.breadcrumb').append('<li><a href="@Url.Action("Masters", "Home", new {id = Model.daid })"><span>' + "Masters Home" + '</span></a></li>');
+            });
+
+        </script>
+
+    }*@
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('click', '#backlink', function () {
+               this.href = "@Session["PreviousURL"]";
+            });
+        });
+
+
+        $("#LifeCycleDesc").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+        var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+        if (model == true)
+            $('#btnSave').prop("disabled", "");
+        else
+            $('#btnSave').prop("disabled", "disabled");
+        
+       
+    </script>
+} 

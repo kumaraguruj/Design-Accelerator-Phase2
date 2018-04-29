@@ -1,0 +1,614 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model MISReports
+
+@{
+    ViewBag.Title = "UserManagementAndClientInformation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<h2>MIS Reports</h2>
+<hr style="width:65%;" />
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="CreateUserManagementForm">
+            <div class="form-horizontal">
+                @*//  @using (Html.BeginForm("Index", "MISReports", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            //{*@
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.UserId)
+
+                <div class="form-group">
+                    @*@Html.LabelFor(m => m.MisReports, "MISReports", htmlAttributes: new { @class = "col-sm-2 control-label", @style = "text-align:left" })*@
+                    <div class="col-md-6">
+                        <span class="form-inline" style="margin-left:150px">
+                            <label radio="inline">
+                                @*@Html.RadioButton("Reports", new { id = 1, @checked = "true" }, new { @checked = true, @id = "usermgnt" })*@
+                                <input type="radio" name="radioName" value="User Management" id="usermgnt" checked="checked" />
+                                <span>User Management</span>
+                                @*@Html.RadioButtonFor(m => m.UserManagement,true)
+                            <span>User Management</span>*@
+
+                            </label>
+                        </span>
+                        <span class="form-inline" style="margin-left:100px">
+                            <label radio="inline">
+                                @*style="margin:8px 0 0"*@
+                                @*@Html.RadioButton("Reports", new { id = 2 }, new { @id = "clnginfo" })
+                            <span>Client Information</span>*@
+                                <input type="radio" name="radioName" value="Client Information" id="clientinfo" />
+                                <span>Client Information</span>
+                                @*@Html.RadioButtonFor(m => m.ClientInformation, "")
+                            <span>Client Information</span>*@
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                </div>
+                <div id="UsrMgnt">
+                    <div class="form-group">
+                        @*<label>From Date</label>*@
+                        @Html.Label("From Date*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                        <div class="col-md-8">
+                            <span class="form-inline" style="margin-left:-30px">
+                                @*<input id="Fromdate" type="date" name="" style="width:100px" />*@
+                                @Html.TextBoxFor(m => m.Fromdate, new { @maxlength = "10", @class = "form-control", @required = "required", style = "width:100px", id = "FromDate" })
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @*<label>ToDate</label>*@
+                        @Html.Label("To Date*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                        <div class="col-md-8">
+                            <span class="form-inline" style="margin-left:-30px">
+                                @*<input id="Todate" type="date" name="" style="width:100px" />*@
+                                @Html.TextBoxFor(m => m.ToDate, new { @maxlength = "10", @class = "form-control", @required = "required", style = "width:100px", id = "ToDate" })
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Actions *", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                        <div class="col-md-10">
+                            <span class="form-inline" style="margin-left:-30px">
+                                @Html.DropDownListFor(m => m.actionName, new SelectList(Model.lstActions, "ActionID", "ActionName", ""), "--Select Actions--", new { @class = "form-control", @required = "Required", style = "width:150px", id = "actions" })
+                            </span>
+
+                            <span id="export" class="form-inline" style="margin-left:80px">
+                                @Html.ActionLink("Export to Excel", "ExportToExcelUserManagement1", "MISReports", new { @id = "btnExportUsermgt" })
+                                @*<a id="btnExport1">Export to Excel</a>*@
+                            </span>
+
+                        </div>
+                    </div>
+                    <div class="form-group" id="statusDiv">
+                        @Html.Label("Status *", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                        <div class="col-md-10">
+                            <span class="form-inline" style="margin-left:-30px">
+                                @*@Html.DropDownList("Status", ViewData["list"] as SelectList, "--Select Status--", htmlAttributes: new { @class = "form-control", @required = "Required", style = "width: 150px", id = "status" })*@
+                                @Html.DropDownList("Status", @*"--Select Status--", htmlAttributes: new { @class = "form-control", @required = "Required", style = "width: 150px", id = "status" })*@
+                                        new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Active", Value = "1" },
+                                            new SelectListItem{ Text="Inactive", Value = "0" }
+                                        }, "--Select Statu--", htmlAttributes: new { @class = "form-control", @required = "Required", style = "width:150px", id = "status" })
+                            </span>
+
+                        </div>
+
+                    </div>
+                    @*@Html.DropDownList("ObjList", (IEnumerable<SelectListItem>)ViewBag.regionids, new { id = "ddlLocations", @class = "form-control" })*@
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10" style="margin-left:165px">
+                            <input id="btnSave" type="button" value="Submit" name="action:Add" class="btn btn-default; button" />
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ClntInfo" style="display:none">
+                    <div class="form-group">
+                        @Html.Label("Filter *", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                        <div class="col-md-10">
+                            <span class="form-inline" style="margin-left:-120px">
+                                @Html.DropDownListFor(model => model.RegionName, Model.RegionList, "--By Region--", new { @class = "form-control", style = "width:200px", id = "regionId" })
+                            </span>
+                            <span class="form-inline" style="margin-left:40px">
+                                @Html.DropDownList("applicationids", (IEnumerable<SelectListItem>)ViewBag.applicationids, "--By Application--", new { @class = "form-control", style = "width:200px", id = "applicationId" })
+                            </span>
+                            <span id="export" class="form-inline" style="margin-left:80px">
+                                @Html.ActionLink("Export to Excel", "ExportToExcelUserManagement2", "MISReports", new { byRegion = "d1", byApplication = "d2" }, null)
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           @*// }*@
+        </section>
+
+    </div>
+</div>
+
+<div>
+    <a id="backlink" href="">Back</a>
+    @*<a href="@Url.Action("Index", "Client")">Back</a>*@
+</div>
+<hr />
+@{
+    IEnumerable<MISReports> MisReportsViewModel2 = ViewData["misReportsViewModel2"] as IEnumerable<MISReports>;
+}
+
+<div style="width:65%;">
+    @{
+
+        try
+        {
+
+            WebGrid grid = new WebGrid(MisReportsViewModel2);
+            <div id="webgridUsrMgmt">
+                @grid.GetHtml(
+           tableStyle: "table table-bordered table-hover",
+           fillEmptyRows: false,
+           headerStyle: "gvHeading",
+           alternatingRowStyle: "gvAlternateRow",
+           rowStyle: "gvRow",
+           footerStyle: "gvFooter",
+           mode: WebGridPagerModes.All,
+           firstText: "<< First",
+           previousText: "< Prev",
+           nextText: "Next >",
+           lastText: "Last >>",
+           columns: new[] {
+                            grid.Column(header: "S.No", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                            grid.Column("UserName",header: "User Name", canSort:false),
+                            grid.Column("CreatorName",header: "Creator Name",canSort:false),
+                            grid.Column("AuthName",header: "Authorizer Name",canSort:false),
+                            grid.Column("CreateDate",header: "Created Date",
+                                format: (item) => string.Format("{0:dd/MM/yyyy}", item.createDate), canSort:false),
+                            grid.Column("Status",header: "Status",
+                                format: item =>
+                                        {
+                                            return item.Status ? "Active" : "InActive";
+                                        }, canSort:false),
+                            //grid.Column("actionName",header: "Action",canSort:false),
+                              grid.Column("ActionID",header:"Action",canSort:false,
+                                             format: @<text>
+                                @if(Model.ActionID == 2) {
+                                    <text>Modified</text>
+                                                }
+                                            else if(Model.ActionID == 3) {
+                                    <text>Deleted</text>
+                                                }
+                                            else{
+                                    <text>Add</text>
+                                                }
+                                            </text>
+                                        )
+
+
+
+                            }
+                     )
+            </div>
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+</div>
+
+@{
+    IEnumerable<MISReports> MisReportsViewModel1 = ViewData["misReportsViewModel1"] as IEnumerable<MISReports>;
+}
+
+<div style="width:80%;">
+    @{
+
+        try
+        {
+
+            WebGrid grid = new WebGrid(MisReportsViewModel1);
+            <div id="webgridClntInfo" style="display:none">
+                @grid.GetHtml(
+              tableStyle: "table table-bordered table-hover",
+              fillEmptyRows: false,
+              headerStyle: "gvHeading",
+              alternatingRowStyle: "gvAlternateRow",
+              rowStyle: "gvRow",
+              footerStyle: "gvFooter",
+              mode: WebGridPagerModes.All,
+              firstText: "<< First",
+              previousText: "< Prev",
+              nextText: "Next >",
+              lastText: "Last >>",
+              columns: new[] {
+                                grid.Column(header: "S.No", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("ClientName",header: "Client Name",canSort:false),
+                                grid.Column("ProjectName",header: "Project Name",canSort:false),
+                                grid.Column("ApplicationName",header: "Application Name",canSort:false),
+                                grid.Column("AppVersion",header: "Version",canSort:false),
+                                grid.Column("BankTypeName",header: "Bank Type",canSort:false),
+                                grid.Column("RegionName",header: "Region",canSort:false),
+
+                             }
+                     )
+            </div>
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.maskedinput.min.js")"></script>
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.12.4.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.12.1.js")"></script>
+
+    <script type="text/javascript">
+
+        //text formatting
+        //$("#FromDate").mask("99/99/9999");
+        //$("#ToDate").mask("99/99/9999");
+
+        $(document).ready(function () {
+            $(document).on('click', '#backlink', function () {
+                this.href = "@Session["PreviousURL"]";
+            });
+        });
+
+        $(function () {
+            $("#FromDate").datepicker();
+            $("#ToDate").datepicker();
+        })
+
+        $(document).ready(function () {
+
+            $("#FromDate,#ToDate,#actions,#status").change(function () {
+
+                $(this).css("border-color", "#ccc");
+            })
+
+
+        })
+
+        //Client Information
+
+        $("#regionId").change(function () {
+
+
+            // setting the URL where ajax is used
+            var MyAppUrlSettings = {
+                MyUsefulUrl: '@Url.Action("GetApplicationList", "MISReports")'
+            }
+            var jsondata = { regionName: $("#regionId option:selected").text() };
+
+            $.ajax({
+                cache: false,
+                url: MyAppUrlSettings.MyUsefulUrl,
+                data: jsondata,
+                type: 'GET',
+                async: false,
+                datatype: 'application/json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (choices) {
+
+                    var selectHTML = "<option value='--By Application--'>--By Application--</option>";
+
+                    for (i = 0; i < choices.length; i = i + 1) {
+
+                        selectHTML += "<option value='" + choices[i]["Value"] + "'>" + choices[i]["Text"] + "</option>";
+                    };
+
+                    $("#applicationId").html(selectHTML);
+                }
+
+            });
+        });
+
+    $("#applicationId").change(function () {
+
+        // setting the URL where ajax is used
+        var MyAppUrlSettings = {
+            MyUsefulUrl: '@Url.Action("ChangeData", "MISReports")'
+        }
+        var jsondata = { regionId: $("#regionId option:selected").text(), applicationId: $("#applicationId option:selected").text() };
+
+        $.ajax({
+            cache: false,
+            url: MyAppUrlSettings.MyUsefulUrl,
+            data: jsondata,
+            type: 'GET',
+            async: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                isSuccess = result;
+
+                var str;
+                var ind;
+                if (result.length != 0) {
+                    var myObj = result;
+
+                    str = "<table id='ajaxdata' class='table table-bordered table-hover'><tr class='gvHeading'><th>S.No</th><th>Client Name</th><th>Project Name</th><th>Application Name</th><th>Version</th><th>Bank Type</th><th>Region</th></tr>";
+
+                    $.each(result, function (index, value) {
+                        ind = index + 1;
+
+                        str += "<tr><td>" + ind + "</td><td>" + myObj[index]["ClientName"] + "</td><td>" + myObj[index]["ProjectName"] + "</td><td>" + myObj[index]["ApplicationName"] + "</td><td>" + myObj[index]["AppVersion"] + "</td><td>" + myObj[index]["BankTypeName"] + "</td><td>" + myObj[index]["RegionName"] + "</td></tr>";
+                    });
+
+                    str += "</table>";
+                }
+                else {
+
+                    str = "<table id='emptydata' class='table table-bordered table-hover'><tr class='gvHeading'><th>S.No</th><th>Client Name</th><th>Project Name</th><th>Application Name</th><th>Version</th><th>Bank Type</th><th>Region</th></tr>";
+                }
+
+                $("#webgridClntInfo").css("display", "block");
+                $("#webgridClntInfo").html(str);
+            },
+            error: function (result) {
+                isSuccess = result;
+            }
+        });
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //User Management
+    $(document).ready(function () {
+        $("#actions").change(function () {
+
+            if ($("#actions option:selected").text() == "Modify" || $("#actions option:selected").text() == "Delete") {
+                $("#statusDiv").css("display", "none");
+                $("#export").hide();
+
+            }
+            else {
+                $("#statusDiv").css("display", "block");
+                $("#export").hide();
+            }
+
+        });
+        $("#status").change(function () {
+
+            if ($("#status option:selected").text() == "Active" || $("#status option:selected").text() == "InActive") {
+
+                $("#export").hide();
+
+            }
+
+        });
+    });
+
+    $("#btnSave").click(function (e) {
+        
+
+        if ($("#FromDate").val() == '') {
+            $("#FromDate").css("border-color", "Red")
+        }
+        else {
+            $("#FromDate").css("border-color", "#ccc");
+        }
+
+        if ($("#ToDate").val() == '') {
+            $("#ToDate").css("border-color", "Red")
+        }
+        else {
+            $("#ToDate").css("border-color", "#ccc");
+        }
+       
+
+        if ($("#status option:selected").text() == '--Select Status--') {
+            $("#status").css("border-color", "Red")
+        }
+        else {
+            $("#status").css("border-color", "#ccc");
+        }
+        
+        if ($("#actions option:selected").text() == '--Select Actions--') {
+            $("#actions").css("border-color", "Red")
+        }
+        else {
+            $("#actions").css("border-color", "#ccc");
+        }        
+        if ($("#FromDate").val() != '' && $("#ToDate").val() != '' && $("#actions option:selected").text() != '--Select Actions--') {
+            
+
+            if ($("#actions option:selected").text() == "Add" && $("#status option:selected").text() == '--Select Status--')
+            {                
+                return false;
+
+            }
+
+            $("#export").show();
+            
+            // setting the URL where ajax is used
+            var MyAppUrlSettings = {
+                MyUsefulUrl: '@Url.Action("ShowData", "MISReports")'
+            }
+            
+            var jsondata = { fromDate: $("#FromDate").val(), toDate: $("#ToDate").val(), actions: $("#actions option:selected").val(), status: $("#status option:selected").val() };
+            //alert(JSON.stringify(jsondata));
+            
+            $.ajax({
+
+                url: MyAppUrlSettings.MyUsefulUrl,
+                data: jsondata,
+                type: 'GET',
+                async: true,
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {                    
+                    isSuccess = result;
+                    var str;
+                    var ind; 
+                    
+                    if (result.length != 0) {
+                        var myObj = result;
+                        if ($("#actions option:selected").text() == "Modify" || $("#actions option:selected").text() == "Delete") {
+
+                            str = "<table id='ajaxdata' class='table table-bordered table-hover'><tr class='gvHeading'><th>S.No</th><th>User Name</th><th>Creator Name</th><th>Authorizer Name</th><th>Created Date</th> <th>Action</th></tr>";
+
+                            $.each(result, function (index, value) {
+                                ind = index + 1;
+                                str += "<tr><td>" + ind + "</td><td>" + myObj[index]["UserName"] + "</td><td>" + myObj[index]["CreatorName"] + "</td><td>" + myObj[index]["AuthName"] + "</td><td>" + myObj[index]["CreateDate"] + "</td><td>" + myObj[index]["ActionName"] + "</td></tr>";
+
+                            });
+
+                            str += "</table>";
+
+                        }
+                        else {
+                            str = "<table id='ajaxdata' class='table table-bordered table-hover'><tr class='gvHeading'><th>S.No</th><th>User Name</th><th>Creator Name</th><th>Authorizer Name</th><th>Created Date</th><th>Status</th><th>Action</th></tr>";
+
+                            $.each(result, function (index, value) {
+                                ind = index + 1;
+
+                                str += "<tr><td>" + ind + "</td><td>" + myObj[index]["UserName"] + "</td><td>" + myObj[index]["CreatorName"] + "</td><td>" + myObj[index]["AuthName"] + "</td><td>" + myObj[index]["CreateDate"] + "</td><td>" + myObj[index]["Status"] + "</td><td>" + myObj[index]["ActionName"] + "</td></tr>";
+
+                            });
+
+                            str += "</table>";
+
+                        }
+                    }
+                    else if ($("#actions option:selected").text() == "Modify" || $("#actions option:selected").text() == "Delete") {
+
+                        str = "<table id='ajaxdata' class='table table-bordered table-hover'><tr class='gvHeading'><th>S.No</th><th>User Name</th><th>Creator Name</th><th>Authorizer Name</th><th>Created Date</th><th>Action</th></tr>";
+
+                    }
+                    else {
+                        str = "<table id='ajaxdata' class='table table-bordered table-hover'><tr class='gvHeading'><th>S.No</th><th>User Name</th><th>Creator Name</th><th>Authorizer Name</th><th>Created Date</th><th>Status</th><th>Action</th></tr>";
+
+                    }
+                    $("#webgridUsrMgmt").html(str);
+                }
+            })
+        }
+
+
+
+        //e.preventDefault();
+        //$('#FromDate').val("");
+        //$('#ToDate').val("");
+        //$('#actions').find('option:first').attr('selected', 'selected');
+        //$('#status').find('option:first').attr('selected', 'selected');
+    })
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    var copyRegion = "";
+    var copyApplication = "";
+    $(document).ready(function () {
+        $("a").click(function (event) {
+
+
+            var radioValueCopy
+            if (document.getElementById('usermgnt').checked) {
+                radioValueCopy = document.getElementById('usermgnt').value;
+            }
+            else if (document.getElementById('clientinfo').checked) {
+                radioValueCopy = document.getElementById('clientinfo').value;
+            }
+            if (radioValueCopy.toLowerCase().trim() == "Client Information".toLowerCase().trim()) {
+
+                var name = $('#regionId :selected').text();
+                var app = $('#applicationId :selected').text();
+
+                var str;
+                if (this.href.indexOf("d1") > 0 && this.href.indexOf("d2") > 0) {
+                    str = this.href.replace("d1", name).replace("d2", app);
+
+                }
+                else {
+                    str = this.href.replace(copyRegion, name).replace(copyApplication, app);
+
+                }
+
+                this.href = str;
+
+                copyRegion = $('#regionId :selected').text();
+                copyApplication = $('#applicationId :selected').text();
+            }
+
+        });
+    });
+
+
+    $(document).ready(function () {
+
+        $("#btnExportUsermgt").click(function (event) {
+
+            // setting the URL where ajax is used
+            var MyAppUrlSettings = {
+                MyUsefulUrl: '@Url.Action("ExportToExcelUserManagement1", "MISReports")'
+            }
+
+            var radioValue
+            if (document.getElementById('usermgnt').checked) {
+                radioValue = document.getElementById('usermgnt').value;
+            }
+            else if (document.getElementById('clientinfo').checked) {
+                radioValue = document.getElementById('clientinfo').value;
+            }
+
+            var jsondata = { selectdValue: radioValue, byRegion: $("#regionId option:selected").text(), byApplication: $("#applicationId option:selected").text() };
+
+
+            $.ajax({
+
+                url: MyAppUrlSettings.MyUsefulUrl,
+                data: jsondata,
+                type: 'GET',
+                async: true,
+                contentType: 'application/json; charset=utf-8'
+            });
+
+        });
+    });
+
+
+    //function getval() {
+
+    //    return $("#regionId option:selected").text();
+
+    //}
+
+    $(Document).ready(function () {
+        $("input[type=radio]").change(function () {
+
+            if ($("#usermgnt").is(":checked")) {
+                $("#UsrMgnt").show();
+                $("#ClntInfo").hide();
+                $("#webgridClntInfo").hide();
+                $("#webgridUsrMgmt").show();
+            }
+            else if (($("#clientinfo").is(":checked"))) {
+                $("#ClntInfo").show();
+                $("#UsrMgnt").hide();
+                $("#webgridClntInfo").show();
+                $("#webgridUsrMgmt").hide();
+            }
+        })
+
+    });
+
+    </script>
+}
+
+

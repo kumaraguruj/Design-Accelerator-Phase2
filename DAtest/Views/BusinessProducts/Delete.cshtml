@@ -1,0 +1,46 @@
+﻿@model DesignAccelerator.Models.ViewModel.BuzProdViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Delete Business Product</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.BuzProdID)
+        @Html.HiddenFor(model => model.daId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BuzProdDesc, "Business Product", new { @class = "control-label col-md-2", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline" style="margin-left:-60px">
+                    @Html.EditorFor(model => model.BuzProdDesc, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    @Html.ValidationMessageFor(model => model.BuzProdDesc, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="margin-left:135px">
+                <input type="submit" value="Delete" class="btn btn-default; button" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>

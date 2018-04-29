@@ -1,0 +1,183 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model ProductsViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+
+<h2>Products</h2>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <section id="ProductsForm">
+            @using (Html.BeginForm("Index", "Products", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.daid)
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.lstLOB, "Line of Business*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-6">
+                        <span class="form-inline">
+                            @Html.DropDownListFor(model => model.LobID, new SelectList(Model.lstLOB, "LobID", "LobDesc"), "Select LOB", new { @class = "form-control", @required = "Required" })
+                            &nbsp;&nbsp;<a href="@Url.Action("Index", "LOB", new {id = Model.daid })">Add Line Of Business</a>
+                            @*<span class="navbar-right">
+                                <a class="" id="linkToTrans" href="@Url.Action("Index", "Transactions", new {id = Model.daid })">Link To Transactions</a>
+                                <span class="glyphicon glyphicon-expand" id="glyphiconHide"></span>
+                            </span>*@
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="navbar-left">
+                            <a class="" id="linkToTrans" href="@Url.Action("Index", "Transactions", new {id = Model.daid })">Link To Transactions</a>
+                            <span class="glyphicon glyphicon-expand" id="glyphiconHide"></span>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    @Html.LabelFor(m => m.lstBuzProd, "Business Product*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-6">
+                        <span class="form-inline">
+                            @Html.DropDownListFor(model => model.BuzProdID, new SelectList(Model.lstBuzProd, "BuzProdID", "BuzProdDesc"), "Select Business Product", new { @class = "form-control", @required = "Required" })
+                            &nbsp; &nbsp;<a href="@Url.Action("Index", "BusinessProducts", new {id = Model.daid })">Add Business Product</a>
+                        </span>
+                    </div>
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ReqReference, "Requirement Reference*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(m => m.ReqReference, new { @maxlength = "50", @class = "form-control", @required = "Required" })
+                        @Html.ValidationMessageFor(m => m.ReqReference, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<hr />
+@{
+    IEnumerable<ProductsViewModel> buzprodviewmodel2 = ViewData["prodviewmodel1"] as IEnumerable<ProductsViewModel>;
+}
+<div style="width:80%;">
+    @{
+        WebGrid grid = new WebGrid(buzprodviewmodel2);
+        var count = grid.Rows.Count;
+        <input id="totalCount" type="hidden" value="@count" />
+        @grid.GetHtml(
+              tableStyle: "table table-bordered table-hover",
+              fillEmptyRows: false,
+              headerStyle: "gvHeading",
+              alternatingRowStyle: "gvAlternateRow",
+              rowStyle: "gvRow",
+              footerStyle: "gvFooter",
+              mode: WebGridPagerModes.All,
+              firstText: "<< First",
+              previousText: "< Prev",
+              nextText: "Next >",
+              lastText: "Last >>",
+              columns: new[] {
+                                grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex, canSort:true),
+                                grid.Column("ReqReference",header: "Requirement Reference",canSort:true),
+                                grid.Column("LobDesc",header: "Line Of Business",canSort:true),
+                                grid.Column("BuzProdDesc",header: "Business Product",canSort:false),
+                                grid.Column("ProductID",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                    @if(Model.EdiPermission) {
+                                        @Html.ActionLink("Edit | ", "Edit", new { id=item.ProductID});
+                                              }
+                                              else {
+                                        <text>Edit | </text>
+                                              }
+
+                                    @if(Model.DeletePermission){
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.ProductID})
+                                              }
+                                             else {
+                                        <text>Delete</text>
+                                             }
+
+                                </text>
+                                            )
+                               }
+                     )
+}
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = Model.ClientID })"><span>' + "@Model.ProjectName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = Model.ProjectID })"><span>' + "@Model.ApplicationName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Module", new {id = Model.ApplicationID })"><span>' + "@Model.ModuleName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = Model.ModuleId })"><span>' + "@Model.daName" + '</span></a></li>');
+        });
+
+        var gridCount = $("#totalCount").val();
+
+        if (gridCount != 0 && gridCount != null) {
+            $("#linkToTrans").show();
+            $('#glyphiconHide').show();
+        }
+        else {
+            $("#linkToTrans").hide();
+            $('#glyphiconHide').hide();
+        }
+
+
+        $("#btnSave").on("click", function (e) {
+            var Reqref = $("#ReqReference").val();
+            $("table tbody tr").each(function () {
+                var get_Reqref = $(this).find("td:nth-child(2)")[0].innerText;
+                //debugger;
+                if (get_Reqref.toUpperCase() == Reqref.toUpperCase()) {
+                    alert("This ReqReference already exists");
+                    e.preventDefault();
+                }
+            });
+        });
+
+        var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+        if (model == true)
+            $('#btnSave').prop("disabled", "");
+        else
+            $('#btnSave').prop("disabled", "disabled");
+
+        $("#ReqReference").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+       
+    </script>
+}

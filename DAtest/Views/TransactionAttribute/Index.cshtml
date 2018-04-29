@@ -1,0 +1,432 @@
+﻿@model IEnumerable<DesignAccelerator.Models.ViewModel.TransactionAttributes>
+
+@{
+    ViewBag.Title = "Transaction Attributes";
+}
+
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+<h2>Transaction Attribute</h2>
+<hr />
+
+<style type="text/css">
+    table, tr, td, th {
+        border: 1px solid #000;
+        position: relative;
+        padding: 10px;
+    }
+
+
+        th span.temp {
+            transform-origin: 115px;
+            transform: rotate(-90deg);
+            margin: 2px 2px 2px 0;
+            vertical-align: bottom;
+            margin-top: 0px;
+            font-size: 11px;
+            width: 13.35px;
+            height: 230px;
+            white-space: nowrap;
+            /*position: relative;*/
+            display: block;
+            float: right;
+            border-top: 0px;
+            border-right: 0px;
+            border-left: 0px;
+            border-bottom: 0px;
+        }
+
+        td span.tooltiptext {
+            transform-origin: 100px;
+            margin: 2px 2px 2px 0;
+            vertical-align: bottom;
+            margin-top: 0px;
+            font-size: 11px;
+            width: 13.35px;
+            white-space: nowrap;
+            /*position: relative;*/
+            display: block;
+            float: right;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+    #tooltip .tooltiptext {
+        visibility: hidden;
+        width: 220px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+
+    #tooltip {
+        position: relative;
+    }
+
+
+        #tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    #TT {
+        overflow-x: scroll;
+        margin-left: 38em;
+        overflow-y: visible;
+        padding: 2px;
+    }
+    /*Sno header*/
+    #headcol {
+        position: absolute;
+        width: 3.6em;
+        left: 0;
+        height: 255px;
+        border-right: 0px none black;
+        padding-top: 170px;
+        padding-left: 3.6px;
+        text-align: center;
+    }
+    /*Sno body*/
+    #colid {
+        position: absolute;
+        width: 3.6em;
+        left: 0;
+        border-right: 0px none black;
+        height: 3.2em;
+        border-top: 0px;
+    }
+    /*rr header*/
+    #rridth {
+        position: absolute;
+        width: 270px;
+        /*padding: 15.5px;*/
+        left: 0;
+        height: 255px;
+        border-right: 0px none black;
+        margin-left: 50px;
+        padding-top: 170px;
+        text-align: center;
+    }
+    /*rr body*/
+    #rowidtd {
+        position: absolute;
+        /*width: 17em;*/
+        width: 245px;
+        left: 0;
+        border-right: 0px none black;
+        margin-left: 50px;
+        border-top: 0px;
+        height: 3.2em;
+    }
+    /*attr header*/
+    #Attrid {
+        width: 260px;
+        /*padding: 106px;*/
+        left: 200px;
+        position: absolute;
+        margin-left: 90px;
+        height: 255px;
+        border-right: 0px;
+        padding-top: 170px;
+        text-align: center;
+    }
+    /*attr body*/
+    #attrtd {
+        width: 260px;
+        padding: 21.9px;
+        left: 200px;
+        position: absolute;
+        margin-left: 90px;
+        border-top: 0px;
+        height: 3.2em;
+        border-right: 0px none black;
+        font-size:12px;
+
+    }
+
+    .form-control {
+        height: 30px;
+    }
+
+    .no-js #loader {
+        display: none;
+    }
+
+    .js #loader {
+        display: block;
+        position: absolute;
+        left: 100px;
+        top: 0;
+    }
+
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/DesignAccelerator/Content/Images/pageLoad.gif') center no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+</style>
+@using (Html.BeginForm("Index", "TransactionAttribute", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="row clearfix">
+        <span class="navbar-left">
+            &nbsp;&nbsp;&nbsp;&nbsp;<a class="" href="@Url.Action("Index", "BusinessRules", new {id = ViewData["daId"] })">Link To Business Rules</a>
+            <span class="glyphicon glyphicon-expand"></span>
+        </span>
+        <div class="col-md-12 column" id="divTA">
+
+        </div>
+        <div class="col-md-12 column">
+            <button id="btnSave" type="button" class="btn btn-primary">Save Changes</button>
+        </div>
+
+    </div>
+
+    <div class="se-pre-con"></div>
+
+
+}
+@section Scripts {
+
+    <script type="text/javascript">
+        var highleveltransactions = [];
+        var attributelist = [];
+        var _listAttr = JSON.parse('@Html.Raw(Json.Encode(ViewData["AttributeList"]))');
+        $(document).ready(function () {
+
+
+            $(".se-pre-con").fadeOut("slow");
+
+            var model = @Html.Raw(Json.Encode(Model));
+            $.each(model, function(index, value) {
+                if(value.HighLevelTransaction != null)
+                {
+                    if ($.inArray(value.HighLevelTransaction, highleveltransactions)==-1) {
+                        highleveltransactions.push(value.HighLevelTransaction); // Retrieving headers for HLTs
+                    }
+                }
+            });
+
+            $.each(_listAttr, function(index, value) {
+                attributelist.push(value); // Retrieving AttributeIds
+            });
+            
+            var transactionAttributeTable = makeTable(model, highleveltransactions, attributelist);
+
+            var header_height = 0;
+            $('table th span').each(function () {
+                if ($(this).outerWidth() > header_height) header_height = $(this).outerWidth();
+            });
+
+            $('table th').height(header_height);
+
+            //fillModules();
+
+            $("#btnSave").on("click", function (e) {
+
+
+                var jsondata = getJSONFromTable(highleveltransactions);
+                // setting the URL where ajax is used
+                var MyAppUrlSettings = {
+                    MyUsefulUrl: '@Url.Action("SaveData", "TransactionAttribute")'
+                }
+                $.blockUI(
+		        {
+		            message: '<h8><img src="@Url.Content("~/Content/Images/busy.gif")" /> StandBy...</h8>'
+		        });
+                $.ajax({
+
+                    url: MyAppUrlSettings.MyUsefulUrl,
+                    data: JSON.stringify(jsondata),
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+
+                        isSuccess = result;
+                    },
+                    error: function (result) {
+                        isSuccess = result;
+                    }
+
+                }).done(function () {
+                    if (isSuccess == "1") {           // Successfully saved
+                        //alert("Record Inserted");
+                        $.unblockUI();
+                        //location.reload();
+                    }
+                    else {                      // Data Error
+                        alert("Error. Please, check the data");
+                    }
+                });
+            });
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@ViewData["ClientName"]" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = ViewData["ClientId"] })"><span>' + "@ViewData["ProjectName"]" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = ViewData["ProjectID"] })"><span>' + "@ViewData["ApplicationName"]" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Module", new {id = ViewData["ApplicationID"] })"><span>' + "@ViewData["ModuleName"]" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = ViewData["ModuleId"] })"><span>' + "@ViewData["daName"]" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Products", new {id = ViewData["daId"] })"><span>' + "Products" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Transactions", new {id = ViewData["daId"] })"><span>' + "Transactions" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "AttributeList", new {id = ViewData["daId"] })"><span>' + "Attribute" + '</span></a></li>');
+        });
+
+        function makeTable(model, highleveltransactions, attributelist) {
+            var table = $("<div id = 'TT'><table id = 'tblTransactionAttributes' class='table table-bordered table-hover'>");
+
+            ///
+            /// Table head
+            ///
+            html = "<thead>" +
+                   "    <tr>" +
+                   "        <th id ='headcol'>S No.</th>" +
+                   "        <th id ='rridth'>Requirement Reference*</th>" +
+                   "        <th id='Attrid'>Attributes*</th>"
+            $.each(highleveltransactions , function (index, value){
+                html = html +  "        <th><span class='temp'>" + value + "</span></th>";
+            });
+            html = html +       "     </tr>" +
+                                "</thead>";
+
+            var tableHead = $(html);
+            table.append(tableHead);
+
+            var tbody = $("<tbody/>");
+            var srno = 1;
+
+            $.each(attributelist , function (i, v){
+                //$.each(model, function (rowIndex, r) {
+
+                var r=$(model).filter(function (i,n){return n.MapId!=0 && n.AttributeId === v});
+                //Or other way
+                //$.grep( model, function( n, i ) {
+                //    return n.MapId!=0;
+                //});
+                if(r.length>0)
+                {
+                    for (var i=0;i<1;i++)
+                    {
+                        var row = $("<tr/>");
+                        $(row).html("<td id='colid'>"+ (srno++) +"</td>" + //1
+                                    "<td id='rowidtd'><input name='reqref"+srno+"' type='text' onkeypress='return DisableSpecialChars(event)' maxlength='100' placeholder='Requirement Reference' class='form-control input-md' value = '" + r[i].RequirementReference + "'  /></td>" + //2
+                                    "<td style='display:none;'>" + r[i].AttributeId + "</td>" + //3
+                                    "<td id='attrtd'>" + r[i].AttributeName + "</td>"  + //4
+                                    "<td style='display:none;'>" + r[i].AttributeTypeDesc + "</td>"  //5
+
+                                    );
+
+                        $.each(highleveltransactions , function (index, value){
+                            var islinked = getLinking(model, value, r[i].AttributeName);
+                            if(islinked == true)
+                                $(row).append("<td id='tooltip'><span class='tooltiptext'>"+value+"</span><input type='checkbox' checked=checked  /> </td>"); //6
+                            else
+                                $(row).append("<td id='tooltip'><span class='tooltiptext'>"+value+"</span><input type='checkbox' /> </td>"); //6
+                        });
+
+                        tbody.append(row);
+                    }
+                }
+                else
+                {
+                    var t=$(model).filter(function (i,n){return n.AttributeId === v});
+                    var row = $("<tr/>");
+                    $(row).html("<td id='colid'>"+ (srno++) +"</td>" + //1
+                                "<td id='rowidtd'><input name='reqref"+srno+"' type='text' placeholder='Requirement Reference' class='form-control input-md' value = '" + t[0].RequirementReference + "'  /></td>" + //2
+                                "<td style='display:none;'>" + t[0].AttributeId + "</td>" + //3
+                                "<td id='attrtd'>" + t[0].AttributeName + "</td>"  + //4
+                                "<td style='display:none;'>" + t[0].AttributeTypeDesc + "</td>"  //5
+
+                                );
+
+                    $.each(highleveltransactions , function (index, value){
+                        $(row).append("<td id='tooltip'><span class='tooltiptext'>"+value+"</span><input type='checkbox' /> </td>"); //6
+                    });
+
+                    tbody.append(row);
+                }
+
+                //});
+            });
+            table.append(tbody);
+            var tableEnd = $("</div></table>");
+            table.append(tableEnd);
+            return $('#divTA').append(table);
+        }
+
+        function getLinking(model, hlt, attribute)
+        {
+            var islinked = false;
+            $.each(model, function (rowIndex, r) {
+                if(hlt == r.HighLevelTransaction && attribute == r.AttributeName)
+                {
+                    islinked = r.IsLinked;
+                    return islinked;
+                }
+            });
+            return islinked;
+        }
+
+
+        function getJSONFromTable() {
+
+            var tableRows = [];
+            $('#TT table').each(function(){
+                $('tbody tr').each(function () {
+
+                    var self = $(this);
+                    var i = 6;
+                    $.each(highleveltransactions , function (index, value){
+
+                        var isLinked='false';
+                        var requirementReference = self.find("td:nth-child(2) input[type=text]").val();
+                        var attributeId = self.find("td:nth-child(3)").text();
+                        if (self.find("td:nth-child(" + i + ") input[type=checkbox]").is(":checked"))
+
+                            isLinked = 'true';
+
+
+                        var item = null;
+                        item = {};
+
+                        item["RequirementReference"] = requirementReference;
+                        item["HighLevelTransaction"] = value
+                        item["IsLinked"] = isLinked;
+                        item["AttributeId"] = attributeId;
+                        item["daId"] = @ViewData["daId"];
+                        tableRows.push(item);
+                        i++;
+                    });
+
+                });
+            });
+            return tableRows;
+        };
+
+        function DisableSpecialChars(e) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode!=46) {//if key stroke is space bar, then pass. ASCII code for space bar is 32, dot is for 46
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+
+    </script>
+}

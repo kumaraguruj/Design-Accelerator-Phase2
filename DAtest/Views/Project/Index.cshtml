@@ -1,0 +1,161 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model ProjectViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+<h2>Project Details</h2>
+<hr />
+
+<div class="row">
+    
+    <div class="col-md-12">
+        <section id="ProjectForm">
+            @using (Html.BeginForm("Index", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.ClientID)
+
+                <div class="form-group">
+                    @Html.Label("Project Name*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-90px">
+                            @Html.TextBoxFor(m => m.ProjectName, new { @maxlength = "50", @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.ProjectName, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RegionId, "Region*", new { @class = "col-md-2 control-label", @style = "text-align:left" })
+                    <div class="col-md-10">
+                        <span class="form-inline" style="margin-left:-90px">
+                            @Html.DropDownListFor(model => model.RegionId, new SelectList(Model.lstRegion, "Id", "Region",""), "--Select--", new { @class = "form-control", @required = "Required", @style = "width:180px" })
+                            &nbsp;&nbsp;<a href="@Url.Action("Index", "Region")">Add Region</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10" style="margin-left:105px">
+                            <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />
+                            @*<input type="submit" value="Cancel" onclick="Cancel()" class="btn btn-default" />*@
+                        </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<hr />
+@{
+    IEnumerable<ProjectViewModel> ProjectViewModel2 = ViewData["ProjectViewModel1"] as IEnumerable<ProjectViewModel>;
+}
+<div style="width:70%;">
+    @{
+
+        try
+        {
+
+       
+
+        WebGrid grid = new WebGrid(ProjectViewModel2);
+        @grid.GetHtml(
+              tableStyle: "table table-bordered table-hover",
+              fillEmptyRows: false,
+              headerStyle: "gvHeading",
+              alternatingRowStyle: "gvAlternateRow",
+              rowStyle: "gvRow",
+              footerStyle: "gvFooter",
+              mode: WebGridPagerModes.All,
+              firstText: "<< First",
+              previousText: "< Prev",
+              nextText: "Next >",
+              lastText: "Last >>",
+              columns: new[] {
+                                grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("ProjectName",header: "Project Name",canSort:true, format: (item) => Html.ActionLink(((string)item.ProjectName), "Index", "Application", new { id = item.ProjectID }, null)),
+                                grid.Column("Region",header: "Region",canSort:true),
+                                grid.Column("ProjectID",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                            @if(Model.EdiPermission) {
+                                                @Html.ActionLink("Edit | ", "Edit", new { id=item.ProjectID});
+                                              }
+                                              else {
+                                                <text>Edit | </text>
+                                              }
+
+                                            @if(Model.DeletePermission){
+                                                @Html.ActionLink("Delete", "Delete", new { id=item.ProjectID})
+                                              }
+                                             else {
+                                                <text>Delete</text>
+                                             }
+
+                                        </text>
+
+                                            )
+                               }
+                     )
+        }
+        catch (Exception e)
+        {
+
+        }
+        }
+         
+    
+
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+        });
+
+        $("#ProjectName").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+     
+        var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+        if (model == true)
+            $('#btnSave').prop("disabled", "");
+        else
+            $('#btnSave').prop("disabled", "disabled");
+        </script>
+     @if (ViewBag.Message != null)
+     {
+        <script>
+            
+                alert('@ViewBag.Message');
+                $("#ProjectName").val("");
+                $('#RegionId').find('option:first').attr('selected', 'selected');
+        
+</script>
+     }
+     }
+
+
+
+
+
+

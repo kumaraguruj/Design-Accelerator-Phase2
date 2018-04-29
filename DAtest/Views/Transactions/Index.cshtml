@@ -1,0 +1,230 @@
+﻿@using DesignAccelerator.Models.ViewModel
+@model TransactionsViewModel
+
+@{
+    ViewBag.Title = "Transactions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+
+<h2>Transactions</h2>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <section id="TransactionsForm">
+            @using (Html.BeginForm("Index", "Transactions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ProductId)
+                @Html.HiddenFor(m => m.daId)
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HighLevelTxnID, "High Level Transaction ID*", new { @class = "col-md-3 control-label", @style = "text-align:left" })
+                    <div class="col-md-6">
+                        <span class="form-inline" style="margin-left:-70px">
+                            @Html.TextBoxFor(m => m.HighLevelTxnID, new { @maxlength = "10", @class = "form-control", @required = "Required" })
+                            @Html.ValidationMessageFor(m => m.HighLevelTxnID, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="navbar-left">
+                            <a class="" id="linkToAttr" href="@Url.Action("Index", "AttributeList", new {id = Model.daId })">Link To Attribute List Input</a>
+                            <span class="glyphicon glyphicon-expand" id="glyphiconHide"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HighLevelTxnDesc , "High Level Transaction*", new { @class = "col-md-3 control-label", @style = "text-align:left" })
+                    <div class="col-md-9">
+                        <span class="form-inline" style="margin-left:-70px">
+                            @Html.TextBoxFor(m => m.HighLevelTxnDesc, new { @maxlength = "50", @class = "form-control", @required = "Required" })
+                            @Html.ValidationMessageFor(m => m.HighLevelTxnDesc, "", new { @class = "text-danger" })
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.lstLifeCycle, "Life Cycle*", new { @class = "col-md-3 control-label", @style = "text-align:left" })
+                    <div class="col-md-9">
+                        <span class="form-inline" style="margin-left:-70px">
+                            @Html.DropDownListFor(model => model.LifeCycleID, new SelectList(Model.lstLifeCycle, "LifeCycleID ", "LifeCycleDesc"), "---Select---", new { @class = "form-control", @required = "Required" })
+                            &nbsp;&nbsp;<a href="@Url.Action("Index", "LifeCycles", new {id = Model.daId })">Add Life Cycle</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ReqReference, "Requirement Reference*", new { @class = "col-md-3 control-label", @style = "text-align:left" })
+                    <div class="col-md-9" style="margin-left:-70px">
+                        @Html.TextBoxFor(m => m.ReqReference, new { @maxlength = "50", @class = "form-control", @required = "Required" })
+                        @Html.ValidationMessageFor(m => m.ReqReference, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9" style="margin-left:222px">
+                       <input id="btnSave" type="submit" value="Add" name="action:Add" class="btn btn-default; button" />
+                       @*@ <input type="submit" value="Cancel" onclick="Cancel()" class="btn btn-default" />*@
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+@*<div>
+    <a href="@Url.Action("Index", "Products", new { id = Model.daId})">Back</a>
+    <a id ="backlink" href="">Back</a>
+</div>*@
+<hr />
+@{
+    IEnumerable<TransactionsViewModel> LifeCycleTransviewmodel2 = ViewData["transviewmodel1"] as IEnumerable<TransactionsViewModel>;
+}
+<div style="width:80%;">
+    @{
+        WebGrid grid = new WebGrid(LifeCycleTransviewmodel2);
+       var count = grid.Rows.Count;
+        <input id="totalCount" type="hidden" value="@count"/>
+        @grid.GetHtml(
+              tableStyle: "table table-bordered table-hover",
+              fillEmptyRows: false,
+              headerStyle: "gvHeading",
+              alternatingRowStyle: "gvAlternateRow",
+              rowStyle: "gvRow",
+              footerStyle: "gvFooter",
+              mode: WebGridPagerModes.All,
+              firstText: "<< First",
+              previousText: "< Prev",
+              nextText: "Next >",
+              lastText: "Last >>",
+              columns: new[] {
+                                grid.Column(header: "S.No.", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex, canSort:true),
+                                grid.Column("ReqReference",header: "Requirement Reference",canSort:true),
+                                grid.Column("HighLevelTxnID",header: "High Level Transaction ID",canSort:true),
+                                grid.Column("HighLevelTxnDesc",header: "High Level Transaction",canSort:true),
+                                grid.Column("LifeCycleDesc",header: "Life Cycle",canSort:true),
+                                grid.Column("TransactionSeq",header:"Edit/Delete",canSort:false,
+                                 format:@<text>
+                                            @if(Model.EdiPermission) {
+                                                @Html.ActionLink("Edit | ", "Edit", new { id=item.TransactionSeq});
+                                              }
+                                              else {
+                                                <text>Edit | </text>
+                                              }
+
+                                            @if(Model.DeletePermission){
+                                                @Html.ActionLink("Delete", "Delete", new { id=item.TransactionSeq})
+                                              }
+                                             else {
+                                                <text>Delete</text>
+                                             }
+
+                                        </text>
+                                            )
+                               }
+                     )
+    }
+</div>
+
+@*<script type="text/javascript">
+        function Cancel() {
+            $("Product").val = '';
+            }
+
+</script>*@
+
+@section Scripts {
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.maskedinput.min.js")"></script> 
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = Model.ClientID })"><span>' + "@Model.ProjectName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = Model.ProjectID })"><span>' + "@Model.ApplicationName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Module", new {id = Model.ApplicationID })"><span>' + "@Model.ModuleName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = Model.ModuleId })"><span>' + "@Model.daName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Products", new {id = Model.daId })"><span>' + "Products" + '</span></a></li>');
+        });
+
+    //to show ro hide the linking to next flow if only there are values, if the table is empty, then linking to the next wont be shown
+
+    var gridCount = $("#totalCount").val();
+  
+    if (gridCount != 0 && gridCount != null)
+    {
+        $("#linkToAttr").show();
+        $("#glyphiconHide").show();
+    }
+    else
+    {
+        $("#linkToAttr").hide();
+        $("#glyphiconHide").hide();
+    }
+
+    //Added code to disable the underscore in high level transaction
+
+  
+
+    // cannot copy or paste the value for safety purpose(to prevent under score)
+
+    
+    //for reference
+    //var HlTxDesc = $("#HighLevelTxnDesc").val();
+    //var get_HLTxDesc = $(this).find("td:nth-child(4)")[0].innerText;
+    
+
+        //text formatting 
+        $("#HighLevelTxnID").mask("aa_aaaa_99");
+
+        $("#btnSave").on("click", function (e) {
+            var Hltxn = $("#HighLevelTxnID").val();
+            $("table tbody tr").each(function () {
+                var get_Hltxn = $(this).find("td:nth-child(3)")[0].innerText;
+                //debugger;
+                if (get_Hltxn.toUpperCase() == Hltxn.toUpperCase()) {
+                    alert("This HighLevelTransaction already exists");
+                    e.preventDefault();
+                }
+            });
+        });
+
+        var model = @Html.Raw(Json.Encode(Model.AddPermmission));
+        if (model == true)
+            $('#btnSave').prop("disabled", "");
+        else
+            $('#btnSave').prop("disabled", "disabled");
+
+        $("#HighLevelTxnDesc").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+        $("#ReqReference").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9_]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32 && event.charCode != 46) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+       
+</script>
+}

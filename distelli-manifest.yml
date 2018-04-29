@@ -1,0 +1,61 @@
+guru4ui/Design-Accelerator-Phase2:
+  PkgInclude:
+    - '*.zip'
+  Env:
+    # Define the TCP port you want the IIS application to listen on
+    - PORT: "8085"
+    # Define the Name for the IIS application
+    - SITE: DAtest
+    # Define the Directory full path where the IIS application should reside
+    - APPDIR: c:\Design-Accelerator-Phase2
+  PreInstall:
+    - echo "Begin PreInstall"
+    - echo "Install any IIS Prerequisites"
+    - dism /enable-feature /online /featurename:IIS-WebServer /all
+    - dism /enable-feature /online /featureName:IIS-ASP /all
+    - dism /enable-feature /online /featureName:IIS-ASPNET /all
+    - dism /enable-feature /online /featureName:IIS-ASPNET45 /all
+    - echo "---"
+    - echo "Removing existing IIS Site"
+    - for /F "tokens=*" %%a in ('%windir%\system32\inetsrv\appcmd list site %SITE%') do set RESPONSE=%%a
+    - if "%RESPONSE%"=="" (
+    -   echo "%SITE% doesn't exist"
+    - ) else (
+    -   echo "%SITE% does exist. Deleting"
+    -   (%windir%\system32\inetsrv\appcmd delete site %SITE%)
+    - )
+    - echo "Create Application Directory"
+    - rmdir /S/Q %APPDIR%
+    - mkdir %APPDIR%
+    - echo "---"
+    - echo "Creating IIS Site"
+    - (%windir%\system32\inetsrv\appcmd add site /name:%SITE% /physicalPath:%APPDIR% /bindings:http://*:%PORT%)
+    - (%windir%\system32\inetsrv\appcmd addd apppool /name:%SITE% 
+    - echo "---"
+    - echo "Done PreInstall"
+  PostInstall:
+    - echo "Begin PostInstall"
+    - echo "Unzip DAtest to Application Directory"
+    # Using Powershell version 2
+    # - PowerShell (New-Object -COM Shell.Application).NameSpace('"%APPDIR%"').CopyHere((New-Object -COM Shell.Application).NameSpace('"%DIStELLI_INSTALLHOME%\DAtest"').Items(), 1564);    
+    - echo "---"
+    - echo "Set Directory Attributes"
+    - attrib -r %APPDIR%\App_Data /s /d
+    - icacls "%APPDIR%\App_Data" /grant IIS_IUSRS:(OI)(CI)F /t
+    - icacls "%APPDIR%\App_Data" /grant IUSR:(OI)(CI)F /t
+    - echo "---"
+    - echo "Done PostInstall"
+  Start:
+    - echo "Begin Start"
+    - echo "Start IIS Site"
+    - (%windir%\system32\inetsrv\appcmd start site %SITE%)
+    - echo "---"
+    - echo "Open Firewall"
+    - set FWNAME="%SITE% fw rule TCP Port %PORT%"
+    - echo "Adding %FWNAME%"
+    - netsh advfirewall firewall add rule name=%FWNAME% dir=in action=allow protocol=TCP localport=%PORT%
+    - netsh advfirewall firewall delete rule name=%FWNAME%
+    - netsh advfirewall firewall add rule name=%FWNAME% dir=in action=allow protocol=TCP localport=%PORT%
+    - netsh advfirewall firewall add rule name=%FWNAME% dir=out action=allow protocol=TCP localport=%PORT%
+    - echo "---"
+    - echo "Done Start"

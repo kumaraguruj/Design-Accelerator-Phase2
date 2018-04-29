@@ -1,0 +1,66 @@
+﻿@model DesignAccelerator.Models.ViewModel.DAViewModel
+
+@{
+    ViewBag.Title = "Map Attributes";
+}
+
+<div class="navbar-static-top">
+    <ul class="breadcrumb"></ul>
+</div>
+
+<h2>Map Attributes Home</h2>
+<hr />
+<div class="jumbotron">
+    <form>
+        @Html.HiddenFor(m => m.DAID)
+        <div class="row">
+            <div class="col-md-4">
+                <p><a class="btn btn-primary btn-block" href="@Url.Action("Index", "Products", new {id = Model.DAID })">Products</a></p>
+            </div>
+            <div class="col-md-4">
+                <p><a class="btn btn-primary btn-block" href="">Transactions</a></p>
+            </div>
+            <div class="col-md-4">
+                <p><a class="btn btn-primary btn-block" href="@Url.Action("Index", "TransactionAttribute", new {id = Model.DAID })">Transaction Attributes</a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <p><a class="btn btn-primary btn-block" href="">Business Rules</a></p>
+            </div>
+            <div class="col-md-4">
+                <p><a class="btn btn-primary btn-block" href="">Interfaces</a></p>
+            </div>
+            <div class="col-md-4">
+                <p><a class="btn btn-primary btn-block" href="">Channels And Alerts</a></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <p><a class="btn btn-primary btn-block" href="">Reports</a></p>
+            </div>
+            <div class="col-md-4">
+                <p></p>
+            </div>
+            <div class="col-md-4">
+                <p></p>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Client")"><span>' + "@Model.ClientName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Project", new {id = Model.ClientId })"><span>' + "@Model.ProjectName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Application", new {id = Model.ProjectId })"><span>' + "@Model.ApplicationName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "DesignAccelerator", new {id = Model.ApplicationID })"><span>' + "@Model.DAName" + '</span></a></li>');
+            $('.breadcrumb').append('<li><a href="@Url.Action("Index", "Home", new {id = Model.DAID })"><span>' + "DA Home" + '</span></a></li>');
+        });
+
+    </script>
+}
+

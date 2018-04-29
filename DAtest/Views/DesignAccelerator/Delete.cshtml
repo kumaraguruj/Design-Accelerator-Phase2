@@ -1,0 +1,47 @@
+﻿@model DesignAccelerator.Models.ViewModel.DAViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Delete Design Accelerator</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.DAID)
+        @Html.HiddenFor(model => model.ApplicationID)
+        @Html.HiddenFor(model => model.DAComplete)
+        
+        <div class="form-group">
+            @Html.Label("DA Name", htmlAttributes: new { @class = "control-label col-md-2", @style = "text-align:left" })
+            <div class="col-md-10">
+                <span class="form-inline" style="margin-left:-120px">
+                    @Html.EditorFor(model => model.DAName, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    @Html.ValidationMessageFor(model => model.DAName, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="margin-left:75px">
+                <input type="submit" value="Delete" class="btn btn-default; button" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
+

@@ -2,3 +2,10 @@ D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\bin\Release\DA.
 D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\bin\Release\DA.DomainModel.pdb
 D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Release\DA.DomainModel.dll
 D:\Guru\DA 505\Projects\Design Accelerator Phase2\DA.DomainModel\obj\Release\DA.DomainModel.pdb
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\bin\Release\DA.DomainModel.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\bin\Release\DA.DomainModel.pdb
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\bin\Release\EPPlus.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\bin\Release\EPPlus.xml
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\obj\Release\DA.DomainModel.csprojResolveAssemblyReference.cache
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\obj\Release\DA.DomainModel.dll
+D:\Guru\DA\Design Accelerator Phase2\DA.DomainModel\obj\Release\DA.DomainModel.pdb

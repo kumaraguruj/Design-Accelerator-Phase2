@@ -1,0 +1,63 @@
+﻿@model DesignAccelerator.Models.ViewModel.ModeTypeViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Edit ModeType</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ModeTypeID)
+        @Html.HiddenFor(model => model.daid)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModeTypeDesc, "Mode Type", new { @class = "control-label col-md-2",@style = "text-align:left" })
+            <div class="col-md-6">
+                <span class="form-inline" style="margin-left:-105px">
+                    @Html.EditorFor(model => model.ModeTypeDesc, new { htmlAttributes = new { @maxlength = "20", @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ModeTypeDesc, "", new { @class = "text-danger" })
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="margin-left:90px">
+                <input type="submit" value="Save" class="btn btn-default; button" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
+
+@section scripts{
+    <script>
+        $("#ModeTypeDesc").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+    </script>
+}

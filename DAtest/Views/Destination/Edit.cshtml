@@ -1,0 +1,66 @@
+﻿@model DesignAccelerator.Models.ViewModel.DestinationViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Edit Destination</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.destID)
+        @Html.HiddenFor(model => model.DAID)
+        <div class="col-sm-12 col-lg-12 col-xs-12" style="padding-left:0px;">
+            <div class="form-group; col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding-left:0px; margin-bottom:1%">
+                @Html.Label("Destination", htmlAttributes: new { @class = "control-label col-md-1", @style = "text-align:left;padding-left:0px" })
+                <div class="col-md-11" style="padding-left:0px">
+                    <span class="form-inline" style="float:left">
+                        @Html.EditorFor(model => model.destDesc, new { htmlAttributes = new { @maxlength = "50", @class = "form-control", @style = "width:300px" } })
+                        @Html.ValidationMessageFor(model => model.destDesc, "", new { @class = "text-danger" })
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12" style="padding-left:0px;">
+                <div class="col-md-1"></div>
+                <div class="col-md-11" style="float:left;">
+                    <input type="submit" value="Save" class="btn btn-default; button" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
+@section scripts
+{
+    <script>
+        $("#destDesc").bind('keypress', function (event) {
+
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                if (event.charCode != 32) {//if key stroke is space bar, then pass. ASCII code for space bar is 32
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        });
+    </script>
+}
+
+

@@ -1,0 +1,155 @@
+﻿@model DesignAccelerator.Controllers.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .button {
+        background-color: #af2024;
+        color: #ffffff;
+    }
+
+</style>
+
+<div class="" style="background-color:#af2024; padding-bottom:5px; width:750px; text-align:center;">
+    @*margin-top:0px*@
+    <h3 style="color:white">Login</h3>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr style="width:100%;" />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group" id="radio_UserType">
+
+                    @Html.Label("User Type", new { @class = "col-md-2 control-label" })
+
+                    <div class="col-md-10">
+
+                        @foreach (var userType in Model.UserTypes)
+                        {
+                            if (userType.Type == "Internal")
+                            {
+                                <span style="margin:8px 0 0">
+
+                                    @if (ViewData["UserTypeID"].ToString() == "1")
+                                    {
+                                        @Html.RadioButtonFor(m => m.UserTypeId, userType.ID, new { @checked = true, id = "internal" })
+                                        
+                                    }
+                                    else
+                                    {
+                                        @Html.RadioButtonFor(m => m.UserTypeId, userType.ID, new { id = "internal" })
+                                    }
+                                    @Html.HiddenFor(m => m.UserTypeId)
+                                    @Html.Label(userType.Type)
+                                </span>
+                            }
+                            else
+                            {
+                                <span style="margin:8px 0 0">
+                                    @if (ViewData["UserTypeID"].ToString() == "2")
+                                    {
+                                        @Html.RadioButtonFor(m => m.UserTypeId, userType.ID, new { @checked = true, id = "external" })
+                                    }
+                                    else
+                                    {
+                                        @Html.RadioButtonFor(m => m.UserTypeId, userType.ID, new { id = "external" })
+                                    }
+                                    @Html.HiddenFor(m => m.UserTypeId)
+                                    @Html.Label(userType.Type)
+                                </span>
+                            }
+                        }
+
+                        <div class="" id="show">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <span class="form-inline; navbar-left" style="padding-top:10px">
+                                        <a id="linkToChangePwd" href="@Url.Action("Index", "ChangePassword", new { })">ChangePassword</a>
+                                        <span class="glyphicon glyphicon-expand" id="glyphiconHide"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Login" class="btn btn-default; button" />
+                        </div>
+                    </div>
+                    @*<div  class="col-md-6" style="color:#af2024">
+
+                        </div>*@
+            }
+        </section>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            if (@ViewData["UserTypeID"] == 1) {
+                $("#show").hide();
+            }
+            else {
+                $("#show").show();    
+            }
+            
+
+            $('#internal').change(function () {
+                internal = $(this).val();
+                $("#Username").val("");
+                $("#show").hide();
+            });
+
+            $('#external').change(function () {
+                external = $(this).val();
+                $("#Username").val("");
+                $("#show").show();
+            });
+        });
+
+        //$(document).ready(function () {
+
+        //});
+
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script>
+            alert('@ViewBag.Message');
+            $("#Username").val("");
+            $('#Password').val("");
+            if (@ViewData["UserTypeID"] == "2") {
+                $("#show").show();
+            }
+        </script>
+    }
+}
