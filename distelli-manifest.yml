@@ -7,7 +7,7 @@ guru4ui/Design-Accelerator-Phase2:
     # Define the Name for the IIS application
     - SITE: DAtest
     # Define the Directory full path where the IIS application should reside
-    - APPDIR: c:\Design-Accelerator-Phase2
+    - APPDIR: c:\DAtest
   PreInstall:
     - echo "Begin PreInstall"
     - echo "Install any IIS Prerequisites"
