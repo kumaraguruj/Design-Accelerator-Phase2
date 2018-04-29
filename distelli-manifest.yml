@@ -29,8 +29,7 @@ guru4ui/Design-Accelerator-Phase2:
     - mkdir %APPDIR%
     - echo "---"
     - echo "Creating IIS Site"
-    - (%windir%\system32\inetsrv\appcmd add site /name:%SITE% /physicalPath:%APPDIR% /bindings:http://*:%PORT%)
-    - (%windir%\system32\inetsrv\appcmd addd apppool /name:%SITE% 
+    - (%windir%\system32\inetsrv\appcmd add site /name:%SITE% /physicalPath:%APPDIR% /bindings:http://*:%PORT%)   
     - echo "---"
     - echo "Done PreInstall"
   PostInstall:
