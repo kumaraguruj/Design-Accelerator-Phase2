@@ -1,8 +1,9 @@
 guru4ui/Design-Accelerator-Phase2:
   PkgInclude:
    # - '*.zip'
+    - DesignAccelerator/bin/*
     - DesignAccelerator/bin/roslyn/*
-    - DesignAccelerator/bin/*   
+       
      - DesignAccelerator/Content/themes/base/*
      - DesignAccelerator/Content/themes/base/images/*
      - DesignAccelerator/Content/images/*
