@@ -59,7 +59,7 @@ guru4ui/Design-Accelerator-Phase2:
     # Using Powershell version 2
     # - PowerShell (New-Object -COM Shell.Application).NameSpace('"%APPDIR%"').CopyHere((New-Object -COM Shell.Application).NameSpace('"%DIStELLI_INSTALLHOME%\DAtest"').Items(), 1564);    
     #- powershell Copy-Item '"%DIStELLI_INSTALLHOME%\DAtest\*"' -Destination %APPDIR%
-    - xcopy /C/E/Q/R/Y "%DIStELLI_INSTALLHOME%\DAtest\*" %APPDIR%
+    - xcopy /C/E/Q/R/Y "%DIStELLI_INSTALLHOME%\DesignAccelerator\*" %APPDIR%
     
      # Using Powershell version 3+
     #- powershell add-type -assemblyname "system.io.compression.filesystem" ; [System.io.compression.zipfile]::ExtractToDirectory('"%DIStELLI_INSTALLHOME%\DAtest.zip"','"%APPDIR%"')
