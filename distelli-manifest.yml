@@ -1,6 +1,6 @@
 guru4ui/Design-Accelerator-Phase2:
   PkgInclude:
-    - '*.zip'
+   # - '*.zip'
     - DAtest/*
   Env:
     # Define the TCP port you want the IIS application to listen on
