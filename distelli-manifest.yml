@@ -10,7 +10,7 @@ guru4ui/Design-Accelerator-Phase2:
     - DesignAccelerator/Content/*
     - DesignAccelerator/fonts/*
     - DesignAccelerator/Scripts/*
-    - DesignAccelerator/Views/
+    - DesignAccelerator/Views/*
     - DesignAccelerator/Views/Application/*
     - DesignAccelerator/Views/AppVersion/*
     - DesignAccelerator/Views/AttributeList/*
