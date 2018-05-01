@@ -14,6 +14,7 @@ guru4ui/Design-Accelerator-Phase2:
     - dism /enable-feature /online /featurename:IIS-WebServer /all
     - dism /enable-feature /online /featureName:IIS-ASP /all
     - dism /enable-feature /online /featureName:IIS-ASPNET /all
+    - dism /enable-feature /online /featureName:IIS-ASPNET4.0 /all
     - dism /enable-feature /online /featureName:IIS-ASPNET45 /all
     - echo "---"
     - echo "Removing existing IIS Site"
