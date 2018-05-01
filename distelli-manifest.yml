@@ -10,8 +10,50 @@ guru4ui/Design-Accelerator-Phase2:
     - DesignAccelerator/Content/*
     - DesignAccelerator/fonts/*
     - DesignAccelerator/Scripts/*
-    - DesignAccelerator/Views//*
-    
+    - DesignAccelerator/Views/
+    - DesignAccelerator/Views/Application/*
+    - DesignAccelerator/Views/AppVersion/*
+    - DesignAccelerator/Views/AttributeList/*
+    - DesignAccelerator/Views/AttributeValue/*
+    - DesignAccelerator/Views/AuthUser/*
+    - DesignAccelerator/Views/BusinessProducts/*
+    - DesignAccelerator/Views/BusinessRuleMapping/*
+    - DesignAccelerator/Views/BusinessRules/*
+    - DesignAccelerator/Views/ChangePassword/*
+    - DesignAccelerator/Views/ChannelsAndAlerts/*
+    - DesignAccelerator/Views/Client/*
+    - DesignAccelerator/Views/DesignAccelerator/*
+    - DesignAccelerator/Views/Destination/*
+    - DesignAccelerator/Views/DF/*
+    - DesignAccelerator/Views/DistributionType/*
+    - DesignAccelerator/Views/ExportDesignAccelerator/*
+    - DesignAccelerator/Views/FrequencyType/*
+    - DesignAccelerator/Views/Home/*
+    - DesignAccelerator/Views/Interface/*
+    - DesignAccelerator/Views/LifeCycles/*
+    - DesignAccelerator/Views/LinkingUI/*
+    - DesignAccelerator/Views/LOB/*
+    - DesignAccelerator/Views/Login/*
+    - DesignAccelerator/Views/Mapping/*
+    - DesignAccelerator/Views/Mapping_ForAll/*
+    - DesignAccelerator/Views/MISReports/*
+    - DesignAccelerator/Views/ModeType/*
+    - DesignAccelerator/Views/Module/*
+    - DesignAccelerator/Views/PeriodType/*
+    - DesignAccelerator/Views/Products/*
+    - DesignAccelerator/Views/Project/*
+    - DesignAccelerator/Views/Region/*
+    - DesignAccelerator/Views/Reports/*
+    - DesignAccelerator/Views/Role/*
+    - DesignAccelerator/Views/RolesPermissions/*
+    - DesignAccelerator/Views/Shared/*
+    - DesignAccelerator/Views/SMD/*
+    - DesignAccelerator/Views/Source/*
+    - DesignAccelerator/Views/TransactionAttribute/*
+    - DesignAccelerator/Views/Transactions/*
+    - DesignAccelerator/Views/User/*
+    - DesignAccelerator/Views/_ViewStart.cshtml
+    - DesignAccelerator/Views/Web.config
     - DesignAccelerator/favicon.ico
     - DesignAccelerator/Global.asax
     - DesignAccelerator/packages.config
