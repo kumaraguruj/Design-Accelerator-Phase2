@@ -1,13 +1,11 @@
 guru4ui/Design-Accelerator-Phase2:
   PkgInclude:
    # - '*.zip'
-    - DesignAccelerator/bin/*
-    - DesignAccelerator/bin/roslyn/*
-       
-     - DesignAccelerator/Content/themes/base/*
-     - DesignAccelerator/Content/themes/base/images/*
-     - DesignAccelerator/Content/images/*
-     - DesignAccelerator/Content/themes/*
+    - DesignAccelerator/bin/*           
+    - DesignAccelerator/Content/themes/base/*
+    - DesignAccelerator/Content/themes/base/images/*
+    - DesignAccelerator/Content/images/*
+    - DesignAccelerator/Content/themes/*
     - DesignAccelerator/Content/*
     - DesignAccelerator/fonts/*
     - DesignAccelerator/Scripts/*
@@ -59,6 +57,7 @@ guru4ui/Design-Accelerator-Phase2:
     - DesignAccelerator/Global.asax
     - DesignAccelerator/packages.config
     - DesignAccelerator/Web.config
+    - DesignAccelerator/bin/roslyn/*
     
   Env:
     # Define the TCP port you want the IIS application to listen on
