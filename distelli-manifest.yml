@@ -39,7 +39,7 @@ guru4ui/Design-Accelerator-Phase2:
     # Using Powershell version 2
     # - PowerShell (New-Object -COM Shell.Application).NameSpace('"%APPDIR%"').CopyHere((New-Object -COM Shell.Application).NameSpace('"%DIStELLI_INSTALLHOME%\DAtest"').Items(), 1564);    
 
-    - xcopy /C/E/Q/R/Y %DIStELLI_INSTALLHOME%\DAtest\* %APPDIR%
+    - xcopy /C/E/Q/R/Y "%DIStELLI_INSTALLHOME%\DAtest\*" %APPDIR%
     - echo "---"
     - echo "Set Directory Attributes"
     - attrib -r %APPDIR% /s /d
