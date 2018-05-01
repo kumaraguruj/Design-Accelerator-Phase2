@@ -24,8 +24,7 @@ guru4ui/Design-Accelerator-Phase2:
     -   echo "%SITE% does exist. Deleting"
     -   (%windir%\system32\inetsrv\appcmd delete site %SITE%)
     - )
-
- - echo "---"
+    - echo "---"
     - echo "Removing existing App Pool"
     - for /F "tokens=*" %%a in ('%windir%\system32\inetsrv\appcmd list apppool %SITE%') do set RESPONSE=%%a
     - if "%RESPONSE%"=="" (
@@ -34,6 +33,7 @@ guru4ui/Design-Accelerator-Phase2:
     -   echo "%SITE% does exist. Deleting"
     -   (%windir%\system32\inetsrv\appcmd delete apppool %SITE%)
     - )
+    
     - echo "Create Application Directory"
     - rmdir /S/Q %APPDIR%
     - mkdir %APPDIR%
