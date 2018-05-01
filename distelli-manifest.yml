@@ -97,7 +97,7 @@ guru4ui/Design-Accelerator-Phase2:
     - mkdir %APPDIR%
     - echo "---"
     - echo "Creating IIS Site"
-    -powershell $ipV4 = Test-Connection -ComputerName (hostname) -Count 1  | Select -ExpandProperty IPV4Address
+    
     - (%windir%\system32\inetsrv\appcmd add site /name:%SITE% /physicalPath:%APPDIR% /bindings:http://*:%PORT%)   
     - (%windir%\system32\inetsrv\appcmd add apppool /name:%SITE% /managedRuntimeVersion:"v4.0" /managedPipelineMode:"Integrated")
     - echo "---"
