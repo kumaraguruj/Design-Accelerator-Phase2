@@ -40,7 +40,7 @@ guru4ui/Design-Accelerator-Phase2:
     - echo "---"
     - echo "Creating IIS Site"
     - (%windir%\system32\inetsrv\appcmd add site /name:%SITE% /physicalPath:%APPDIR% /bindings:http://*:%PORT%)   
-    - (%windir%\system32\inetsrv\appcmd add apppool /name:appPoolName /managedRuntimeVersion:"v4.0" /managedPipelineMode:"Integrated")
+    - (%windir%\system32\inetsrv\appcmd add apppool /name:%SITE% /managedRuntimeVersion:"v4.0" /managedPipelineMode:"Integrated")
     - echo "---"
     - echo "Done PreInstall"
   PostInstall:
@@ -49,7 +49,7 @@ guru4ui/Design-Accelerator-Phase2:
     # Using Powershell version 2
     # - PowerShell (New-Object -COM Shell.Application).NameSpace('"%APPDIR%"').CopyHere((New-Object -COM Shell.Application).NameSpace('"%DIStELLI_INSTALLHOME%\DAtest"').Items(), 1564);    
 
-    - xcopy /C/E/Q/R/Y "%DIStELLI_INSTALLHOME%\DAtest\*" %APPDIR%
+    - xcopy /C/E/Q/R/Y "%DIStELLI_INSTALLHOME%\DAtest\web.config" %APPDIR%
     - echo "---"
     - echo "Set Directory Attributes"
     - attrib -r %APPDIR% /s /d
