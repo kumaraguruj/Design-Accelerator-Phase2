@@ -30,6 +30,7 @@ guru4ui/Design-Accelerator-Phase2:
     - echo "---"
     - echo "Creating IIS Site"
     - (%windir%\system32\inetsrv\appcmd add site /name:%SITE% /physicalPath:%APPDIR% /bindings:http://*:%PORT%)   
+    - (%windir%\system32\inetsrv\appcmd add apppool /name:appPoolName /managedRuntimeVersion:"v4.0" /managedPipelineMode:"Integrated")
     - echo "---"
     - echo "Done PreInstall"
   PostInstall:
@@ -37,17 +38,20 @@ guru4ui/Design-Accelerator-Phase2:
     - echo "Unzip DAtest to Application Directory"
     # Using Powershell version 2
     # - PowerShell (New-Object -COM Shell.Application).NameSpace('"%APPDIR%"').CopyHere((New-Object -COM Shell.Application).NameSpace('"%DIStELLI_INSTALLHOME%\DAtest"').Items(), 1564);    
+
+    - xcopy /C/E/Q/R/Y %DIStELLI_INSTALLHOME%\DAtest\* %APPDIR%
     - echo "---"
     - echo "Set Directory Attributes"
-    - attrib -r %APPDIR%\App_Data /s /d
-    - icacls "%APPDIR%\App_Data" /grant IIS_IUSRS:(OI)(CI)F /t
-    - icacls "%APPDIR%\App_Data" /grant IUSR:(OI)(CI)F /t
+    - attrib -r %APPDIR% /s /d
+    - icacls "%APPDIR%" /grant IIS_IUSRS:(OI)(CI)F /t
+    - icacls "%APPDIR%" /grant IUSR:(OI)(CI)F /t
     - echo "---"
     - echo "Done PostInstall"
   Start:
     - echo "Begin Start"
     - echo "Start IIS Site"
     - (%windir%\system32\inetsrv\appcmd start site %SITE%)
+
     - echo "---"
     - echo "Open Firewall"
     - set FWNAME="%SITE% fw rule TCP Port %PORT%"
