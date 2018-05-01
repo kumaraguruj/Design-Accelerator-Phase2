@@ -10,7 +10,8 @@ guru4ui/Design-Accelerator-Phase2:
     - DesignAccelerator/Content/*
     - DesignAccelerator/fonts/*
     - DesignAccelerator/Scripts/*
-    - DesignAccelerator/Views/*.*
+    - DesignAccelerator/Views//*
+    
     - DesignAccelerator/favicon.ico
     - DesignAccelerator/Global.asax
     - DesignAccelerator/packages.config
@@ -60,7 +61,7 @@ guru4ui/Design-Accelerator-Phase2:
     - echo "Done PreInstall"
   PostInstall:
     - echo "Begin PostInstall"
-    - echo "Unzip DAtest to Application Directory"
+   # - echo "Unzip DAtest to Application Directory"
     # Using Powershell version 2
     # - PowerShell (New-Object -COM Shell.Application).NameSpace('"%APPDIR%"').CopyHere((New-Object -COM Shell.Application).NameSpace('"%DIStELLI_INSTALLHOME%\DAtest"').Items(), 1564);    
     #- powershell Copy-Item '"%DIStELLI_INSTALLHOME%\DAtest\*"' -Destination %APPDIR%
