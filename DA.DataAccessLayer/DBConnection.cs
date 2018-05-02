@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
 using System.Data.EntityClient;
+using System.Configuration;
 namespace DA.DataAccessLayer
 {
     static class DBConnection
@@ -9,11 +10,13 @@ namespace DA.DataAccessLayer
             SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder();
 
             // Set the properties for the data source.
-            sqlBuilder.DataSource = @"192.168.12.129\SQLEXPRESS"; //sqlBuilder.DataSource = @"ATLT924\sqlexpress";
-            sqlBuilder.InitialCatalog = "DA";
-            sqlBuilder.UserID = "sa";
-            sqlBuilder.Password = "Admin@123";
-            
+            //sqlBuilder.DataSource = @"192.168.12.129\SQLEXPRESS"; //sqlBuilder.DataSource = @"ATLT924\sqlexpress";
+            //sqlBuilder.InitialCatalog = "DA";
+            //sqlBuilder.UserID = "sa";
+            //sqlBuilder.Password = "Admin@123";
+
+            string constr = ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
+
             string providerString = sqlBuilder.ToString();
 
             // Initialize the EntityConnectionStringBuilder.
@@ -23,7 +26,8 @@ namespace DA.DataAccessLayer
             entityBuilder.Provider = "System.Data.SqlClient";
 
             // Set the provider-specific connection string.
-            entityBuilder.ProviderConnectionString = providerString;
+            // entityBuilder.ProviderConnectionString = providerString;
+            entityBuilder.ProviderConnectionString = constr;
 
             // Set the Metadata location.
 
