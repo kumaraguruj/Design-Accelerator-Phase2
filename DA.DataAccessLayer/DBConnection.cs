@@ -9,11 +9,11 @@ namespace DA.DataAccessLayer
         {
             SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder();
 
-            // Set the properties for the data source.
-            //sqlBuilder.DataSource = @"192.168.12.129\SQLEXPRESS"; //sqlBuilder.DataSource = @"ATLT924\sqlexpress";
-            //sqlBuilder.InitialCatalog = "DA";
-            //sqlBuilder.UserID = "sa";
-            //sqlBuilder.Password = "Admin@123";
+          //  Set the properties for the data source.
+           sqlBuilder.DataSource = @"192.168.12.129\SQLEXPRESS"; //sqlBuilder.DataSource = @"ATLT924\sqlexpress";
+           sqlBuilder.InitialCatalog = "DA";
+            sqlBuilder.UserID = "sa";
+            sqlBuilder.Password = "Admin@123";
 
             string constr = ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
 
